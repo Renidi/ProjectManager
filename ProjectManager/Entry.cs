@@ -1,0 +1,220 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ProjectManager
+{
+    public partial class Entry : Form
+    {
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        const int WM_NCLBUTTONDOWN = 0xA1;
+        const int HT_CAPTION = 0x2;
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        private void Entry_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        public Entry()
+        {
+            InitializeComponent();
+        }
+        public void SHOW(Panel frontPanel)
+        {
+            // Hide other panels
+            List<Panel> list = new List<Panel> {panelLogin , panelRegister , panelReset , panelResetPassword };
+            
+            foreach (Panel item in list)
+            {
+                item.Dock = DockStyle.None;
+                item.Size = new Size(0, 0);
+                item.Visible = false;
+                item.Hide();
+            }
+
+
+            //Show only wanted panel
+            frontPanel.Size = new Size(480, 450);
+            frontPanel.Dock = DockStyle.Fill;
+            frontPanel.Visible = true;
+            frontPanel.Show();
+
+        }
+        private void Clear()
+        {
+            Action<Control.ControlCollection> func = null;
+
+            func = (controls) =>
+            {
+                foreach (Control control in controls)
+                    if (control is TextBox)
+                        (control as TextBox).Clear();
+                    else
+                        func(control.Controls);
+            };
+
+            func(Controls);
+        }
+
+        // -----------------------------------------------------------------------------------------------------------------------------------
+
+        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        User user = new User();
+
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        private void lblResetLogin_Click(object sender, EventArgs e)
+        {
+            SHOW(panelLogin);
+        }
+        private void lblResetRegister_Click(object sender, EventArgs e)
+        {
+            SHOW(panelRegister);
+        }
+        private void lblRegisterLogin_Click(object sender, EventArgs e)
+        {
+            SHOW(panelLogin);
+        }
+        private void lblRegisterReset_Click(object sender, EventArgs e)
+        {
+            SHOW(panelReset);
+        }
+        private void lblLoginReset_Click(object sender, EventArgs e)
+        {
+            SHOW(panelReset);
+        }
+        private void lblLoginRegister_Click(object sender, EventArgs e)
+        {
+            SHOW(panelRegister);
+        }
+
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            if (txResetMail.Text != "" && txResetSecretWord.Text != "")
+            {
+                if (sqlDbHelper.CheckSecretWord(txResetMail.Text, txResetSecretWord.Text))
+                {
+                    user.UserMail = txResetMail.Text;
+                    SHOW(panelResetPassword);
+                }
+                else
+                {
+                    MessageBox.Show("Wrong Info");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Missing Info");
+            }
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            user.UserMail = txLoginMail.Text;
+            //string Query = "SELECT * FROM UserTbl WHERE UserMail=@UserMail AND UserPassword=@UserPassword";
+
+            if (!String.IsNullOrEmpty(txLoginPassword.Text) && !String.IsNullOrEmpty(txLoginMail.Text))
+            {
+                bool loginStatus = sqlDbHelper.Login(txLoginMail.Text, txLoginPassword.Text);
+
+                if (loginStatus)
+                {
+                    Clear();
+                    Events events = new Events(user.UserMail);
+                    events.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Missing Info");
+            }
+        }
+        private void btnResetPasswordAndLogin_Click(object sender, EventArgs e)
+        {
+            if (txResetPasswordFirst.Text != "" && txResetPasswordSecond.Text != "")
+            {
+                if (txResetPasswordFirst.Text == txResetPasswordSecond.Text)
+                {
+                    sqlDbHelper.ChangePassword(txResetMail.Text, txResetPasswordFirst.Text);
+                    user.UserPassword = txResetPasswordFirst.Text;
+                    user.UserMail = txResetMail.Text;
+                    Clear();
+                    MessageBox.Show("Password Successfully Changed");
+                    if(sqlDbHelper.Login(user.UserMail,user.UserPassword))
+                    {
+                        Clear();
+                        Events events = new Events(user.UserMail);
+                        events.Show();
+                        this.Hide();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Passwords do not match");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Missing Info");
+            }
+        }
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            if (txRegisterMail.Text != "" && txRegisterName.Text != "" && txRegisterPasswordFirst.Text != "" && txRegisterPasswordSecond.Text != "" && txRegisterSecretWord.Text != "" && txRegisterSurname.Text != "")
+            {
+                if (txRegisterPasswordSecond.Text == txRegisterPasswordFirst.Text)
+                {
+                    user.UserName = txRegisterName.Text;
+                    user.UserSurname = txRegisterSurname.Text;
+                    user.UserMail = txRegisterMail.Text;
+                    user.UserPassword = txRegisterPasswordSecond.Text;
+                    user.UserSecretWord = txRegisterSecretWord.Text;
+                    user.UserLastLoginDate = user.UserRegisterDate;
+                    sqlDbHelper.Register(user);
+                    Clear();
+                    MessageBox.Show("Registration Successful");
+                    SHOW(panelLogin);
+                }
+                else
+                    MessageBox.Show("Passwords do not match");
+            }
+            else
+            {
+                MessageBox.Show("Missing info");
+            }
+        }
+
+        private void exitApp_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+}
