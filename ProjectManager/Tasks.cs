@@ -25,18 +25,25 @@ namespace ProjectManager
         }
         private void Tasks_Load(object sender, EventArgs e)
         {
-            dtTaskStartDate.Value = DateTime.Now;
             dtTaskFinishDate.Value = DateTime.Now;
             user.UserMail = Mail;
             List<string> tempList = new List<string>();
-            tempList = sqlDbHelper.TakeProjectsName();
+            tempList = sqlDbHelper.TakeProjectsName("ProjectsTbl");
 
             for(int i=0; i<tempList.Count; i++)
             {
                 cmbTaskProject.Items.Add(tempList[i]);
                 
             }
-            
+
+            List<string> tempUserList = new List<string>();
+            tempUserList = sqlDbHelper.TakeEmployeeMails();
+
+            for (int i = 0; i < tempUserList.Count; i++)
+            {
+                cmbTaskEmployee.Items.Add(tempUserList[i]);
+            }
+
             cmbTaskProject.StartIndex = 0;
             DoubleBuffered = true;
             Dt();
@@ -44,6 +51,7 @@ namespace ProjectManager
         private void Dt()
         {
             dgvActiveTasks.DataSource = sqlDbHelper.LoadData("TasksTbl",user.UserMail);
+            dgvActiveTasks.Columns["Id"].Visible = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -51,12 +59,23 @@ namespace ProjectManager
             task.TaskName = txTaskName.Text;
             task.TaskStatus = cmbTaskStatus.Text;
             task.TaskPriority = cmbTaskPriority.Text;
+            task.TaskStartDate = DateTime.Now;
             task.TaskFinishDate= dtTaskFinishDate.Value;
-            task.TaskOwner = user.UserMail;
+            task.TaskOwner = cmbTaskEmployee.Text;
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
 
-            sqlDbHelper.SaveTask(task);
+            DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName +" to tasks ?", "Add Task ", MessageBoxButtons.YesNo , MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                sqlDbHelper.SaveTask(task);
+                
+                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(task.TaskName, "TasksTbl", "Add", DateTime.Now.ToString(), "Task", user.UserMail, "2"));
+            
+            }
+            else
+                MessageBox.Show("Cancelled");
+
             Dt();
         }
 
@@ -70,14 +89,34 @@ namespace ProjectManager
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
             task.Id = varId;
-            sqlDbHelper.EditTask(task);
-            Dt() ;
+
+            DialogResult result = MessageBox.Show("Are you sure edit " + task.TaskName, "Edit Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                sqlDbHelper.EditTask(task);
+                
+                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(task.TaskName, "TasksTbl", "Edit", DateTime.Now.ToString(), "Task", user.UserMail, "2"));
+            }
+                
+            else
+                MessageBox.Show("Cancelled");
+
+            Dt();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            sqlDbHelper.Delete("TasksTbl", null ,task);
-            Dt() ;
+            DialogResult result = MessageBox.Show("Are you sure to delete " + task.TaskName,"Delete Task",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {   
+                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(task.TaskName, "TasksTbl", "Delete", DateTime.Now.ToString(), "Task", user.UserMail, "2"));
+
+                sqlDbHelper.Delete("TasksTbl", null, task);
+            }
+                
+            else
+                MessageBox.Show("Cancelled");
+            Dt();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -99,30 +138,32 @@ namespace ProjectManager
             };
             func(Controls);
             txTaskComment.Text = string.Empty;
-            dtTaskStartDate.Value = DateTime.Now;
             dtTaskFinishDate.Value = DateTime.Now;
         }
 
-        private void btnCommitComment_Click(object sender, EventArgs e)
+        bool CheckTask(Task task)
         {
+            
 
-        }
-
-        private void btnCancelComment_Click(object sender, EventArgs e)
-        {
-            //txTaskComment.Text
+            return false;
         }
 
         private void dgvActiveTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            task.TaskName =txTaskName.Text = dgvActiveTasks.SelectedRows[0].Cells[1].Value.ToString();
-            task.TaskStatus = cmbTaskStatus.Text = dgvActiveTasks.SelectedRows[0].Cells[2].Value.ToString();
-            task.TaskPriority = cmbTaskPriority.Text = dgvActiveTasks.SelectedRows[0].Cells[3].Value.ToString();
-            task.TaskStartDate = dtTaskStartDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[4].Value);
-            task.TaskFinishDate = dtTaskFinishDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[5].Value);
-            task.TaskProject = cmbTaskProject.Text = dgvActiveTasks.SelectedRows[0].Cells[7].Value.ToString();
-            task.TaskDescription = txTaskComment.Text = dgvActiveTasks.SelectedRows[0].Cells[8].Value.ToString();
-            task.Id = varId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
+            try
+            {
+                task.TaskName = txTaskName.Text = dgvActiveTasks.SelectedRows[0].Cells[1].Value.ToString();
+                task.TaskOwner = cmbTaskEmployee.Text = dgvActiveTasks.Rows[0].Cells[6].Value.ToString();
+                task.TaskStatus = cmbTaskStatus.Text = dgvActiveTasks.SelectedRows[0].Cells[2].Value.ToString();
+                task.TaskPriority = cmbTaskPriority.Text = dgvActiveTasks.SelectedRows[0].Cells[3].Value.ToString();
+                task.TaskFinishDate = dtTaskFinishDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[5].Value);
+                task.TaskProject = cmbTaskProject.Text = dgvActiveTasks.SelectedRows[0].Cells[7].Value.ToString();
+                task.TaskDescription = txTaskComment.Text = dgvActiveTasks.SelectedRows[0].Cells[8].Value.ToString();
+                task.Id = varId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
+            }
+            catch{ }
+  
+            
         }
 
     }

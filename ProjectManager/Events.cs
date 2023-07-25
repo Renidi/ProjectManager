@@ -46,9 +46,7 @@ namespace ProjectManager
         public Events(string usermail)
         {
             InitializeComponent();
-
             Mail = usermail;
-
             openChildForm(new Projects(Mail));
             DoubleBuffered = true;
 
@@ -58,12 +56,15 @@ namespace ProjectManager
         private void Events_Load(object sender, EventArgs e)
         {
             user.UserMail = Mail;
-            lblMail.Text = Mail;
-            //lblAdSoyad.Text = user.UserName + user.UserSurname;
+            user = sqlDbHelper.UserInfo(user);
+            lblMail.Text = user.UserMail;
+            lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
         }
-
+        
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            user = sqlDbHelper.UserInfo(user);
+            sqlDbHelper.UserLog(user, "Logout");
             Entry entry = new Entry();
             entry.Show();
             this.Hide();
@@ -83,8 +84,7 @@ namespace ProjectManager
         private Form activeForm = null;
         private void openChildForm(Form childForm)
         {
-            if (activeForm != null) 
-                activeForm.Close();
+            activeForm?.Close();
             activeForm = childForm;
             childForm.TopLevel = false;
             childForm.Dock = DockStyle.Fill;
@@ -96,14 +96,15 @@ namespace ProjectManager
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
-        {
-
+        {  // user settings
+            openChildForm (new UserSettings(user.UserMail));
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             openChildForm(new Calendar());
         }
+
     }
 
 }

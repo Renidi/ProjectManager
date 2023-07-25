@@ -13,8 +13,7 @@ namespace ProjectManager
 {
     public partial class Calendar : Form
     {
-        static CultureInfo ci = new CultureInfo("en-US");
-        static DateTime currentDt = Convert.ToDateTime(DateTime.Now.ToString("dd - MMM - yyyy", ci));
+        static DateTime currentDt = DateTime.Now;
         static int currentMonth = currentDt.Month;
         static int currentYear = currentDt.Year;  
         public Calendar()
@@ -28,8 +27,6 @@ namespace ProjectManager
         }
         private void displayDays()
         {
-            CultureInfo ci = new CultureInfo("en-US");
-            DateTime currentDt = Convert.ToDateTime(DateTime.Now.ToString("dd - MMM - yyyy", ci));
             lblTarih.Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(currentMonth) + " " + currentYear;
             DateTime startOfMonth = new DateTime(currentYear,currentMonth, 1);
             int days = DateTime.DaysInMonth(currentYear,currentMonth);
@@ -44,7 +41,8 @@ namespace ProjectManager
             for (int i = 1;i <= days ; i++)
             {
                 DayControl dayControl = new DayControl();
-                dayControl.Days(i);
+                dayControl.Days(i, i + "." + currentMonth + "." + currentYear);
+                
                 flContainer.Controls.Add(dayControl);
             }
 
@@ -80,5 +78,6 @@ namespace ProjectManager
             
             displayDays();
         }
+
     }
 }

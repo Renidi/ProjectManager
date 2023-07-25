@@ -19,7 +19,7 @@ namespace ProjectManager
 
         }
         public DataTable LoadData(params string[] arguments) 
-        {
+        {                       // arg[0] = Table , arg[1] =? userMail
             try
             {
                 SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;"); // THINK
@@ -110,7 +110,7 @@ namespace ProjectManager
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            Con.Close();
             return false;
         }
 
@@ -135,6 +135,7 @@ namespace ProjectManager
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            Con.Close();
             return false;
         }
 
@@ -153,7 +154,6 @@ namespace ProjectManager
                 cmd.Parameters.AddWithValue("@TaskDescription", task.TaskDescription);
                 cmd.Parameters.AddWithValue("@Id", task.Id);
 
-
                 cmd.ExecuteNonQuery();
                 Con.Close();
                 return true;
@@ -162,7 +162,7 @@ namespace ProjectManager
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            Con.Close();
             return false;
         }
 
@@ -222,8 +222,8 @@ namespace ProjectManager
 
             return false;
         }
-        
-        public List<string> TakeProjectsName()
+        // combin with project names
+        public List<string> TakeEmployeeMails(params string[] arguments)
         {
             List<string> list = new List<string>();
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
@@ -232,14 +232,68 @@ namespace ProjectManager
             {
                 using (Con)
                 {
-                    SqlCommand cmd = new SqlCommand("SELECT ProjectName FROM ProjectsTbl", Con);
+                    SqlCommand cmd = new SqlCommand("SELECT UserMail FROM UserTbl ", Con);
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        while (rd.Read()) 
+                        while (rd.Read())
                         {
                             list.Add(rd.GetString(0));
                         }
                     }
+                }
+                Con.Close();
+                return list;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return list;
+        }
+        
+        public List<string> TakeProjectsName(params string[] arguments)
+        {
+            List<string> list = new List<string>();
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+            Con.Open();
+            try
+            {
+                using (Con)
+                { 
+                    if (arguments.Length == 1)
+                    { // Project Names in Combobox
+                        SqlCommand cmd = new SqlCommand("SELECT ProjectName FROM "+ arguments[0], Con);
+
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                list.Add(rd.GetString(0));
+                            }
+                        }
+                    }
+                    else
+                    { // Project Names on Calender with Priority
+                        string tempDate = Convert.ToDateTime(arguments[1]).ToString();
+                        SqlCommand cmd = new SqlCommand("SELECT ProjectName,ProjectFinishDate,ProjectPriority FROM "+ arguments[0], Con);
+
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                string projectDate = rd.GetDateTime(1).Date.ToString();
+                                if (tempDate == projectDate)
+                                {
+                                    list.Add(rd.GetString(0));
+                                    list.Add(rd.GetString(2));
+                                }
+
+                            }
+                        }
+
+                    }
+                    
                 }
 
                 return list;
@@ -287,7 +341,7 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-
+                 
                 SqlCommand cmd = new SqlCommand("INSERT INTO UserTbl(UserName,UserSurname,UserMail,UserPassword,UserRegisterDate,UserLastLoginDate,UserSecretWord)" +
                                                             "values(@UserName,@UserSurname,@UserMail,@UserPassword,@UserRegisterDate,@UserLastLoginDate,@UserSecretWord)", Con);
                 cmd.Parameters.AddWithValue("@UserName",user.UserName);
@@ -307,6 +361,38 @@ namespace ProjectManager
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             Con.Close();
+
+        }
+        public User UserInfo(User user)
+        {
+            try
+            {
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+                
+                SqlCommand cmd = new SqlCommand("SELECT * FROM UserTbl WHERE UserMail=@UserMail",Con);
+                cmd.Parameters.AddWithValue("@UserMail", user.UserMail);
+                Con.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader()) 
+                {
+                    while (rd.Read())
+                    {
+                        user.Id = Convert.ToInt32(rd["UserId"]);
+                        user.UserName = rd["UserName"].ToString();
+                        user.UserSurname = rd["UserSurname"].ToString();
+                        user.UserMail = rd["UserMail"].ToString();
+                        user.UserRegisterDate = Convert.ToDateTime(rd["UserRegisterDate"].ToString());
+                        user.UserLastLoginDate = Convert.ToDateTime(rd["UserLastLoginDate"].ToString());
+                    }
+                }
+                Con.Close();
+                return user;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close() ;
+            return user;
         }
 
         public bool CheckSecretWord(string userMail, string userSecretWord)
@@ -369,6 +455,7 @@ namespace ProjectManager
                 cmd.Parameters.AddWithValue("@UserMail", userMail);
                 cmd.ExecuteNonQuery();
                 Con.Close();
+
             }
             catch(Exception ex) 
             {
@@ -377,6 +464,65 @@ namespace ProjectManager
             Con.Close() ;
         }
 
+        public void DataLog(Operation operation)
+        {
+            try
+            {
+                Con.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO LogDataTbl(OperationName,OperationTable,OperationType,OperationTime,OperationChange,OperationUser,OperationUserId)" +
+                                                     "values(@OperationName,@OperationTable,@OperationType,@OperationTime,@OperationChange,@OperationUser,@OperationUserId)", Con);
+                cmd.Parameters.AddWithValue("@OperationName",operation.OperationName);
+                cmd.Parameters.AddWithValue("@OperationTable",operation.OperationTable);
+                cmd.Parameters.AddWithValue("@OperationType",operation.OperationType);
+                cmd.Parameters.AddWithValue("@OperationTime",operation.OperationTime);
+                cmd.Parameters.AddWithValue("@OperationChange",operation.OperationChange);
+                cmd.Parameters.AddWithValue("@OperationUser",operation.OperationUser);
+                cmd.Parameters.AddWithValue("@OperationUserId",operation.OperationUserId);
 
+                cmd.ExecuteNonQuery();
+                Con.Close();
+            
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+        }
+        public void UserLog(User user, string type)
+        {
+            try
+            {
+                Con.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO LogUserTbl(ProcessUser,ProcessUserId,ProcessType,ProcessTime)" +
+                                                              "values(@ProcessUser,@ProcessUserId,@ProcessType,@ProcessTime)", Con);
+                cmd.Parameters.AddWithValue("@ProcessUser", user.UserMail);
+                cmd.Parameters.AddWithValue("@ProcessUserId", user.Id);
+                cmd.Parameters.AddWithValue("@ProcessType", type);
+                cmd.Parameters.AddWithValue("@ProcessTime", DateTime.Now);
+                cmd.ExecuteNonQuery();
+
+                Con.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public Operation Transmitter(params string[] arguments)
+        {
+            Operation operation = new Operation
+            {
+                OperationName = arguments[0],
+                OperationTable = arguments[1],
+                OperationType = arguments[2],
+                OperationTime = Convert.ToDateTime(arguments[3]),
+                OperationChange = arguments[4],
+                OperationUser = arguments[5],
+                OperationUserId = Convert.ToInt32(arguments[6])
+            };
+
+            return operation;
+        }
     }
 }

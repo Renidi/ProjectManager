@@ -38,6 +38,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.lblAdSoyad = new System.Windows.Forms.Label();
             this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlBottom.SuspendLayout();
@@ -51,6 +52,7 @@
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnlTop.Controls.Add(this.lblAdSoyad);
             this.pnlTop.Controls.Add(this.lblMail);
             this.pnlTop.Controls.Add(this.pictureBox1);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -64,7 +66,7 @@
             // 
             this.lblMail.AutoSize = true;
             this.lblMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMail.Location = new System.Drawing.Point(1091, 33);
+            this.lblMail.Location = new System.Drawing.Point(1052, 57);
             this.lblMail.Name = "lblMail";
             this.lblMail.Size = new System.Drawing.Size(75, 20);
             this.lblMail.TabIndex = 2;
@@ -98,7 +100,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ProjectManager.Properties.Resources.work_process;
-            this.pictureBox2.Location = new System.Drawing.Point(621, 28);
+            this.pictureBox2.Location = new System.Drawing.Point(554, 28);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -109,7 +111,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = global::ProjectManager.Properties.Resources.user;
-            this.pictureBox6.Location = new System.Drawing.Point(550, 28);
+            this.pictureBox6.Location = new System.Drawing.Point(760, 28);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(32, 32);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -120,7 +122,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::ProjectManager.Properties.Resources.graph;
-            this.pictureBox5.Location = new System.Drawing.Point(760, 28);
+            this.pictureBox5.Location = new System.Drawing.Point(692, 28);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(32, 32);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -141,7 +143,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::ProjectManager.Properties.Resources.calendar;
-            this.pictureBox3.Location = new System.Drawing.Point(691, 28);
+            this.pictureBox3.Location = new System.Drawing.Point(623, 28);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(32, 32);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -157,6 +159,16 @@
             this.pnlMiddle.Name = "pnlMiddle";
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 2;
+            // 
+            // lblAdSoyad
+            // 
+            this.lblAdSoyad.AutoSize = true;
+            this.lblAdSoyad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdSoyad.Location = new System.Drawing.Point(1052, 33);
+            this.lblAdSoyad.Name = "lblAdSoyad";
+            this.lblAdSoyad.Size = new System.Drawing.Size(116, 20);
+            this.lblAdSoyad.TabIndex = 3;
+            this.lblAdSoyad.Text = "User Ad Soyad";
             // 
             // Events
             // 
@@ -195,5 +207,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lblMail;
         private System.Windows.Forms.Panel pnlMiddle;
+        private System.Windows.Forms.Label lblAdSoyad;
     }
 }

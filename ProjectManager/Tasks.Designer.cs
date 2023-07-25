@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlTasks = new System.Windows.Forms.Panel();
             this.cmbTaskProject = new Guna.UI2.WinForms.Guna2ComboBox();
             this.txTaskComment = new System.Windows.Forms.RichTextBox();
             this.dtTaskFinishDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.cmbTaskStatus = new Guna.UI2.WinForms.Guna2ComboBox();
             this.cmbTaskPriority = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.dtTaskStartDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
             this.btnEdit = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
@@ -45,10 +44,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txTaskName = new Guna.UI2.WinForms.Guna2TextBox();
             this.dgvActiveTasks = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.cmbTaskEmployee = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.pnlTasks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActiveTasks)).BeginInit();
             this.SuspendLayout();
@@ -56,12 +57,14 @@
             // pnlTasks
             // 
             this.pnlTasks.BackColor = System.Drawing.Color.Silver;
+            this.pnlTasks.Controls.Add(this.label7);
+            this.pnlTasks.Controls.Add(this.label6);
+            this.pnlTasks.Controls.Add(this.cmbTaskEmployee);
             this.pnlTasks.Controls.Add(this.cmbTaskProject);
             this.pnlTasks.Controls.Add(this.txTaskComment);
             this.pnlTasks.Controls.Add(this.dtTaskFinishDate);
             this.pnlTasks.Controls.Add(this.cmbTaskStatus);
             this.pnlTasks.Controls.Add(this.cmbTaskPriority);
-            this.pnlTasks.Controls.Add(this.dtTaskStartDate);
             this.pnlTasks.Controls.Add(this.btnDelete);
             this.pnlTasks.Controls.Add(this.btnEdit);
             this.pnlTasks.Controls.Add(this.btnSave);
@@ -69,7 +72,6 @@
             this.pnlTasks.Controls.Add(this.label5);
             this.pnlTasks.Controls.Add(this.label4);
             this.pnlTasks.Controls.Add(this.label3);
-            this.pnlTasks.Controls.Add(this.label2);
             this.pnlTasks.Controls.Add(this.label1);
             this.pnlTasks.Controls.Add(this.txTaskName);
             this.pnlTasks.Controls.Add(this.dgvActiveTasks);
@@ -108,7 +110,7 @@
             this.dtTaskFinishDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
             this.dtTaskFinishDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dtTaskFinishDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.dtTaskFinishDate.Location = new System.Drawing.Point(424, 366);
+            this.dtTaskFinishDate.Location = new System.Drawing.Point(219, 366);
             this.dtTaskFinishDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.dtTaskFinishDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.dtTaskFinishDate.Name = "dtTaskFinishDate";
@@ -157,21 +159,6 @@
             this.cmbTaskPriority.StartIndex = 0;
             this.cmbTaskPriority.TabIndex = 30;
             // 
-            // dtTaskStartDate
-            // 
-            this.dtTaskStartDate.Checked = true;
-            this.dtTaskStartDate.Enabled = false;
-            this.dtTaskStartDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
-            this.dtTaskStartDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtTaskStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.dtTaskStartDate.Location = new System.Drawing.Point(218, 366);
-            this.dtTaskStartDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
-            this.dtTaskStartDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.dtTaskStartDate.Name = "dtTaskStartDate";
-            this.dtTaskStartDate.Size = new System.Drawing.Size(200, 36);
-            this.dtTaskStartDate.TabIndex = 29;
-            this.dtTaskStartDate.Value = new System.DateTime(2023, 7, 4, 0, 0, 0, 0);
-            // 
             // btnDelete
             // 
             this.btnDelete.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -180,7 +167,7 @@
             this.btnDelete.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(480, 494);
+            this.btnDelete.Location = new System.Drawing.Point(324, 494);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(150, 45);
             this.btnDelete.TabIndex = 10;
@@ -195,7 +182,7 @@
             this.btnEdit.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(324, 494);
+            this.btnEdit.Location = new System.Drawing.Point(168, 494);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(150, 45);
             this.btnEdit.TabIndex = 10;
@@ -225,7 +212,7 @@
             this.btnClear.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(168, 494);
+            this.btnClear.Location = new System.Drawing.Point(480, 494);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(150, 45);
             this.btnClear.TabIndex = 10;
@@ -253,20 +240,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(421, 350);
+            this.label3.Location = new System.Drawing.Point(216, 350);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 22;
             this.label3.Text = "Task Finish Date";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(215, 350);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Task Date";
             // 
             // label1
             // 
@@ -299,30 +277,30 @@
             // dgvActiveTasks
             // 
             this.dgvActiveTasks.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            this.dgvActiveTasks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvActiveTasks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dgvActiveTasks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvActiveTasks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.dgvActiveTasks.ColumnHeadersHeight = 4;
             this.dgvActiveTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvActiveTasks.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvActiveTasks.DefaultCellStyle = dataGridViewCellStyle15;
             this.dgvActiveTasks.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvActiveTasks.Location = new System.Drawing.Point(12, 6);
             this.dgvActiveTasks.Name = "dgvActiveTasks";
@@ -355,6 +333,39 @@
             this.dgvActiveTasks.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvActiveTasks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActiveTasks_CellContentClick);
             // 
+            // cmbTaskEmployee
+            // 
+            this.cmbTaskEmployee.BackColor = System.Drawing.Color.Transparent;
+            this.cmbTaskEmployee.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cmbTaskEmployee.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTaskEmployee.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cmbTaskEmployee.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cmbTaskEmployee.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbTaskEmployee.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.cmbTaskEmployee.ItemHeight = 30;
+            this.cmbTaskEmployee.Location = new System.Drawing.Point(425, 366);
+            this.cmbTaskEmployee.Name = "cmbTaskEmployee";
+            this.cmbTaskEmployee.Size = new System.Drawing.Size(199, 36);
+            this.cmbTaskEmployee.TabIndex = 38;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(422, 419);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Task Project";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(422, 350);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 13);
+            this.label7.TabIndex = 40;
+            this.label7.Text = "Task Employee";
+            // 
             // Tasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -379,7 +390,6 @@
         private Guna.UI2.WinForms.Guna2DateTimePicker dtTaskFinishDate;
         private Guna.UI2.WinForms.Guna2ComboBox cmbTaskStatus;
         private Guna.UI2.WinForms.Guna2ComboBox cmbTaskPriority;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtTaskStartDate;
         private Guna.UI2.WinForms.Guna2Button btnDelete;
         private Guna.UI2.WinForms.Guna2Button btnEdit;
         private Guna.UI2.WinForms.Guna2Button btnSave;
@@ -387,10 +397,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2TextBox txTaskName;
         private System.Windows.Forms.RichTextBox txTaskComment;
         private Guna.UI2.WinForms.Guna2ComboBox cmbTaskProject;
+        private Guna.UI2.WinForms.Guna2ComboBox cmbTaskEmployee;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

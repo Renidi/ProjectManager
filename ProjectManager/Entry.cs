@@ -39,6 +39,19 @@ namespace ProjectManager
         {
             InitializeComponent();
         }
+
+        private void Entry_Load(object sender, EventArgs e)
+        {
+
+            txLoginMail.Text = Properties.Settings.Default.UserMail;
+            txLoginPassword.Text = Properties.Settings.Default.UserPassword;
+
+            if(txLoginMail.Text != "")
+                cbRememberMe.Checked = true;
+            else
+                cbRememberMe.Checked = false;
+            
+        }
         public void SHOW(Panel frontPanel)
         {
             // Hide other panels
@@ -81,11 +94,6 @@ namespace ProjectManager
         SqlDbHelper sqlDbHelper = new SqlDbHelper();
         User user = new User();
 
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
         private void lblResetLogin_Click(object sender, EventArgs e)
         {
             SHOW(panelLogin);
@@ -139,9 +147,25 @@ namespace ProjectManager
             if (!String.IsNullOrEmpty(txLoginPassword.Text) && !String.IsNullOrEmpty(txLoginMail.Text))
             {
                 bool loginStatus = sqlDbHelper.Login(txLoginMail.Text, txLoginPassword.Text);
-
+                user.UserMail = txLoginMail.Text;
                 if (loginStatus)
                 {
+                    user.UserName= txLoginMail.Text;
+                    user = sqlDbHelper.UserInfo(user);
+                    sqlDbHelper.UserLog(user,"Login");
+                    if (cbRememberMe.Checked)
+                    {
+                        Properties.Settings.Default.UserMail = txLoginMail.Text;
+                        Properties.Settings.Default.UserPassword = txLoginPassword.Text;
+                        Properties.Settings.Default.Save();
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.UserMail = "";
+                        Properties.Settings.Default.UserPassword = "";
+                        Properties.Settings.Default.Save();
+                    }
+
                     Clear();
                     Events events = new Events(user.UserMail);
                     events.Show();
@@ -214,7 +238,14 @@ namespace ProjectManager
 
         private void exitApp_Click(object sender, EventArgs e)
         {
+            if (!cbRememberMe.Checked || txLoginMail.Text == "" || txLoginPassword.Text == "")
+            {
+                Properties.Settings.Default.UserMail = "";
+                Properties.Settings.Default.UserPassword = "";
+                Properties.Settings.Default.Save();
+            }
             Application.Exit();
         }
+
     }
 }

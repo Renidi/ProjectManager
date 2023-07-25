@@ -71,6 +71,7 @@
             this.txLoginPassword = new Guna.UI2.WinForms.Guna2TextBox();
             this.exitApp = new System.Windows.Forms.PictureBox();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.cbRememberMe = new Guna.UI2.WinForms.Guna2CheckBox();
             this.panelMain.SuspendLayout();
             this.panelRegister.SuspendLayout();
             this.panelReset.SuspendLayout();
@@ -111,9 +112,9 @@
             this.panelRegister.Controls.Add(this.txRegisterPasswordSecond);
             this.panelRegister.Controls.Add(this.txRegisterName);
             this.panelRegister.Controls.Add(this.txRegisterPasswordFirst);
-            this.panelRegister.Location = new System.Drawing.Point(375, 12);
+            this.panelRegister.Location = new System.Drawing.Point(368, 12);
             this.panelRegister.Name = "panelRegister";
-            this.panelRegister.Size = new System.Drawing.Size(102, 87);
+            this.panelRegister.Size = new System.Drawing.Size(109, 87);
             this.panelRegister.TabIndex = 17;
             this.panelRegister.Visible = false;
             // 
@@ -529,6 +530,7 @@
             // panelLogin
             // 
             this.panelLogin.BackColor = System.Drawing.Color.Silver;
+            this.panelLogin.Controls.Add(this.cbRememberMe);
             this.panelLogin.Controls.Add(this.lblLoginRegister);
             this.panelLogin.Controls.Add(this.lblLoginReset);
             this.panelLogin.Controls.Add(this.label3);
@@ -546,7 +548,7 @@
             // 
             this.lblLoginRegister.AutoSize = true;
             this.lblLoginRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLoginRegister.Location = new System.Drawing.Point(283, 317);
+            this.lblLoginRegister.Location = new System.Drawing.Point(283, 329);
             this.lblLoginRegister.Name = "lblLoginRegister";
             this.lblLoginRegister.Size = new System.Drawing.Size(46, 13);
             this.lblLoginRegister.TabIndex = 0;
@@ -557,7 +559,7 @@
             // 
             this.lblLoginReset.AutoSize = true;
             this.lblLoginReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLoginReset.Location = new System.Drawing.Point(126, 317);
+            this.lblLoginReset.Location = new System.Drawing.Point(126, 329);
             this.lblLoginReset.Name = "lblLoginReset";
             this.lblLoginReset.Size = new System.Drawing.Size(35, 13);
             this.lblLoginReset.TabIndex = 0;
@@ -590,7 +592,7 @@
             this.btnLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(129, 269);
+            this.btnLogin.Location = new System.Drawing.Point(129, 281);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(200, 45);
             this.btnLogin.TabIndex = 6;
@@ -651,6 +653,23 @@
             this.guna2Elipse1.BorderRadius = 20;
             this.guna2Elipse1.TargetControl = this;
             // 
+            // cbRememberMe
+            // 
+            this.cbRememberMe.AutoSize = true;
+            this.cbRememberMe.CheckedState.BorderColor = System.Drawing.Color.Yellow;
+            this.cbRememberMe.CheckedState.BorderRadius = 0;
+            this.cbRememberMe.CheckedState.BorderThickness = 0;
+            this.cbRememberMe.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbRememberMe.Location = new System.Drawing.Point(128, 260);
+            this.cbRememberMe.Name = "cbRememberMe";
+            this.cbRememberMe.Size = new System.Drawing.Size(95, 17);
+            this.cbRememberMe.TabIndex = 16;
+            this.cbRememberMe.Text = "Remember Me";
+            this.cbRememberMe.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.cbRememberMe.UncheckedState.BorderRadius = 0;
+            this.cbRememberMe.UncheckedState.BorderThickness = 0;
+            this.cbRememberMe.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            // 
             // Entry
             // 
             this.AllowDrop = true;
@@ -662,6 +681,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Entry";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Entry_Load);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Entry_MouseMove);
             this.panelMain.ResumeLayout(false);
             this.panelRegister.ResumeLayout(false);
@@ -720,6 +740,7 @@
         private Guna.UI2.WinForms.Guna2TextBox txRegisterPasswordSecond;
         private Guna.UI2.WinForms.Guna2TextBox txRegisterName;
         private Guna.UI2.WinForms.Guna2TextBox txRegisterPasswordFirst;
+        private Guna.UI2.WinForms.Guna2CheckBox cbRememberMe;
     }
 }
 

@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.lbl = new System.Windows.Forms.Label();
+            this.lblProject1 = new System.Windows.Forms.Label();
+            this.lblProject2 = new System.Windows.Forms.Label();
+            this.lblProject3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl
@@ -41,15 +44,43 @@
             this.lbl.TabIndex = 0;
             this.lbl.Text = "00";
             // 
+            // lblProject1
+            // 
+            this.lblProject1.AutoSize = true;
+            this.lblProject1.Location = new System.Drawing.Point(7, 24);
+            this.lblProject1.Name = "lblProject1";
+            this.lblProject1.Size = new System.Drawing.Size(0, 13);
+            this.lblProject1.TabIndex = 1;
+            // 
+            // lblProject2
+            // 
+            this.lblProject2.AutoSize = true;
+            this.lblProject2.Location = new System.Drawing.Point(7, 37);
+            this.lblProject2.Name = "lblProject2";
+            this.lblProject2.Size = new System.Drawing.Size(0, 13);
+            this.lblProject2.TabIndex = 2;
+            // 
+            // lblProject3
+            // 
+            this.lblProject3.AutoSize = true;
+            this.lblProject3.Location = new System.Drawing.Point(7, 50);
+            this.lblProject3.Name = "lblProject3";
+            this.lblProject3.Size = new System.Drawing.Size(0, 13);
+            this.lblProject3.TabIndex = 3;
+            // 
             // DayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Controls.Add(this.lblProject3);
+            this.Controls.Add(this.lblProject2);
+            this.Controls.Add(this.lblProject1);
             this.Controls.Add(this.lbl);
             this.Name = "DayControl";
             this.Size = new System.Drawing.Size(150, 70);
             this.Load += new System.EventHandler(this.DayControl_Load);
+            this.Click += new System.EventHandler(this.DayControl_Click);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -58,5 +89,8 @@
         #endregion
 
         private System.Windows.Forms.Label lbl;
+        private System.Windows.Forms.Label lblProject1;
+        private System.Windows.Forms.Label lblProject2;
+        private System.Windows.Forms.Label lblProject3;
     }
 }
