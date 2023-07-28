@@ -18,7 +18,7 @@ namespace ProjectManager
         public int OperationUserId { get; set; }
         public Operation() 
         {
-           // OperationTime = DateTime.Now;
+           OperationTime = DateTime.Now;
         }
 
     }
