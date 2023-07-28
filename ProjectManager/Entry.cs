@@ -93,6 +93,7 @@ namespace ProjectManager
 
         SqlDbHelper sqlDbHelper = new SqlDbHelper();
         User user = new User();
+        Log log = new Log();
 
         private void lblResetLogin_Click(object sender, EventArgs e)
         {
@@ -152,7 +153,17 @@ namespace ProjectManager
                 {
                     user.UserName= txLoginMail.Text;
                     user = sqlDbHelper.UserInfo(user);
-                    sqlDbHelper.UserLog(user,"Login");
+
+                    log.LogSource = "User";
+                    log.LogType = "Login";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogUserId = user.UserId;
+                    log.LogDescription = "x";
+                    log.LogStatus = loginStatus+"";
+
+                    sqlDbHelper.DataLog(log);
+
                     if (cbRememberMe.Checked)
                     {
                         Properties.Settings.Default.UserMail = txLoginMail.Text;
@@ -221,8 +232,20 @@ namespace ProjectManager
                     user.UserMail = txRegisterMail.Text;
                     user.UserPassword = txRegisterPasswordSecond.Text;
                     user.UserSecretWord = txRegisterSecretWord.Text;
-                    user.UserLastLoginDate = user.UserRegisterDate;
+                    user.UserLastLoginDate = DateTime.Now;
+                    user.UserRegisterDate = DateTime.Now;
+
                     sqlDbHelper.Register(user);
+
+                    log.LogSource = "User";
+                    log.LogType = "Login";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogUserId = user.UserId;
+                    log.LogDescription = "Login";
+                    log.LogStatus = "true";
+                    sqlDbHelper.DataLog(log);
+
                     Clear();
                     MessageBox.Show("Registration Successful");
                     SHOW(panelLogin);

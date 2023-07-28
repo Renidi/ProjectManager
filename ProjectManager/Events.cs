@@ -24,7 +24,7 @@ namespace ProjectManager
         SqlDbHelper sqlDbHelper = new SqlDbHelper();
         Project project = new Project();
         User user = new User();
-        
+        Log log = new Log();
         private void pnlTop_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -60,26 +60,6 @@ namespace ProjectManager
             lblMail.Text = user.UserMail;
             lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
         }
-        
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            user = sqlDbHelper.UserInfo(user);
-            sqlDbHelper.UserLog(user, "Logout");
-            Entry entry = new Entry();
-            entry.Show();
-            this.Hide();
-        }
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-            openChildForm(new Projects(user.UserMail));
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            openChildForm(new Tasks(user.UserMail));
-        }
-
 
         private Form activeForm = null;
         private void openChildForm(Form childForm)
@@ -100,11 +80,38 @@ namespace ProjectManager
             openChildForm (new UserSettings(user.UserMail));
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void pbExit_Click(object sender, EventArgs e)
+        {
+            user = sqlDbHelper.UserInfo(user);
+            log.LogSource = "User";
+            log.LogType = "Logout";
+            log.LogDate = DateTime.Now;
+            log.LogUser = user.UserMail;
+            log.LogUserId = user.UserId;
+            log.LogDescription = "";
+            log.LogStatus = "true";
+
+            sqlDbHelper.DataLog(log);
+
+            Entry entry = new Entry();
+            entry.Show();
+            this.Hide();
+        }
+
+        private void pbCalender_Click(object sender, EventArgs e)
         {
             openChildForm(new Calendar());
         }
 
+        private void pbTask_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Tasks(user.UserMail));
+        }
+
+        private void pbProject_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Projects(user.UserMail));
+        }
     }
 
 }

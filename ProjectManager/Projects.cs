@@ -15,9 +15,11 @@ namespace ProjectManager
         SqlDbHelper sqlDbHelper = new SqlDbHelper();
         Project project = new Project();
         User user = new User();
+        Log log = new Log();
         public string Mail { get; set; }
 
-        int varId;
+        public int varId;
+
         public Projects(string userMail)
         {
             InitializeComponent();
@@ -30,29 +32,38 @@ namespace ProjectManager
             dtProjectFinishDate.Value = DateTime.Now;
 
             user.UserMail = Mail;
-            DoubleBuffered = true;
             Dt();
         }
         
         private void Dt()
         {
-            dgvActiveProjects.DataSource = sqlDbHelper.LoadData("ProjectsTbl");
-            dgvActiveProjects.Columns["Id"].Visible = false;
+            dgvActiveProjects.DataSource = sqlDbHelper.LoadData("PROJECT");
+            dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
-            project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectOwner = user.UserMail;
-            project.ProjectFinishDate = dtProjectFinishDate.Value;
+            project.ProjectPriority  = cmbProjectPriority.Text;
+            project.ProjectCreator = user.UserMail;
+            project.ProjectStartDate = dtProjectStartDate.Value;
+            project.ProjectEndDate = dtProjectFinishDate.Value;
+            project.ProjectDescription = txProjectComment.Text;
+
             DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName,"Add Project",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                sqlDbHelper.SaveProject(project);
+                // sqlDbHelper.SaveProject(project) to 61
 
-                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(project.ProjectName,"ProjectsTbl","Add", DateTime.Now.ToString(),"Project",user.UserMail,"2"));
+                log.LogSource = "Project";
+                log.LogType = "Save";
+                log.LogDate = DateTime.Now;
+                log.LogUser = user.UserMail;
+                log.LogDescription= "Add Project " + project.ProjectName;
+                log.LogStatus = sqlDbHelper.SaveProject(project).ToString() ;
+
+                sqlDbHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -64,15 +75,23 @@ namespace ProjectManager
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectOwner = user.UserMail;
-            project.ProjectFinishDate = dtProjectFinishDate.Value;
-            project.Id = varId;
+            project.ProjectCreator = user.UserMail;
+            project.ProjectEndDate= dtProjectFinishDate.Value;
+            project.ProjectDescription = txProjectComment.Text;
+            project.ProjectId= varId;
 
             DialogResult result = MessageBox.Show("Are you sure to edit " + project.ProjectName, "Edit Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                sqlDbHelper.EditProject(project);
-                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(project.ProjectName, "ProjectsTbl", "Edit", DateTime.Now.ToString(), "Project", user.UserMail,"2"));
+                log.LogSource = "Project";
+                log.LogType = "Edit";
+                log.LogDate = DateTime.Now;
+                log.LogUser = user.UserMail;
+                log.LogDescription = "Changes on " + project.ProjectName + " and Id : " + project.ProjectId;
+                log.LogStatus = sqlDbHelper.EditProject(project).ToString();
+
+                // sqlDbHelper.EditProject(project);
+                sqlDbHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -85,16 +104,23 @@ namespace ProjectManager
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectOwner = user.UserMail;
-            project.ProjectFinishDate = dtProjectFinishDate.Value;
-            project.Id = varId;
+            project.ProjectCreator = user.UserMail;
+            project.ProjectEndDate = dtProjectFinishDate.Value;
+            project.ProjectId = varId;
 
             DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                sqlDbHelper.DataLog(sqlDbHelper.Transmitter(project.ProjectName, "ProjectsTbl", "Delete", DateTime.Now.ToString(), "Project", user.UserMail, "2"));
+                log.LogSource = "Project";
+                log.LogType = "Delete";
+                log.LogDate = DateTime.Now;
+                log.LogUser = user.UserMail;
+                log.LogDescription = "Deleted " + project.ProjectName + " and Id : " + project.ProjectId;
+                log.LogStatus = sqlDbHelper.EditProject(project).ToString();
 
-                sqlDbHelper.Delete("ProjectsTbl", project);
+                sqlDbHelper.DataLog(log);
+
+                sqlDbHelper.Delete("PROJECT", project);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -134,6 +160,7 @@ namespace ProjectManager
                 cmbProjectPriority.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[3].Value.ToString();
                 dtProjectStartDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[4].Value);
                 dtProjectFinishDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[5].Value);
+                txProjectComment.Text = dgvActiveProjects.SelectedRows[0].Cells[8].Value.ToString();
                 varId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
             }
             catch { }

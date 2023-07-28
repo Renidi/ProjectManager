@@ -58,7 +58,7 @@ namespace ProjectManager
                         if (sqlDbHelper.Login(Mail, txCurrentPasswordOrSecretWord.Text))
                         {
                             sqlDbHelper.ChangePassword(Mail, txNewPassword.Text);
-                            MessageBox.Show("Password Succesfully Changed");
+                            MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }
                         else
@@ -71,7 +71,7 @@ namespace ProjectManager
                         if (sqlDbHelper.CheckSecretWord(user.UserMail, txCurrentPasswordOrSecretWord.Text))
                         {
                             sqlDbHelper.ChangePassword(user.UserMail, txNewPassword.Text);
-                            MessageBox.Show("Password Succesfully Changed");
+                            MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }
                         else

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace ProjectManager
 {
     internal class SqlDbHelper
     {
         SqlDataReader dr;
-        SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+        SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
 
         User user = new User();
         Project project = new Project();
@@ -22,7 +23,7 @@ namespace ProjectManager
         {                       // arg[0] = Table , arg[1] =? userMail
             try
             {
-                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;"); // THINK
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"); // THINK
                 Con.Open();
                 using (Con)
                 {
@@ -31,12 +32,12 @@ namespace ProjectManager
                         SqlDataAdapter adptr = new SqlDataAdapter();
                         if (arguments.Length == 2)
                         {
-                            adptr = new SqlDataAdapter("SELECT * FROM " + arguments[0] + " WHERE TaskOwner=@TaskOwner", Con);
-                            adptr.SelectCommand.Parameters.AddWithValue("@TaskOwner", arguments[1]);
+                            adptr = new SqlDataAdapter("SELECT * FROM [" + arguments[0] + "] WHERE TASK_OWNER=@TASK_OWNER", Con);
+                            adptr.SelectCommand.Parameters.AddWithValue("@TASK_OWNER", arguments[1]);
                         }
                         else
                         {
-                            adptr = new SqlDataAdapter("SELECT * FROM " + arguments[0], Con);
+                            adptr = new SqlDataAdapter("SELECT * FROM [" + arguments[0] + "]", Con);
                         }
                         adptr.Fill(dt);
                         Con.Close();
@@ -62,18 +63,21 @@ namespace ProjectManager
 
         public bool SaveProject(Project project)
         {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             try
             {
                 
-                SqlCommand cmd = new SqlCommand("INSERT INTO ProjectsTbl(ProjectName,ProjectStatus,ProjectPriority,ProjectStartDate,ProjectFinishDate,ProjectOwner)" +
-                                                                "values(@ProjectName,@ProjectStatus,@ProjectPriority,@ProjectStartDate,@ProjectFinishDate,@ProjectOwner)", Con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [PROJECT](PROJECT_NAME,PROJECT_STATUS,PROJECT_PRIORITY,PROJECT_START_DATE,PROJECT_END_DATE,PROJECT_DURATION,PROJECT_CREATOR,PROJECT_DESCRIPTION)" +
+                                                                "values(@PROJECT_NAME,@PROJECT_STATUS,@PROJECT_PRIORITY,@PROJECT_START_DATE,@PROJECT_END_DATE,@PROJECT_DURATION,@PROJECT_CREATOR,@PROJECT_DESCRIPTION)", Con);
 
-                cmd.Parameters.AddWithValue("@ProjectName",project.ProjectName);
-                cmd.Parameters.AddWithValue("@ProjectStatus", project.ProjectStatus);
-                cmd.Parameters.AddWithValue("@ProjectPriority", project.ProjectPriority);
-                cmd.Parameters.AddWithValue("@ProjectFinishDate", project.ProjectFinishDate);
-                cmd.Parameters.AddWithValue("@ProjectOwner", project.ProjectOwner);
-                cmd.Parameters.AddWithValue("@ProjectStartDate", project.ProjectStartDate);
+                cmd.Parameters.AddWithValue("@PROJECT_NAME", project.ProjectName);
+                cmd.Parameters.AddWithValue("@PROJECT_STATUS", project.ProjectStatus);
+                cmd.Parameters.AddWithValue("@PROJECT_PRIORITY", project.ProjectPriority);
+                cmd.Parameters.AddWithValue("@PROJECT_START_DATE", project.ProjectStartDate);
+                cmd.Parameters.AddWithValue("@PROJECT_END_DATE", project.ProjectEndDate);
+                cmd.Parameters.AddWithValue("@PROJECT_DURATION", project.ProjectDuration);
+                cmd.Parameters.AddWithValue("@PROJECT_CREATOR", project.ProjectCreator);
+                cmd.Parameters.AddWithValue("@PROJECT_DESCRIPTION", project.ProjectDescription);
                 Con.Open();
                 cmd.ExecuteNonQuery();
                 Con.Close() ;
@@ -91,16 +95,17 @@ namespace ProjectManager
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO TasksTbl(TaskName,Taskstatus,TaskPriority,TaskStartDate,TaskFinishDate,TaskOwner,TaskProject,TaskDescription)" +
-                                                            "values(@TaskName,@TaskStatus,@TaskPriority,@TaskStartDate,@TaskFinishDate,@TaskOwner,@TaskProject,@TaskDescription)",Con);
-                cmd.Parameters.AddWithValue("@TaskName",task.TaskName);
-                cmd.Parameters.AddWithValue("@TaskStatus",task.TaskStatus);
-                cmd.Parameters.AddWithValue("@TaskPriority",task.TaskPriority);
-                cmd.Parameters.AddWithValue("@TaskStartDate",task.TaskStartDate);
-                cmd.Parameters.AddWithValue("@TaskFinishDate",task.TaskFinishDate);
-                cmd.Parameters.AddWithValue("@TaskOwner",task.TaskOwner);
-                cmd.Parameters.AddWithValue("@TaskProject",task.TaskProject);
-                cmd.Parameters.AddWithValue("@TaskDescription",task.TaskDescription);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [TASK](TASK_NAME,TASK_STATUS,TASK_PRIORITY,TASK_START_DATE,TASK_END_DATE,TASK_DURATION,TASK_OWNER,TASK_PROJECT,TASK_DESCRIPTION)" +
+                                                            "values(@TASK_NAME,@TASK_STATUS,@TASK_PRIORITY,@TASK_START_DATE,@TASK_END_DATE,@TASK_DURATION,@TASK_OWNER,@TASK_PROJECT,@TASK_DESCRIPTION)", Con);
+                cmd.Parameters.AddWithValue("@TASK_NAME", task.TaskName);
+                cmd.Parameters.AddWithValue("@TASK_STATUS", task.TaskStatus);
+                cmd.Parameters.AddWithValue("@TASK_PRIORITY", task.TaskPriority);
+                cmd.Parameters.AddWithValue("@TASK_START_DATE", task.TaskStartDate);
+                cmd.Parameters.AddWithValue("@TASK_END_DATE", task.TaskEndDate);
+                cmd.Parameters.AddWithValue("@TASK_DURATION", task.TaskDuration);
+                cmd.Parameters.AddWithValue("@TASK_OWNER", task.TaskOwner);
+                cmd.Parameters.AddWithValue("@TASK_PROJECT", task.TaskProject);
+                cmd.Parameters.AddWithValue("@TASK_DESCRIPTION", task.TaskDescription);
                 Con.Open();
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -119,13 +124,15 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE ProjectsTbl SET ProjectName=@ProjectName,ProjectStatus=ProjectStatus,ProjectPriority=@ProjectPriority,ProjectFinishDate=@ProjectFinishDate,ProjectOwner=@ProjectOwner WHERE Id=@Id", Con);
-                cmd.Parameters.AddWithValue("@ProjectName", project.ProjectName);
-                cmd.Parameters.AddWithValue("@ProjectStatus", project.ProjectStatus);
-                cmd.Parameters.AddWithValue("@ProjectPriority", project.ProjectPriority);
-                cmd.Parameters.AddWithValue("@ProjectFinishDate", project.ProjectFinishDate);
-                cmd.Parameters.AddWithValue("@ProjectOwner", project.ProjectOwner);
-                cmd.Parameters.AddWithValue("@Id", project.Id);
+                SqlCommand cmd = new SqlCommand("UPDATE [PROJECT] SET PROJECT_NAME=@PROJECT_NAME,PROJECT_STATUS=PROJECT_STATUS,PROJECT_PRIORITY=@PROJECT_PRIORITY,PROJECT_END_DATE=@PROJECT_END_DATE, PROJECT_DURATION=@PROJECT_DURATION ,PROJECT_DESCRIPTION=@PROJECT_DESCRIPTION WHERE PROJECT_ID=@PROJECT_ID", Con);
+                cmd.Parameters.AddWithValue("@PROJECT_NAME", project.ProjectName);
+                cmd.Parameters.AddWithValue("@PROJECT_STATUS", project.ProjectStatus);
+                cmd.Parameters.AddWithValue("@PROJECT_PRIORITY", project.ProjectPriority);
+                cmd.Parameters.AddWithValue("@PROJECT_DURATION", project.ProjectDuration);
+                cmd.Parameters.AddWithValue("@PROJECT_END_DATE", project.ProjectEndDate);
+                cmd.Parameters.AddWithValue("@PROJECT_DESCRIPTION", project.ProjectDescription);
+
+                cmd.Parameters.AddWithValue("@PROJECT_ID", project.ProjectId);
                 
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -144,15 +151,16 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE TasksTbl SET TaskName = @TaskName, TaskStatus = @TaskStatus, TaskFinishDate = @TaskFinishDate, TaskOwner = @TaskOwner, TaskProject = @TaskProject, TaskDescription = @TaskDescription WHERE Id = @Id", Con);
-                cmd.Parameters.AddWithValue("@TaskName", task.TaskName);
-                cmd.Parameters.AddWithValue("@TaskStatus", task.TaskStatus);
-                cmd.Parameters.AddWithValue("@TaskPriority", task.TaskPriority);
-                cmd.Parameters.AddWithValue("@TaskFinishDate", task.TaskFinishDate);
-                cmd.Parameters.AddWithValue("@TaskOwner", task.TaskOwner);
-                cmd.Parameters.AddWithValue("@TaskProject", task.TaskProject);
-                cmd.Parameters.AddWithValue("@TaskDescription", task.TaskDescription);
-                cmd.Parameters.AddWithValue("@Id", task.Id);
+                SqlCommand cmd = new SqlCommand("UPDATE [TASK] SET TASK_NAME = @TASK_NAME, TASK_STATUS = @TASK_STATUS, TASK_PRIORITY = @TASK_PRIORITY , TASK_END_DATE = @TASK_END_DATE, TASK_OWNER = @TASK_OWNER, TASK_PROJECT = @TASK_PROJECT, TASK_DESCRIPTION = @TASK_DESCRIPTION WHERE TASK_ID = @TASK_ID", Con);
+                cmd.Parameters.AddWithValue("@TASK_NAME", task.TaskName);
+                cmd.Parameters.AddWithValue("@TASK_STATUS", task.TaskStatus);
+                cmd.Parameters.AddWithValue("@TASK_PRIORITY", task.TaskPriority);
+                cmd.Parameters.AddWithValue("@TASK_END_DATE", task.TaskEndDate);
+                cmd.Parameters.AddWithValue("@TASK_OWNER", task.TaskOwner);
+                cmd.Parameters.AddWithValue("@TASK_PROJECT", task.TaskProject);
+                cmd.Parameters.AddWithValue("@TASK_DESCRIPTION", task.TaskDescription);
+
+                cmd.Parameters.AddWithValue("@TASK_ID", task.TaskId);
 
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -166,27 +174,30 @@ namespace ProjectManager
             return false;
         }
 
-        public bool Delete(string where, Project project = null, Task task = null)
+        public bool Delete(string table, Project project = null, Task task = null)
         {
             try
             {
-                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
                 Con.Open();
                 using (Con)
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM "+ where + " WHERE Id=@Id", Con);
+                    SqlCommand cmd = new SqlCommand("DELETE FROM ["+ table + "] WHERE "+ table + "_ID = @"+ table + "_ID", Con);
+                    // SqlCommand cmd = new SqlCommand("DELETE FROM PROJECT WHERE PROJECT_ID = @PROJECT_ID, Con);
+                    // SqlCommand cmd = new SqlCommand("DELETE FROM TASK WHERE TASK_ID = @TASK_ID, Con);
                     if(project != null)
                     {
-                        cmd.Parameters.AddWithValue("@Id", project.Id);
+                        cmd.Parameters.AddWithValue("@PROJECT_ID", project.ProjectId);
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("Id", task.Id);
+                        cmd.Parameters.AddWithValue("TASK_ID", task.TaskId);
                     }
+
                     cmd.ExecuteNonQuery();
                 }
                 Con.Close();
-                if (where == "ProjectsTbl")
+                if (table == "PROJECT")
                 {
                     DeleteSubTasks(project);
                 }
@@ -204,12 +215,12 @@ namespace ProjectManager
         {
             try
             {
-                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
                 Con.Open();
                 using (Con)
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM TasksTbl WHERE TaskProject=@TaskProject",Con);
-                    cmd.Parameters.AddWithValue("@TaskProject",project.ProjectName);
+                    SqlCommand cmd = new SqlCommand("DELETE FROM [TASK] WHERE TASK_RPOJECT=@TASK_PROJECT",Con);
+                    cmd.Parameters.AddWithValue("@TASK_PROJECT", project.ProjectName);
                     cmd.ExecuteNonQuery ();
                 }
                 Con.Close();
@@ -222,17 +233,17 @@ namespace ProjectManager
 
             return false;
         }
-        // combin with project names
+        // combine with project names
         public List<string> TakeEmployeeMails(params string[] arguments)
         {
             List<string> list = new List<string>();
-            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             Con.Open();
             try
             {
                 using (Con)
                 {
-                    SqlCommand cmd = new SqlCommand("SELECT UserMail FROM UserTbl ", Con);
+                    SqlCommand cmd = new SqlCommand("SELECT USER_MAIL FROM [USER]", Con);
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
                         while (rd.Read())
@@ -255,7 +266,7 @@ namespace ProjectManager
         public List<string> TakeProjectsName(params string[] arguments)
         {
             List<string> list = new List<string>();
-            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             Con.Open();
             try
             {
@@ -263,7 +274,7 @@ namespace ProjectManager
                 { 
                     if (arguments.Length == 1)
                     { // Project Names in Combobox
-                        SqlCommand cmd = new SqlCommand("SELECT ProjectName FROM "+ arguments[0], Con);
+                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME FROM [" + arguments[0]+"]", Con);
 
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
@@ -276,7 +287,7 @@ namespace ProjectManager
                     else
                     { // Project Names on Calender with Priority
                         string tempDate = Convert.ToDateTime(arguments[1]).ToString();
-                        SqlCommand cmd = new SqlCommand("SELECT ProjectName,ProjectFinishDate,ProjectPriority FROM "+ arguments[0], Con);
+                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME , PROJECT_END_DATE , PROJECT_PRIORITY FROM [" + arguments[0] + "]", Con);
 
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
@@ -312,9 +323,10 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM UserTbl WHERE UserMail = @UserMail AND UserPassword = @UserPassword", Con);
-                cmd.Parameters.AddWithValue("@UserMail", Mail);
-                cmd.Parameters.AddWithValue("@UserPassword", Password);
+                // CAN BE CHANGE
+                SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL = @USER_MAIL AND USER_PASSWORD = @USER_PASSWORD", Con);
+                cmd.Parameters.AddWithValue("@USER_MAIL", Mail);
+                cmd.Parameters.AddWithValue("@USER_PASSWORD", Password);
                 
                 dr = cmd.ExecuteReader();
 
@@ -338,19 +350,20 @@ namespace ProjectManager
 
         public void Register(User user)
         {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             try
             {
                 Con.Open();
                  
-                SqlCommand cmd = new SqlCommand("INSERT INTO UserTbl(UserName,UserSurname,UserMail,UserPassword,UserRegisterDate,UserLastLoginDate,UserSecretWord)" +
-                                                            "values(@UserName,@UserSurname,@UserMail,@UserPassword,@UserRegisterDate,@UserLastLoginDate,@UserSecretWord)", Con);
-                cmd.Parameters.AddWithValue("@UserName",user.UserName);
-                cmd.Parameters.AddWithValue("@UserSurname", user.UserSurname);
-                cmd.Parameters.AddWithValue("@UserMail", user.UserMail);
-                cmd.Parameters.AddWithValue("@UserPassword", user.UserPassword);
-                cmd.Parameters.AddWithValue("@UserRegisterDate",user.UserRegisterDate);
-                cmd.Parameters.AddWithValue("@UserLastLoginDate",user.UserRegisterDate);
-                cmd.Parameters.AddWithValue("@UserSecretWord", user.UserSecretWord);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [USER](USER_NAME , USER_SURNAME , USER_MAIL , USER_PASSWORD , USER_REGISTER_DATE , USER_LAST_LOGIN_DATE , USER_SECRET_WORD )" +
+                                                            "values(@USER_NAME , @USER_SURNAME , @USER_MAIL , @USER_PASSWORD , @USER_REGISTER_DATE , @USER_LAST_LOGIN_DATE , @USER_SECRET_WORD )", Con);
+                cmd.Parameters.AddWithValue("@USER_NAME", user.UserName);
+                cmd.Parameters.AddWithValue("@USER_SURNAME", user.UserSurname);
+                cmd.Parameters.AddWithValue("@USER_MAIL", user.UserMail);
+                cmd.Parameters.AddWithValue("@USER_PASSWORD", user.UserPassword);
+                cmd.Parameters.AddWithValue("@USER_REGISTER_DATE", user.UserRegisterDate);
+                cmd.Parameters.AddWithValue("@USER_LAST_LOGIN_DATE", user.UserLastLoginDate);
+                cmd.Parameters.AddWithValue("@USER_SECRET_WORD", user.UserSecretWord);
 
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -367,21 +380,21 @@ namespace ProjectManager
         {
             try
             {
-                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManagerDb; Integrated Security=true;");
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
                 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM UserTbl WHERE UserMail=@UserMail",Con);
-                cmd.Parameters.AddWithValue("@UserMail", user.UserMail);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL=@USER_MAIL", Con);
+                cmd.Parameters.AddWithValue("@USER_MAIL", user.UserMail);
                 Con.Open();
                 using (SqlDataReader rd = cmd.ExecuteReader()) 
                 {
                     while (rd.Read())
                     {
-                        user.Id = Convert.ToInt32(rd["UserId"]);
-                        user.UserName = rd["UserName"].ToString();
-                        user.UserSurname = rd["UserSurname"].ToString();
-                        user.UserMail = rd["UserMail"].ToString();
-                        user.UserRegisterDate = Convert.ToDateTime(rd["UserRegisterDate"].ToString());
-                        user.UserLastLoginDate = Convert.ToDateTime(rd["UserLastLoginDate"].ToString());
+                        user.UserId = Convert.ToInt32(rd["USER_ID"]);
+                        user.UserName = rd["USER_NAME"].ToString();
+                        user.UserSurname = rd["USER_SURNAME"].ToString();
+                        user.UserMail = rd["USER_MAIL"].ToString();
+                        user.UserRegisterDate = Convert.ToDateTime(rd["USER_REGISTER_DATE"].ToString());
+                        user.UserLastLoginDate = Convert.ToDateTime(rd["USER_LAST_LOGIN_DATE"].ToString());
                     }
                 }
                 Con.Close();
@@ -400,9 +413,9 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM UserTbl WHERE UserMail = @UserMail AND UserSecretWord = @UserSecretWord", Con);
-                cmd.Parameters.AddWithValue("@UserMail", userMail);
-                cmd.Parameters.AddWithValue("@UserSecretWord", userSecretWord);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL = @USER_MAIL AND USER_SECRET_WORD = @USER_SECRET_WORD", Con);
+                cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
+                cmd.Parameters.AddWithValue("@USER_SECRET_WORD", userSecretWord);
 
                 dr = cmd.ExecuteReader();
 
@@ -428,10 +441,10 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE UserTbl SET UserPassword=@UserPassword WHERE UserMail=@UserMail", Con);
+                SqlCommand cmd = new SqlCommand("UPDATE [USER] SET USER_PASSWORD=@USER_PASSWORD WHERE USER_MAIL=@USER_MAIL", Con);
 
-                cmd.Parameters.AddWithValue("@UserPassword", userNewPassword);
-                cmd.Parameters.AddWithValue("@UserMail", userMail);
+                cmd.Parameters.AddWithValue("@USER_PASSWORD", userNewPassword);
+                cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
                 cmd.ExecuteNonQuery();
                 Con.Close();
                 UpdateLastLoginDate(userMail);
@@ -450,9 +463,9 @@ namespace ProjectManager
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE UserTbl SET UserLastLoginDate=@UserLastLoginDate WHERE UserMail=@UserMail", Con);
-                cmd.Parameters.AddWithValue("@UserLastLoginDate", DateTime.Now);
-                cmd.Parameters.AddWithValue("@UserMail", userMail);
+                SqlCommand cmd = new SqlCommand("UPDATE [USER] SET USER_LAST_LOGIN_DATE=@USER_LAST_LOGIN_DATE WHERE USER_MAIL=@USER_MAIL", Con);
+                cmd.Parameters.AddWithValue("@USER_LAST_LOGIN_DATE", DateTime.Now);
+                cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
                 cmd.ExecuteNonQuery();
                 Con.Close();
 
@@ -464,20 +477,25 @@ namespace ProjectManager
             Con.Close() ;
         }
 
-        public void DataLog(Operation operation)
+        public void DataLog(Log log)
         {
+            if (log.LogStatus.ToLower() == "true")
+                log.LogStatus = "Successful";
+            else
+                log.LogStatus = "Fail";
+
             try
             {
                 Con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO LogDataTbl(OperationName,OperationTable,OperationType,OperationTime,OperationChange,OperationUser,OperationUserId)" +
-                                                     "values(@OperationName,@OperationTable,@OperationType,@OperationTime,@OperationChange,@OperationUser,@OperationUserId)", Con);
-                cmd.Parameters.AddWithValue("@OperationName",operation.OperationName);
-                cmd.Parameters.AddWithValue("@OperationTable",operation.OperationTable);
-                cmd.Parameters.AddWithValue("@OperationType",operation.OperationType);
-                cmd.Parameters.AddWithValue("@OperationTime",operation.OperationTime);
-                cmd.Parameters.AddWithValue("@OperationChange",operation.OperationChange);
-                cmd.Parameters.AddWithValue("@OperationUser",operation.OperationUser);
-                cmd.Parameters.AddWithValue("@OperationUserId",operation.OperationUserId);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [LOG_DATA](LOG_SOURCE , LOG_TYPE , LOG_DATE , LOG_USER , LOG_USER_ID , LOG_DESCRIPTION , LOG_STATUS)" +
+                                                           "values(@LOG_SOURCE,@LOG_TYPE,@LOG_DATE,@LOG_USER,@LOG_USER_ID,@LOG_DESCRIPTION,@LOG_STATUS)", Con);
+                cmd.Parameters.AddWithValue("@LOG_SOURCE",log.LogSource);
+                cmd.Parameters.AddWithValue("@LOG_TYPE",log.LogType);
+                cmd.Parameters.AddWithValue("@LOG_DATE",log.LogDate);
+                cmd.Parameters.AddWithValue("@LOG_USER",log.LogUser);
+                cmd.Parameters.AddWithValue("@LOG_USER_ID",log.LogUserId);
+                cmd.Parameters.AddWithValue("@LOG_DESCRIPTION",log.LogDescription);
+                cmd.Parameters.AddWithValue("@LOG_STATUS",log.LogStatus);
 
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -488,41 +506,6 @@ namespace ProjectManager
             }
             Con.Close();
         }
-        public void UserLog(User user, string type)
-        {
-            try
-            {
-                Con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO LogUserTbl(ProcessUser,ProcessUserId,ProcessType,ProcessTime)" +
-                                                              "values(@ProcessUser,@ProcessUserId,@ProcessType,@ProcessTime)", Con);
-                cmd.Parameters.AddWithValue("@ProcessUser", user.UserMail);
-                cmd.Parameters.AddWithValue("@ProcessUserId", user.Id);
-                cmd.Parameters.AddWithValue("@ProcessType", type);
-                cmd.Parameters.AddWithValue("@ProcessTime", DateTime.Now);
-                cmd.ExecuteNonQuery();
 
-                Con.Close();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        public Operation Transmitter(params string[] arguments)
-        {
-            Operation operation = new Operation
-            {
-                OperationName = arguments[0],
-                OperationTable = arguments[1],
-                OperationType = arguments[2],
-                OperationTime = Convert.ToDateTime(arguments[3]),
-                OperationChange = arguments[4],
-                OperationUser = arguments[5],
-                OperationUserId = Convert.ToInt32(arguments[6])
-            };
-
-            return operation;
-        }
     }
 }

@@ -8,17 +8,16 @@ namespace ProjectManager
 {
     internal class Project
     {
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
         public string ProjectName { get; set; }
         public string ProjectStatus { get; set; }
         public string ProjectPriority { get; set; }
         public DateTime ProjectStartDate { get; set; }
-        public DateTime ProjectFinishDate { get; set; }
-        public string ProjectOwner { get; set; }
-        public Project()
-        {
-            ProjectStartDate = DateTime.Now;
-        }
+        public DateTime ProjectEndDate { get; set; }
+        public int ProjectDuration { get; set; }
+        public string ProjectCreator { get; set; }
+        public string ProjectDescription { get; set; }
+        public string ProjectProgress { get; set;}
 
     }
 

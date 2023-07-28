@@ -29,24 +29,24 @@
         private void InitializeComponent()
         {
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.lblMail = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pnlBottom = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pnlMiddle = new System.Windows.Forms.Panel();
             this.lblAdSoyad = new System.Windows.Forms.Label();
+            this.lblMail = new System.Windows.Forms.Label();
+            this.pbExit = new System.Windows.Forms.PictureBox();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.pbTask = new System.Windows.Forms.PictureBox();
+            this.pbUserSettings = new System.Windows.Forms.PictureBox();
+            this.pbTeams = new System.Windows.Forms.PictureBox();
+            this.pbProject = new System.Windows.Forms.PictureBox();
+            this.pbCalender = new System.Windows.Forms.PictureBox();
+            this.pnlMiddle = new System.Windows.Forms.Panel();
             this.pnlTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbExit)).BeginInit();
             this.pnlBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTask)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUserSettings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTeams)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbProject)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalender)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlTop
@@ -54,13 +54,23 @@
             this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pnlTop.Controls.Add(this.lblAdSoyad);
             this.pnlTop.Controls.Add(this.lblMail);
-            this.pnlTop.Controls.Add(this.pictureBox1);
+            this.pnlTop.Controls.Add(this.pbExit);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1280, 83);
             this.pnlTop.TabIndex = 0;
             this.pnlTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseMove);
+            // 
+            // lblAdSoyad
+            // 
+            this.lblAdSoyad.AutoSize = true;
+            this.lblAdSoyad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdSoyad.Location = new System.Drawing.Point(1052, 33);
+            this.lblAdSoyad.Name = "lblAdSoyad";
+            this.lblAdSoyad.Size = new System.Drawing.Size(116, 20);
+            this.lblAdSoyad.TabIndex = 3;
+            this.lblAdSoyad.Text = "User Ad Soyad";
             // 
             // lblMail
             // 
@@ -72,84 +82,84 @@
             this.lblMail.TabIndex = 2;
             this.lblMail.Text = "User Mail";
             // 
-            // pictureBox1
+            // pbExit
             // 
-            this.pictureBox1.Image = global::ProjectManager.Properties.Resources.delete;
-            this.pictureBox1.Location = new System.Drawing.Point(1236, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pbExit.Image = global::ProjectManager.Properties.Resources.delete;
+            this.pbExit.Location = new System.Drawing.Point(1236, 12);
+            this.pbExit.Name = "pbExit";
+            this.pbExit.Size = new System.Drawing.Size(32, 32);
+            this.pbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbExit.TabIndex = 0;
+            this.pbExit.TabStop = false;
+            this.pbExit.Click += new System.EventHandler(this.pbExit_Click);
             // 
             // pnlBottom
             // 
             this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.pnlBottom.Controls.Add(this.pictureBox2);
-            this.pnlBottom.Controls.Add(this.pictureBox6);
-            this.pnlBottom.Controls.Add(this.pictureBox5);
-            this.pnlBottom.Controls.Add(this.pictureBox4);
-            this.pnlBottom.Controls.Add(this.pictureBox3);
+            this.pnlBottom.Controls.Add(this.pbTask);
+            this.pnlBottom.Controls.Add(this.pbUserSettings);
+            this.pnlBottom.Controls.Add(this.pbTeams);
+            this.pnlBottom.Controls.Add(this.pbProject);
+            this.pnlBottom.Controls.Add(this.pbCalender);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(0, 634);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(1280, 86);
             this.pnlBottom.TabIndex = 4;
             // 
-            // pictureBox2
+            // pbTask
             // 
-            this.pictureBox2.Image = global::ProjectManager.Properties.Resources.work_process;
-            this.pictureBox2.Location = new System.Drawing.Point(554, 28);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pbTask.Image = global::ProjectManager.Properties.Resources.work_process;
+            this.pbTask.Location = new System.Drawing.Point(554, 28);
+            this.pbTask.Name = "pbTask";
+            this.pbTask.Size = new System.Drawing.Size(32, 32);
+            this.pbTask.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbTask.TabIndex = 1;
+            this.pbTask.TabStop = false;
+            this.pbTask.Click += new System.EventHandler(this.pbTask_Click);
             // 
-            // pictureBox6
+            // pbUserSettings
             // 
-            this.pictureBox6.Image = global::ProjectManager.Properties.Resources.user;
-            this.pictureBox6.Location = new System.Drawing.Point(760, 28);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 4;
-            this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
+            this.pbUserSettings.Image = global::ProjectManager.Properties.Resources.user;
+            this.pbUserSettings.Location = new System.Drawing.Point(760, 28);
+            this.pbUserSettings.Name = "pbUserSettings";
+            this.pbUserSettings.Size = new System.Drawing.Size(32, 32);
+            this.pbUserSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbUserSettings.TabIndex = 4;
+            this.pbUserSettings.TabStop = false;
+            this.pbUserSettings.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
-            // pictureBox5
+            // pbTeams
             // 
-            this.pictureBox5.Image = global::ProjectManager.Properties.Resources.graph;
-            this.pictureBox5.Location = new System.Drawing.Point(692, 28);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 3;
-            this.pictureBox5.TabStop = false;
+            this.pbTeams.Image = global::ProjectManager.Properties.Resources.teamwork;
+            this.pbTeams.Location = new System.Drawing.Point(692, 28);
+            this.pbTeams.Name = "pbTeams";
+            this.pbTeams.Size = new System.Drawing.Size(32, 32);
+            this.pbTeams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbTeams.TabIndex = 3;
+            this.pbTeams.TabStop = false;
             // 
-            // pictureBox4
+            // pbProject
             // 
-            this.pictureBox4.Image = global::ProjectManager.Properties.Resources.project_management;
-            this.pictureBox4.Location = new System.Drawing.Point(479, 28);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pbProject.Image = global::ProjectManager.Properties.Resources.project_management;
+            this.pbProject.Location = new System.Drawing.Point(479, 28);
+            this.pbProject.Name = "pbProject";
+            this.pbProject.Size = new System.Drawing.Size(32, 32);
+            this.pbProject.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbProject.TabIndex = 2;
+            this.pbProject.TabStop = false;
+            this.pbProject.Click += new System.EventHandler(this.pbProject_Click);
             // 
-            // pictureBox3
+            // pbCalender
             // 
-            this.pictureBox3.Image = global::ProjectManager.Properties.Resources.calendar;
-            this.pictureBox3.Location = new System.Drawing.Point(623, 28);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 1;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pbCalender.Image = global::ProjectManager.Properties.Resources.calendar;
+            this.pbCalender.Location = new System.Drawing.Point(623, 28);
+            this.pbCalender.Name = "pbCalender";
+            this.pbCalender.Size = new System.Drawing.Size(32, 32);
+            this.pbCalender.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbCalender.TabIndex = 1;
+            this.pbCalender.TabStop = false;
+            this.pbCalender.Click += new System.EventHandler(this.pbCalender_Click);
             // 
             // pnlMiddle
             // 
@@ -159,16 +169,6 @@
             this.pnlMiddle.Name = "pnlMiddle";
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 2;
-            // 
-            // lblAdSoyad
-            // 
-            this.lblAdSoyad.AutoSize = true;
-            this.lblAdSoyad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAdSoyad.Location = new System.Drawing.Point(1052, 33);
-            this.lblAdSoyad.Name = "lblAdSoyad";
-            this.lblAdSoyad.Size = new System.Drawing.Size(116, 20);
-            this.lblAdSoyad.TabIndex = 3;
-            this.lblAdSoyad.Text = "User Ad Soyad";
             // 
             // Events
             // 
@@ -184,13 +184,13 @@
             this.Load += new System.EventHandler(this.Events_Load);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbExit)).EndInit();
             this.pnlBottom.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTask)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUserSettings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTeams)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbProject)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalender)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -199,12 +199,12 @@
 
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBottom;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pbExit;
+        private System.Windows.Forms.PictureBox pbUserSettings;
+        private System.Windows.Forms.PictureBox pbTeams;
+        private System.Windows.Forms.PictureBox pbProject;
+        private System.Windows.Forms.PictureBox pbCalender;
+        private System.Windows.Forms.PictureBox pbTask;
         private System.Windows.Forms.Label lblMail;
         private System.Windows.Forms.Panel pnlMiddle;
         private System.Windows.Forms.Label lblAdSoyad;

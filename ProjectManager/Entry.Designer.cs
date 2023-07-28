@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelRegister = new System.Windows.Forms.Panel();
             this.lblRegisterReset = new System.Windows.Forms.Label();
@@ -62,6 +61,7 @@
             this.txResetPasswordFirst = new Guna.UI2.WinForms.Guna2TextBox();
             this.txResetPasswordSecond = new Guna.UI2.WinForms.Guna2TextBox();
             this.panelLogin = new System.Windows.Forms.Panel();
+            this.cbRememberMe = new Guna.UI2.WinForms.Guna2CheckBox();
             this.lblLoginRegister = new System.Windows.Forms.Label();
             this.lblLoginReset = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,8 +70,6 @@
             this.txLoginMail = new Guna.UI2.WinForms.Guna2TextBox();
             this.txLoginPassword = new Guna.UI2.WinForms.Guna2TextBox();
             this.exitApp = new System.Windows.Forms.PictureBox();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.cbRememberMe = new Guna.UI2.WinForms.Guna2CheckBox();
             this.panelMain.SuspendLayout();
             this.panelRegister.SuspendLayout();
             this.panelReset.SuspendLayout();
@@ -544,6 +542,23 @@
             this.panelLogin.Size = new System.Drawing.Size(480, 450);
             this.panelLogin.TabIndex = 6;
             // 
+            // cbRememberMe
+            // 
+            this.cbRememberMe.AutoSize = true;
+            this.cbRememberMe.CheckedState.BorderColor = System.Drawing.Color.Yellow;
+            this.cbRememberMe.CheckedState.BorderRadius = 0;
+            this.cbRememberMe.CheckedState.BorderThickness = 0;
+            this.cbRememberMe.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbRememberMe.Location = new System.Drawing.Point(128, 260);
+            this.cbRememberMe.Name = "cbRememberMe";
+            this.cbRememberMe.Size = new System.Drawing.Size(95, 17);
+            this.cbRememberMe.TabIndex = 16;
+            this.cbRememberMe.Text = "Remember Me";
+            this.cbRememberMe.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.cbRememberMe.UncheckedState.BorderRadius = 0;
+            this.cbRememberMe.UncheckedState.BorderThickness = 0;
+            this.cbRememberMe.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            // 
             // lblLoginRegister
             // 
             this.lblLoginRegister.AutoSize = true;
@@ -648,28 +663,6 @@
             this.exitApp.TabStop = false;
             this.exitApp.Click += new System.EventHandler(this.exitApp_Click);
             // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 20;
-            this.guna2Elipse1.TargetControl = this;
-            // 
-            // cbRememberMe
-            // 
-            this.cbRememberMe.AutoSize = true;
-            this.cbRememberMe.CheckedState.BorderColor = System.Drawing.Color.Yellow;
-            this.cbRememberMe.CheckedState.BorderRadius = 0;
-            this.cbRememberMe.CheckedState.BorderThickness = 0;
-            this.cbRememberMe.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.cbRememberMe.Location = new System.Drawing.Point(128, 260);
-            this.cbRememberMe.Name = "cbRememberMe";
-            this.cbRememberMe.Size = new System.Drawing.Size(95, 17);
-            this.cbRememberMe.TabIndex = 16;
-            this.cbRememberMe.Text = "Remember Me";
-            this.cbRememberMe.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.cbRememberMe.UncheckedState.BorderRadius = 0;
-            this.cbRememberMe.UncheckedState.BorderThickness = 0;
-            this.cbRememberMe.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            // 
             // Entry
             // 
             this.AllowDrop = true;
@@ -700,7 +693,6 @@
         #endregion
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.PictureBox exitApp;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private System.Windows.Forms.Panel panelLogin;
         private System.Windows.Forms.Label lblLoginRegister;
         private System.Windows.Forms.Label lblLoginReset;

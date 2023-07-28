@@ -29,7 +29,7 @@ namespace ProjectManager
         {
             lbl.Text = numDay.ToString();
             List <string> tempList = new List <string>();
-            tempList = sqlDbHelper.TakeProjectsName("ProjectsTbl",dateDay);
+            tempList = sqlDbHelper.TakeProjectsName("PROJECT",dateDay);
             if (Convert.ToDateTime(dateDay).ToString() == currentDt.ToString())
             {
                 lbl.Font = new Font(Label.DefaultFont,FontStyle.Bold);

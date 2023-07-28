@@ -344,7 +344,7 @@
     <Compile Include="Events.Designer.cs">
       <DependentUpon>Events.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operation.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Projects.cs">
       <SubType>Form</SubType>
@@ -450,6 +450,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\work-process.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\teamwork.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
