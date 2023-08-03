@@ -159,7 +159,7 @@ namespace ProjectManager
                     log.LogDate = DateTime.Now;
                     log.LogUser = user.UserMail;
                     log.LogUserId = user.UserId;
-                    log.LogDescription = "x";
+                    log.LogDescription = "Login";
                     log.LogStatus = loginStatus+"";
 
                     sqlDbHelper.DataLog(log);
@@ -223,7 +223,8 @@ namespace ProjectManager
         }
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if (txRegisterMail.Text != "" && txRegisterName.Text != "" && txRegisterPasswordFirst.Text != "" && txRegisterPasswordSecond.Text != "" && txRegisterSecretWord.Text != "" && txRegisterSurname.Text != "")
+            if (txRegisterMail.Text != "" && txRegisterName.Text != "" && txRegisterPasswordFirst.Text != "" &&
+                txRegisterPasswordSecond.Text != "" && txRegisterSecretWord.Text != "" && txRegisterSurname.Text != "")
             {
                 if (txRegisterPasswordSecond.Text == txRegisterPasswordFirst.Text)
                 {

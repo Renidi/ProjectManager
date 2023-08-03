@@ -192,7 +192,7 @@ namespace ProjectManager
                     {
                         cmd.Parameters.AddWithValue("TASK_ID", task.TaskId);
                     }
-
+                    var temp = project.ProjectName;
                     cmd.ExecuteNonQuery();
                 }
                 Con.Close();

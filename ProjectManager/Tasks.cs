@@ -26,7 +26,7 @@ namespace ProjectManager
         }
         private void Tasks_Load(object sender, EventArgs e)
         {
-            dtTaskFinishDate.Value = DateTime.Now;
+            dtTaskEndDate.Value = DateTime.Now;
             user.UserMail = Mail;
             List<string> tempList = new List<string>();
             tempList = sqlDbHelper.TakeProjectsName("PROJECT");
@@ -53,6 +53,11 @@ namespace ProjectManager
         {
             dgvActiveTasks.DataSource = sqlDbHelper.LoadData("TASK",user.UserMail);
             dgvActiveTasks.Columns["TASK_ID"].Visible = false;
+
+            for(int i = 1; i < dgvActiveTasks.Columns.Count; i++)
+            {
+                dgvActiveTasks.Columns[i].HeaderText = dgvActiveTasks.Columns[i].HeaderText.Replace('_', ' ');
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -60,8 +65,9 @@ namespace ProjectManager
             task.TaskName = txTaskName.Text;
             task.TaskStatus = cmbTaskStatus.Text;
             task.TaskPriority = cmbTaskPriority.Text;
-            task.TaskStartDate = DateTime.Now;
-            task.TaskEndDate = dtTaskFinishDate.Value;
+            task.TaskStartDate = dtTaskStartDate.Value;
+            task.TaskEndDate = dtTaskEndDate.Value;
+            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays));
             task.TaskOwner = cmbTaskEmployee.Text;
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
@@ -69,7 +75,7 @@ namespace ProjectManager
             DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName+" to tasks ?", "Add Task ", MessageBoxButtons.YesNo , MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                // sqlDbHelper.SaveTask(task); to 79
+                // sqlDbHelper.SaveTask(task);
 
                 log.LogSource = "Task";
                 log.LogType = "Save";
@@ -91,7 +97,9 @@ namespace ProjectManager
             task.TaskName = txTaskName.Text;
             task.TaskStatus = cmbTaskStatus.Text;
             task.TaskPriority = cmbTaskPriority.Text;
-            task.TaskEndDate = dtTaskFinishDate.Value;
+            task.TaskStartDate = dtTaskStartDate.Value;
+            task.TaskEndDate = dtTaskEndDate.Value;
+            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays));
             task.TaskOwner = user.UserMail;
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
@@ -157,7 +165,7 @@ namespace ProjectManager
             };
             func(Controls);
             txTaskComment.Text = string.Empty;
-            dtTaskFinishDate.Value = DateTime.Now;
+            dtTaskEndDate.Value = DateTime.Now;
         }
 
         private void dgvActiveTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -168,7 +176,7 @@ namespace ProjectManager
                 task.TaskOwner = cmbTaskEmployee.Text = dgvActiveTasks.Rows[0].Cells[6].Value.ToString();
                 task.TaskStatus = cmbTaskStatus.Text = dgvActiveTasks.SelectedRows[0].Cells[2].Value.ToString();
                 task.TaskPriority = cmbTaskPriority.Text = dgvActiveTasks.SelectedRows[0].Cells[3].Value.ToString();
-                task.TaskEndDate = dtTaskFinishDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[5].Value);
+                task.TaskEndDate = dtTaskEndDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[5].Value);
                 task.TaskProject = cmbTaskProject.Text = dgvActiveTasks.SelectedRows[0].Cells[7].Value.ToString();
                 task.TaskDescription = txTaskComment.Text = dgvActiveTasks.SelectedRows[0].Cells[8].Value.ToString();
                 task.TaskId = varId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
@@ -177,6 +185,10 @@ namespace ProjectManager
   
         }
 
+        private void cmbTaskProject_SelectedValueChanged(object sender, EventArgs e)
+        {
+            cmbTaskTeam.Items.Add("TAKIM"); // FROM DB PROJECT 
+        }
     }
 
 }

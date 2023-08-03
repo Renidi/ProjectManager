@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbTeam = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.dtProjectEndDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            this.dtProjectStartDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.txProjectComment = new System.Windows.Forms.RichTextBox();
             this.cmbProjectStatus = new Guna.UI2.WinForms.Guna2ComboBox();
             this.cmbProjectPriority = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -46,10 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txProjectName = new Guna.UI2.WinForms.Guna2TextBox();
-            this.dtProjectStartDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            this.dtProjectFinishDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            this.cmbTeam = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.pnlMiddle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActiveProjects)).BeginInit();
             this.SuspendLayout();
@@ -57,9 +58,10 @@
             // pnlMiddle
             // 
             this.pnlMiddle.BackColor = System.Drawing.Color.Silver;
+            this.pnlMiddle.Controls.Add(this.label7);
             this.pnlMiddle.Controls.Add(this.label6);
             this.pnlMiddle.Controls.Add(this.cmbTeam);
-            this.pnlMiddle.Controls.Add(this.dtProjectFinishDate);
+            this.pnlMiddle.Controls.Add(this.dtProjectEndDate);
             this.pnlMiddle.Controls.Add(this.dtProjectStartDate);
             this.pnlMiddle.Controls.Add(this.txProjectComment);
             this.pnlMiddle.Controls.Add(this.cmbProjectStatus);
@@ -81,11 +83,63 @@
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 3;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(421, 419);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 38;
+            this.label6.Text = "Project Team";
+            // 
+            // cmbTeam
+            // 
+            this.cmbTeam.BackColor = System.Drawing.Color.Transparent;
+            this.cmbTeam.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cmbTeam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTeam.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cmbTeam.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cmbTeam.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmbTeam.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.cmbTeam.ItemHeight = 30;
+            this.cmbTeam.Location = new System.Drawing.Point(425, 435);
+            this.cmbTeam.Name = "cmbTeam";
+            this.cmbTeam.Size = new System.Drawing.Size(200, 36);
+            this.cmbTeam.TabIndex = 37;
+            // 
+            // dtProjectEndDate
+            // 
+            this.dtProjectEndDate.Checked = true;
+            this.dtProjectEndDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
+            this.dtProjectEndDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.dtProjectEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
+            this.dtProjectEndDate.Location = new System.Drawing.Point(425, 366);
+            this.dtProjectEndDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.dtProjectEndDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.dtProjectEndDate.Name = "dtProjectEndDate";
+            this.dtProjectEndDate.Size = new System.Drawing.Size(200, 36);
+            this.dtProjectEndDate.TabIndex = 36;
+            this.dtProjectEndDate.Value = new System.DateTime(2023, 7, 31, 20, 42, 17, 902);
+            // 
+            // dtProjectStartDate
+            // 
+            this.dtProjectStartDate.Checked = true;
+            this.dtProjectStartDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
+            this.dtProjectStartDate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.dtProjectStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
+            this.dtProjectStartDate.Location = new System.Drawing.Point(218, 366);
+            this.dtProjectStartDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.dtProjectStartDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.dtProjectStartDate.Name = "dtProjectStartDate";
+            this.dtProjectStartDate.Size = new System.Drawing.Size(200, 36);
+            this.dtProjectStartDate.TabIndex = 35;
+            this.dtProjectStartDate.Value = new System.DateTime(2023, 7, 31, 20, 42, 17, 902);
+            // 
             // txProjectComment
             // 
             this.txProjectComment.Location = new System.Drawing.Point(849, 366);
             this.txProjectComment.Name = "txProjectComment";
-            this.txProjectComment.Size = new System.Drawing.Size(419, 173);
+            this.txProjectComment.Size = new System.Drawing.Size(419, 105);
             this.txProjectComment.TabIndex = 34;
             this.txProjectComment.Text = "";
             // 
@@ -135,31 +189,31 @@
             this.dgvActiveProjects.AllowUserToAddRows = false;
             this.dgvActiveProjects.AllowUserToDeleteRows = false;
             this.dgvActiveProjects.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            this.dgvActiveProjects.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dgvActiveProjects.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvActiveProjects.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvActiveProjects.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvActiveProjects.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvActiveProjects.ColumnHeadersHeight = 4;
             this.dgvActiveProjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvActiveProjects.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvActiveProjects.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvActiveProjects.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvActiveProjects.Location = new System.Drawing.Point(12, 6);
             this.dgvActiveProjects.Name = "dgvActiveProjects";
@@ -275,9 +329,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(421, 350);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Project Finish Date";
+            this.label3.Text = "Project End Date";
             // 
             // label2
             // 
@@ -316,58 +370,14 @@
             this.txProjectName.Size = new System.Drawing.Size(200, 36);
             this.txProjectName.TabIndex = 0;
             // 
-            // dtProjectStartDate
+            // label7
             // 
-            this.dtProjectStartDate.Checked = true;
-            this.dtProjectStartDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
-            this.dtProjectStartDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtProjectStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.dtProjectStartDate.Location = new System.Drawing.Point(218, 366);
-            this.dtProjectStartDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
-            this.dtProjectStartDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.dtProjectStartDate.Name = "dtProjectStartDate";
-            this.dtProjectStartDate.Size = new System.Drawing.Size(200, 36);
-            this.dtProjectStartDate.TabIndex = 35;
-            this.dtProjectStartDate.Value = new System.DateTime(2023, 7, 31, 20, 42, 17, 902);
-            // 
-            // dtProjectFinishDate
-            // 
-            this.dtProjectFinishDate.Checked = true;
-            this.dtProjectFinishDate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
-            this.dtProjectFinishDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtProjectFinishDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.dtProjectFinishDate.Location = new System.Drawing.Point(425, 366);
-            this.dtProjectFinishDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
-            this.dtProjectFinishDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.dtProjectFinishDate.Name = "dtProjectFinishDate";
-            this.dtProjectFinishDate.Size = new System.Drawing.Size(200, 36);
-            this.dtProjectFinishDate.TabIndex = 36;
-            this.dtProjectFinishDate.Value = new System.DateTime(2023, 7, 31, 20, 42, 17, 902);
-            // 
-            // cmbTeam
-            // 
-            this.cmbTeam.BackColor = System.Drawing.Color.Transparent;
-            this.cmbTeam.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cmbTeam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTeam.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.cmbTeam.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.cmbTeam.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmbTeam.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.cmbTeam.ItemHeight = 30;
-            this.cmbTeam.Location = new System.Drawing.Point(425, 435);
-            this.cmbTeam.Name = "cmbTeam";
-            this.cmbTeam.Size = new System.Drawing.Size(200, 36);
-            this.cmbTeam.StartIndex = 0;
-            this.cmbTeam.TabIndex = 37;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(421, 419);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 38;
-            this.label6.Text = "Project Team";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(846, 350);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(96, 13);
+            this.label7.TabIndex = 39;
+            this.label7.Text = "Project Description";
             // 
             // Projects
             // 
@@ -404,8 +414,9 @@
         private Guna.UI2.WinForms.Guna2TextBox txProjectName;
         private System.Windows.Forms.RichTextBox txProjectComment;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtProjectStartDate;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtProjectFinishDate;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtProjectEndDate;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2ComboBox cmbTeam;
+        private System.Windows.Forms.Label label7;
     }
 }

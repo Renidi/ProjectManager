@@ -29,16 +29,21 @@ namespace ProjectManager
         private void Projects_Load(object sender, EventArgs e)
         {
             dtProjectStartDate.Value = DateTime.Now;
-            dtProjectFinishDate.Value = DateTime.Now;
+            dtProjectEndDate.Value = DateTime.Now;
 
             user.UserMail = Mail;
             Dt();
+
         }
         
         private void Dt()
         {
             dgvActiveProjects.DataSource = sqlDbHelper.LoadData("PROJECT");
             dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
+            for (int i = 1; i < dgvActiveProjects.Columns.Count; i++)
+            {
+                dgvActiveProjects.Columns[i].HeaderText = dgvActiveProjects.Columns[i].HeaderText.Replace('_', ' ');
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -48,7 +53,8 @@ namespace ProjectManager
             project.ProjectPriority  = cmbProjectPriority.Text;
             project.ProjectCreator = user.UserMail;
             project.ProjectStartDate = dtProjectStartDate.Value;
-            project.ProjectEndDate = dtProjectFinishDate.Value;
+            project.ProjectEndDate = dtProjectEndDate.Value;
+            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));
             project.ProjectDescription = txProjectComment.Text;
 
             DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName,"Add Project",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
@@ -76,7 +82,8 @@ namespace ProjectManager
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
             project.ProjectCreator = user.UserMail;
-            project.ProjectEndDate= dtProjectFinishDate.Value;
+            project.ProjectEndDate= dtProjectEndDate.Value;
+            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));
             project.ProjectDescription = txProjectComment.Text;
             project.ProjectId= varId;
 
@@ -87,7 +94,7 @@ namespace ProjectManager
                 log.LogType = "Edit";
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
-                log.LogDescription = "Changes on " + project.ProjectName + " and Id : " + project.ProjectId;
+                log.LogDescription = "Changes on " + project.ProjectName + ", Id : " + project.ProjectId;
                 log.LogStatus = sqlDbHelper.EditProject(project).ToString();
 
                 // sqlDbHelper.EditProject(project);
@@ -105,7 +112,7 @@ namespace ProjectManager
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
             project.ProjectCreator = user.UserMail;
-            project.ProjectEndDate = dtProjectFinishDate.Value;
+            project.ProjectEndDate = dtProjectEndDate.Value;
             project.ProjectId = varId;
 
             DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -115,12 +122,11 @@ namespace ProjectManager
                 log.LogType = "Delete";
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
-                log.LogDescription = "Deleted " + project.ProjectName + " and Id : " + project.ProjectId;
-                log.LogStatus = sqlDbHelper.EditProject(project).ToString();
+                log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
+                log.LogStatus = sqlDbHelper.Delete("PROJECT", project).ToString();
 
                 sqlDbHelper.DataLog(log);
-
-                sqlDbHelper.Delete("PROJECT", project);
+                
             }
             else
                 MessageBox.Show("Cancelled");
@@ -148,7 +154,7 @@ namespace ProjectManager
 
             func(Controls);
             dtProjectStartDate.Value = DateTime.Now;
-            dtProjectFinishDate.Value = DateTime.Now;
+            dtProjectEndDate.Value = DateTime.Now;
         }
 
         private void dgvActiveProjects_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -159,7 +165,7 @@ namespace ProjectManager
                 cmbProjectStatus.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[2].Value.ToString();
                 cmbProjectPriority.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[3].Value.ToString();
                 dtProjectStartDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[4].Value);
-                dtProjectFinishDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[5].Value);
+                dtProjectEndDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[5].Value);
                 txProjectComment.Text = dgvActiveProjects.SelectedRows[0].Cells[8].Value.ToString();
                 varId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
             }

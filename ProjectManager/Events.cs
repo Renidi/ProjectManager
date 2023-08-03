@@ -88,7 +88,7 @@ namespace ProjectManager
             log.LogDate = DateTime.Now;
             log.LogUser = user.UserMail;
             log.LogUserId = user.UserId;
-            log.LogDescription = "";
+            log.LogDescription = "Logout";
             log.LogStatus = "true";
 
             sqlDbHelper.DataLog(log);
