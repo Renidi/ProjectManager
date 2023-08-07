@@ -327,16 +327,16 @@
     <Compile Include="Forms\Calendar.Designer.cs">
       <DependentUpon>Calendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="CardControl.cs">
+    <Compile Include="UserControls\CardControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CardControl.Designer.cs">
+    <Compile Include="UserControls\CardControl.Designer.cs">
       <DependentUpon>CardControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="DayControl.cs">
+    <Compile Include="UserControls\DayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DayControl.Designer.cs">
+    <Compile Include="UserControls\DayControl.Designer.cs">
       <DependentUpon>DayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Events.cs">
@@ -353,10 +353,10 @@
     <Compile Include="Forms\Projects.Designer.cs">
       <DependentUpon>Projects.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeamsControl.cs">
+    <Compile Include="UserControls\TeamsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TeamsControl.Designer.cs">
+    <Compile Include="UserControls\TeamsControl.Designer.cs">
       <DependentUpon>TeamsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SqlDbHelper.cs" />
@@ -391,10 +391,10 @@
     <EmbeddedResource Include="Forms\Calendar.resx">
       <DependentUpon>Calendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CardControl.resx">
+    <EmbeddedResource Include="UserControls\CardControl.resx">
       <DependentUpon>CardControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DayControl.resx">
+    <EmbeddedResource Include="UserControls\DayControl.resx">
       <DependentUpon>DayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Events.resx">
@@ -406,7 +406,7 @@
     <EmbeddedResource Include="Forms\Projects.resx">
       <DependentUpon>Projects.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeamsControl.resx">
+    <EmbeddedResource Include="UserControls\TeamsControl.resx">
       <DependentUpon>TeamsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
