@@ -261,7 +261,7 @@ namespace ProjectManager
 
             return list;
         }
-        
+
         public List<string> TakeProjectsName(params string[] arguments)
         {
             List<string> list = new List<string>();
@@ -273,7 +273,7 @@ namespace ProjectManager
                 { 
                     if (arguments.Length == 1)
                     { // Project Names in Combobox
-                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME FROM [" + arguments[0]+"]", Con);
+                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME , PROJECT_STATUS FROM [" + arguments[0]+"]", Con);
 
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
@@ -286,7 +286,7 @@ namespace ProjectManager
                     else
                     { // Project Names on Calender with Priority
                         string tempDate = Convert.ToDateTime(arguments[1]).ToString();
-                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME , PROJECT_END_DATE , PROJECT_PRIORITY FROM [" + arguments[0] + "]", Con);
+                        SqlCommand cmd = new SqlCommand("SELECT PROJECT_NAME , PROJECT_END_DATE , PROJECT_PRIORITY , PROJECT_STATUS FROM [" + arguments[0] + "]", Con);
 
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
@@ -295,8 +295,12 @@ namespace ProjectManager
                                 string projectDate = rd.GetDateTime(1).Date.ToString();
                                 if (tempDate == projectDate)
                                 {
-                                    list.Add(rd.GetString(0));
-                                    list.Add(rd.GetString(2));
+                                    if (rd.GetString(3) != "COMPLETED")
+                                    {
+                                        list.Add(rd.GetString(0)); // PROJECT_NAME
+                                        list.Add(rd.GetString(2)); // PROJECT_PRIORITY
+                                    }
+                                    
                                 }
 
                             }
@@ -504,6 +508,23 @@ namespace ProjectManager
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             Con.Close();
+        }
+
+        public void CreateTeam()
+        {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO [USER_GROUP_ID]() " +
+                                            "()", Con);
+
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }
