@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Entities
 {
-    public class Team
+    public class UserGroup
     {
         public int UserGroupId { get; set; }
         public int UserId { get; set; }
         public int GroupId { get; set; }
-        public int UserGroupAuthorization { get; set; }
-        public DateTime UserJoinDate { get; set; }  
+        public int UserGroupAuthorization { get; set; } 
+        public DateTime UserJoinDate { get; set; }
         public int InviteSenderId { get; set; }
-        public string UserInviteStatus { get; set; }
-        // -Rejected -Accepted -Waiting
+        public string InviteStatus { get; set; }
     }
 }

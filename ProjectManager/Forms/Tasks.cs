@@ -27,6 +27,7 @@ namespace ProjectManager
         private void Tasks_Load(object sender, EventArgs e)
         {
             dtTaskEndDate.Value = DateTime.Now;
+            dtTaskStartDate.Value = DateTime.Now;
             user.UserMail = Mail;
             List<string> tempList = new List<string>();
             tempList = sqlDbHelper.TakeProjectsName("PROJECT");
@@ -37,8 +38,7 @@ namespace ProjectManager
                 
             }
 
-            List<string> tempUserList = new List<string>();
-            tempUserList = sqlDbHelper.TakeEmployeeMails();
+            List<string> tempUserList = sqlDbHelper.TakeEmployeeMails();
 
             for (int i = 0; i < tempUserList.Count; i++)
             {
@@ -166,6 +166,7 @@ namespace ProjectManager
             func(Controls);
             txTaskComment.Text = string.Empty;
             dtTaskEndDate.Value = DateTime.Now;
+            dtTaskStartDate.Value = DateTime.Now;
         }
 
         private void dgvActiveTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)

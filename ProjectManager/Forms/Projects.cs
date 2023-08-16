@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,8 @@ namespace ProjectManager
         Project project = new Project();
         User user = new User();
         Log log = new Log();
+        Team team = new Team();
+        Group group = new Group();
         public string Mail { get; set; }
 
         public int varId;
@@ -32,7 +35,17 @@ namespace ProjectManager
             dtProjectEndDate.Value = DateTime.Now;
 
             user.UserMail = Mail;
+            user = sqlDbHelper.UserInfo(user);
             Dt();
+
+            List<Team> tempTeamList = sqlDbHelper.TakeTeams(user.UserId);
+            for (int i = 0; i< tempTeamList.Count; i++)
+            {
+                group.GroupId = tempTeamList[i].GroupId;
+                group = sqlDbHelper.TakeInformationOfGroup(group);
+                cmbTeam.Items.Add(group.GroupName);
+                cmbProjectTeamIdHidden.Items.Add(group.GroupId);
+            }
 
         }
         
@@ -56,6 +69,7 @@ namespace ProjectManager
             project.ProjectEndDate = dtProjectEndDate.Value;
             project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));
             project.ProjectDescription = txProjectComment.Text;
+            project.ProjectGroupId = Convert.ToInt32(cmbProjectTeamIdHidden.Text);
 
             DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName,"Add Project",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -86,6 +100,7 @@ namespace ProjectManager
             project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));
             project.ProjectDescription = txProjectComment.Text;
             project.ProjectId= varId;
+            project.ProjectGroupId = Convert.ToInt32(cmbProjectTeamIdHidden.Text);
 
             DialogResult result = MessageBox.Show("Are you sure to edit " + project.ProjectName, "Edit Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)

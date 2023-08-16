@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System.Web.UI.WebControls;
+using ProjectManager.Entities;
+using System.Data.SqlTypes;
 
 namespace ProjectManager
 {
@@ -66,8 +68,8 @@ namespace ProjectManager
             try
             {
                 
-                SqlCommand cmd = new SqlCommand("INSERT INTO [PROJECT](PROJECT_NAME,PROJECT_STATUS,PROJECT_PRIORITY,PROJECT_START_DATE,PROJECT_END_DATE,PROJECT_DURATION,PROJECT_CREATOR,PROJECT_DESCRIPTION)" +
-                                                                "values(@PROJECT_NAME,@PROJECT_STATUS,@PROJECT_PRIORITY,@PROJECT_START_DATE,@PROJECT_END_DATE,@PROJECT_DURATION,@PROJECT_CREATOR,@PROJECT_DESCRIPTION)", Con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [PROJECT](PROJECT_NAME,PROJECT_STATUS,PROJECT_PRIORITY,PROJECT_START_DATE,PROJECT_END_DATE,PROJECT_DURATION,PROJECT_CREATOR,PROJECT_DESCRIPTION,PROJECT_GROUP_ID)" +
+                                                                "values(@PROJECT_NAME,@PROJECT_STATUS,@PROJECT_PRIORITY,@PROJECT_START_DATE,@PROJECT_END_DATE,@PROJECT_DURATION,@PROJECT_CREATOR,@PROJECT_DESCRIPTION,@PROJECT_GROUP_ID)", Con);
 
                 cmd.Parameters.AddWithValue("@PROJECT_NAME", project.ProjectName);
                 cmd.Parameters.AddWithValue("@PROJECT_STATUS", project.ProjectStatus);
@@ -77,6 +79,7 @@ namespace ProjectManager
                 cmd.Parameters.AddWithValue("@PROJECT_DURATION", project.ProjectDuration);
                 cmd.Parameters.AddWithValue("@PROJECT_CREATOR", project.ProjectCreator);
                 cmd.Parameters.AddWithValue("@PROJECT_DESCRIPTION", project.ProjectDescription);
+                cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID", project.ProjectGroupId);
                 Con.Open();
                 cmd.ExecuteNonQuery();
                 Con.Close() ;
@@ -105,6 +108,7 @@ namespace ProjectManager
                 cmd.Parameters.AddWithValue("@TASK_OWNER", task.TaskOwner);
                 cmd.Parameters.AddWithValue("@TASK_PROJECT", task.TaskProject);
                 cmd.Parameters.AddWithValue("@TASK_DESCRIPTION", task.TaskDescription);
+                cmd.Parameters.AddWithValue("@TASK_gROUP_ID", task.TaskGroupId);
                 Con.Open();
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -232,9 +236,88 @@ namespace ProjectManager
 
             return false;
         }
+        public List<UserGroup> TakeUserGroupInfo(List<User> userList, int groupId)
+        {
+            List<UserGroup> userGroupInfo = new List<UserGroup>();
+
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            SqlCommand cmd;
+            try
+            {
+                using (Con)
+                {
+                    foreach (User user in userList)
+                    {
+                        cmd = new SqlCommand("SELECT * FROM [USER_GROUPS] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID", Con);
+                        cmd.Parameters.AddWithValue("@GROUP_ID", groupId);
+                        cmd.Parameters.AddWithValue("@USER_ID", user.UserId);
+                        Con.Open();
+                        SqlDataReader rd = cmd.ExecuteReader();
+                        while (rd.Read())
+                        {
+                            UserGroup userGroup = new UserGroup();
+                            userGroup.UserGroupId = Convert.ToInt32(rd["USER_GROUP_ID"]);
+                            userGroup.UserId = Convert.ToInt32(rd["USER_ID"]);
+                            userGroup.GroupId = Convert.ToInt32(rd["GROUP_ID"]);
+                            userGroup.UserGroupAuthorization = Convert.ToInt32(rd["USER_GROUP_AUTHORIZATION"]);
+                            userGroup.UserJoinDate = Convert.ToDateTime(rd["USER_JOIN_DATE"]);
+                            userGroup.InviteSenderId = Convert.ToInt32(rd["INVITE_SENDER_ID"]);
+                            userGroup.InviteStatus = rd["INVITE_STATUS"].ToString();
+                            userGroupInfo.Add(userGroup);
+                        }
+                        Con.Close();
+                    }
+                    return userGroupInfo;
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return userGroupInfo;
+        }
+        public List<User> TakeUserListForComboBox(Group group)
+        {
+            List<User> userList = new List<User>();
+            List<int> tempList = new List<int>();
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            SqlCommand cmd;
+            try
+            {
+                using (Con)
+                {    // if invited ?
+                    cmd = new SqlCommand("SELECT USER_ID FROM [USER_GROUPS] WHERE GROUP_ID=@GROUP_ID ",Con);
+                    cmd.Parameters.AddWithValue("@GROUP_ID", group.GroupId);
+                    Con.Open();
+                    SqlDataReader rd = cmd.ExecuteReader();
+                    while(rd.Read())
+                    {
+                        tempList.Add(rd.GetInt32(0));
+                    }
+
+                    foreach (int id in tempList)
+                    {
+                        User userTemp = new User();
+                        userTemp.UserId = id;
+                        userTemp = UserInfo(userTemp);
+                        userList.Add(userTemp);
+                    }
+                    Con.Close();
+                    return userList;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return userList;
+        }
         // combine with project names
         public List<string> TakeEmployeeMails(params string[] arguments)
-        {
+        {                                                   // arg[0] = userId
             List<string> list = new List<string>();
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             Con.Open();
@@ -321,12 +404,36 @@ namespace ProjectManager
             return list;
         }
 
+        public int GetCount(string tableName,int selectId)
+        {
+            int counter = 0;
+
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            Con.Open();
+            try
+            {
+                using (Con)
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT COUNT(" + tableName + "_ID) FROM [" + tableName + "] WHERE "+ tableName +"_ID=@"+tableName+"_ID", Con);
+                    cmd.Parameters.AddWithValue("@"+tableName+"_ID",selectId);
+                    cmd.ExecuteNonQuery();
+                    counter = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return counter;
+        }
+
         public bool Login(string Mail, string Password)
         {
             try
             {
                 Con.Open();
-                // CAN BE CHANGE
+                // !?
                 SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL = @USER_MAIL AND USER_PASSWORD = @USER_PASSWORD", Con);
                 cmd.Parameters.AddWithValue("@USER_MAIL", Mail);
                 cmd.Parameters.AddWithValue("@USER_PASSWORD", Password);
@@ -384,9 +491,19 @@ namespace ProjectManager
             try
             {
                 SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+                SqlCommand cmd;
+
+                if (user.UserMail != null)
+                {
+                    cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL=@USER_MAIL", Con);
+                    cmd.Parameters.AddWithValue("@USER_MAIL", user.UserMail);
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_ID=@USER_ID", Con);
+                    cmd.Parameters.AddWithValue("@USER_ID", user.UserId);
+                }
                 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL=@USER_MAIL", Con);
-                cmd.Parameters.AddWithValue("@USER_MAIL", user.UserMail);
                 Con.Open();
                 using (SqlDataReader rd = cmd.ExecuteReader()) 
                 {
@@ -461,7 +578,7 @@ namespace ProjectManager
             return false;
         }
 
-        void UpdateLastLoginDate(string userMail)
+        public void UpdateLastLoginDate(string userMail)
         {
             try
             {
@@ -509,22 +626,209 @@ namespace ProjectManager
             }
             Con.Close();
         }
-
-        public void CreateTeam()
+        // Check twice
+        public bool CreateTeam(Group group)
         {
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
-
-            SqlCommand cmd = new SqlCommand("INSERT INTO [USER_GROUP_ID]() " +
-                                            "()", Con);
-
+            UserGroup userGroup = new UserGroup();
             try
             {
+                SqlCommand cmd = new SqlCommand("INSERT INTO [GROUP](GROUP_NAME , GROUP_FOUNDER_ID , GROUP_MANAGER_ID , GROUP_DESCRIPTION , GROUP_FORMATION_DATE)" +
+                                                            "values(@GROUP_NAME, @GROUP_FOUNDER_ID, @GROUP_MANAGER_ID, @GROUP_DESCRIPTION , @GROUP_FORMATION_DATE)", Con);
+                cmd.Parameters.AddWithValue("@GROUP_NAME", group.GroupName);
+                cmd.Parameters.AddWithValue("@GROUP_FOUNDER_ID", group.GroupFounderId);
+                cmd.Parameters.AddWithValue("@GROUP_MANAGER_ID", group.GroupManagerId);  
+                cmd.Parameters.AddWithValue("@GROUP_DESCRIPTION", group.GroupDescription);
+                cmd.Parameters.AddWithValue("@GROUP_FORMATION_DATE", group.GroupFormationDate);
+                Con.Open();
+                cmd.ExecuteNonQuery();
+                Con.Close();
+                group = TakeInformationOfGroup(group);
+
+                userGroup.UserId = group.GroupFounderId;
+                userGroup.GroupId = group.GroupId;
+                userGroup.UserGroupAuthorization = 3; //3 - owner / 2 - admin / 1 - member / 0 - viewer (invited)
+                userGroup.UserJoinDate = DateTime.Now;
+                userGroup.InviteSenderId = group.GroupFounderId;
+                userGroup.InviteStatus = "Accepted";
+
+                AddMember(userGroup);
+                return true;
 
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return false;
+        }
+        public bool AddMember(UserGroup userGroup)
+        {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO [USER_GROUPS](USER_ID , GROUP_ID , USER_GROUP_AUTHORIZATION , USER_JOIN_DATE , INVITE_SENDER_ID , INVITE_STATUS )" +
+                                                                  "values(@USER_ID, @GROUP_ID, @USER_GROUP_AUTHORIZATION, @USER_JOIN_DATE, @INVITE_SENDER_ID, @INVITE_STATUS )", Con);
+                cmd.Parameters.AddWithValue("@USER_ID", userGroup.UserId);
+                cmd.Parameters.AddWithValue("@GROUP_ID", userGroup.GroupId);
+                cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION ", userGroup.UserGroupAuthorization);
+                cmd.Parameters.AddWithValue("@USER_JOIN_DATE", userGroup.UserJoinDate);
+                cmd.Parameters.AddWithValue("@INVITE_SENDER_ID", userGroup.InviteSenderId);
+                cmd.Parameters.AddWithValue("@INVITE_STATUS", userGroup.InviteStatus);
+                Con.Open();
+                cmd.ExecuteNonQuery();
+                Con.Close();   
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return false;
+        }
+
+        public bool InviteUser(Team team)
+        {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO [USER_GROUPS](USER_ID , GROUP_ID , USER_GROUP_AUTHORIZATION , USER_JOIN_DATE , USER_INVITE_STATUS) " +
+                                                                   "values(@USER_ID, @GROUP_ID , @USER_GROUP_AUTHORIZATION, @USER_JOIN_DATE, @USER_INVITE_STATUS)", Con);
+                cmd.Parameters.AddWithValue("@USER_ID", team.UserId);
+                cmd.Parameters.AddWithValue("GROUP_ID", team.GroupId);
+                cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION", team.UserGroupAuthorization);
+                cmd.Parameters.AddWithValue("@USER_JOIN_DATE", team.UserJoinDate);
+                cmd.Parameters.AddWithValue("INVITE_SENDER_ID", team.InviteSenderId);
+                cmd.Parameters.AddWithValue("@USER_INVITE_STATUS", team.UserInviteStatus);
+
+                Con.Open();
+                cmd.ExecuteNonQuery();
+                Con.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return false;
+        }
+
+        public bool HandleGroupInvitation(Team team, string anahtar)
+        {
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE [USER_GROUPS] SET USER_GROUP_AUTHORIZATION=@USER_GROUP_AUTHORIZATION , USER_INVITE_STATUS=@USER_INVITE_STATUS WHERE USER_GROUP_ID=@USER_GROUP_ID", Con);
+                cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION", team.UserGroupAuthorization);
+                cmd.Parameters.AddWithValue("@USER_JOIN_DATE", team.UserJoinDate);
+                cmd.Parameters.AddWithValue("INVITE_SENDER_ID", team.InviteSenderId);
+                cmd.Parameters.AddWithValue("@USER_INVITE_STATUS", team.UserInviteStatus);
+                cmd.Parameters.AddWithValue("@USER_GROUP_ID", team.UserGroupId);
+
+                Con.Open();
+                cmd.ExecuteNonQuery();
+                Con.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return false;
+        }
+        public Group TakeInformationOfGroup(Group group)
+        {
+            Group group2 = new Group();
+
+            try
+            {
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+                SqlCommand cmd;
+                if (group.GroupName != null)
+                {
+                    cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_NAME=@GROUP_NAME AND GROUP_FOUNDER_ID=@GROUP_FOUNDER_ID AND GROUP_FORMATION_DATE=@GROUP_FORMATION_DATE", Con);
+                    cmd.Parameters.AddWithValue("@GROUP_NAME", group.GroupName);
+                    cmd.Parameters.AddWithValue("@GROUP_FOUNDER_ID", group.GroupFounderId);
+                    cmd.Parameters.AddWithValue("@GROUP_FORMATION_DATE", group.GroupFormationDate);
+                    Con.Open();
+                    
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_ID=@GROUP_ID", Con);
+
+                    cmd.Parameters.AddWithValue("@GROUP_ID", group.GroupId);
+                    Con.Open();
+                    
+                }
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        group.GroupId = (int)rd["GROUP_ID"];
+                        group.GroupName = rd["GROUP_NAME"].ToString();
+                        group.GroupFounderId = (int)rd["GROUP_FOUNDER_ID"];
+                        group.GroupManagerId = (int)rd["GROUP_MANAGER_ID"];
+                        group.GroupDescription = rd["GROUP_DESCRIPTION"].ToString();
+                        group.GroupFormationDate = Convert.ToDateTime(rd["GROUP_FORMATION_DATE"]);
+                    }
+                }
+
+                Con.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return group;
+        }
+
+        public List<Team> TakeTeams(int userId) 
+        {
+            List<Team> teamsList = new List<Team>();
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security = true;");
+            Con.Open();
+            try
+            {
+                using (Con)
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM [USER_GROUPS]",Con);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        
+                        while (rd.Read()) // USER_GROUP_ID / USER_ID / GROUP_ID / USER_GROUP_AUTH / USER_JOIN_DATE / INVITE_SENDER_ID / INVITE_STATUS
+                        {                 //        0      /    1    /    2     /       3          /      4        /       5          /       6
+                            if ( rd.GetInt32(1) == userId )
+                            {
+                                teamsList.Add(new Team()
+                                {
+                                    UserGroupId = rd.GetInt32(0),
+                                    UserId = rd.GetInt32(1),
+                                    GroupId = rd.GetInt32(2),
+                                    UserGroupAuthorization = rd.GetInt32(3),
+                                    UserJoinDate = rd.GetDateTime(4),
+                                    InviteSenderId = rd.GetInt32(5),
+                                    UserInviteStatus = rd.GetString(6)
+                                });
+                                Console.WriteLine(teamsList);
+                            }
+                        }
+                    }
+                }
+                Con.Close();
+                return teamsList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return teamsList;
         }
 
     }

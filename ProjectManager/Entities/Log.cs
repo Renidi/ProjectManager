@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManager
 {
-    internal class Log
+    public class Log
     {
         public int LOGId { get; set; }
         public string LogSource { get; set; }

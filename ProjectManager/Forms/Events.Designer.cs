@@ -131,6 +131,7 @@
             // 
             // pbTeams
             // 
+            this.pbTeams.AccessibleName = "pbTest";
             this.pbTeams.Image = global::ProjectManager.Properties.Resources.teamwork;
             this.pbTeams.Location = new System.Drawing.Point(692, 28);
             this.pbTeams.Name = "pbTeams";
@@ -138,6 +139,7 @@
             this.pbTeams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbTeams.TabIndex = 3;
             this.pbTeams.TabStop = false;
+            this.pbTeams.Click += new System.EventHandler(this.pbTeams_Click);
             // 
             // pbProject
             // 

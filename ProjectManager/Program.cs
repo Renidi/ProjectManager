@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ProjectManager
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// Uygulamanın ana girdi noktası.

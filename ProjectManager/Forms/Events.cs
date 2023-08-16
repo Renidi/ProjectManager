@@ -14,6 +14,7 @@ namespace ProjectManager
 {
     public partial class Events : Form
     {
+        public PictureBox pbTeamClick {  get { return pbTeams; } }
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
         [DllImportAttribute("user32.dll")]
@@ -112,6 +113,12 @@ namespace ProjectManager
         {
             openChildForm(new Projects(user.UserMail));
         }
+
+        public void pbTeams_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Teams(user.UserMail));
+        }
+
     }
 
 }

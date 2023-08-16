@@ -32,7 +32,7 @@ namespace ProjectManager
             tempList = sqlDbHelper.TakeProjectsName("PROJECT",dateDay);
             if (Convert.ToDateTime(dateDay).ToString() == currentDt.ToString())
             {
-                lbl.Font = new Font(Label.DefaultFont,FontStyle.Bold);
+                lbl.Font = new Font("Microsoft Sans Serif", 12,FontStyle.Bold);
                 lbl.ForeColor = Color.Blue;
             }
 

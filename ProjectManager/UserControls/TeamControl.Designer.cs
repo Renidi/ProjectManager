@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.Forms
 {
-    partial class TeamsControl
+    partial class TeamControl
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -48,9 +48,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 13);
+            this.label2.Size = new System.Drawing.Size(209, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Takım Lideri : Ahmet";
+            this.label2.Text = "Team Leader : a.hakan1818@hotmail.com";
             // 
             // label3
             // 
@@ -61,16 +61,18 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "XXX Proje   XXX Task";
             // 
-            // TeamsControl
+            // TeamControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.DimGray;
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "TeamsControl";
-            this.Size = new System.Drawing.Size(152, 78);
+            this.Name = "TeamControl";
+            this.Size = new System.Drawing.Size(223, 80);
             this.Load += new System.EventHandler(this.TeamsControl_Load);
+            this.DoubleClick += new System.EventHandler(this.TeamControl_DoubleClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 

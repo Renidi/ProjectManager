@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManager
 {
-    internal class Task
+    public class Task
     {
         public int TaskId { get; set; }
         public string TaskName { get; set; }
@@ -17,6 +17,7 @@ namespace ProjectManager
         public int TaskDuration { get; set; }
         public string TaskOwner { get; set; }
         public string TaskProject { get; set; }
+        public int TaskGroupId { get; set; }
         public string TaskDescription { get; set; }
 
     }

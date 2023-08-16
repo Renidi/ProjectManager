@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.pnlMiddle = new System.Windows.Forms.Panel();
-            this.btnDeleteTeam = new Guna.UI2.WinForms.Guna2Button();
-            this.btnCreateTeam = new Guna.UI2.WinForms.Guna2Button();
+            this.pnlMemebers = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlTeams = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnNewTeam = new Guna.UI2.WinForms.Guna2Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pnlTeams = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlMemebers = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlMiddle.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,8 +45,7 @@
             this.pnlMiddle.Controls.Add(this.pnlMemebers);
             this.pnlMiddle.Controls.Add(this.flowLayoutPanel2);
             this.pnlMiddle.Controls.Add(this.pnlTeams);
-            this.pnlMiddle.Controls.Add(this.btnDeleteTeam);
-            this.pnlMiddle.Controls.Add(this.btnCreateTeam);
+            this.pnlMiddle.Controls.Add(this.btnNewTeam);
             this.pnlMiddle.Controls.Add(this.label3);
             this.pnlMiddle.Controls.Add(this.label2);
             this.pnlMiddle.Controls.Add(this.label1);
@@ -57,85 +55,71 @@
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 4;
             // 
-            // btnDeleteTeam
+            // pnlMemebers
             // 
-            this.btnDeleteTeam.BackColor = System.Drawing.Color.Transparent;
-            this.btnDeleteTeam.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnDeleteTeam.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnDeleteTeam.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnDeleteTeam.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnDeleteTeam.Enabled = false;
-            this.btnDeleteTeam.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDeleteTeam.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteTeam.Location = new System.Drawing.Point(198, 460);
-            this.btnDeleteTeam.Name = "btnDeleteTeam";
-            this.btnDeleteTeam.Size = new System.Drawing.Size(180, 45);
-            this.btnDeleteTeam.TabIndex = 8;
-            this.btnDeleteTeam.Text = "Delete Team";
-            this.btnDeleteTeam.UseTransparentBackground = true;
+            this.pnlMemebers.BackColor = System.Drawing.Color.Gray;
+            this.pnlMemebers.Location = new System.Drawing.Point(263, 25);
+            this.pnlMemebers.Name = "pnlMemebers";
+            this.pnlMemebers.Size = new System.Drawing.Size(713, 429);
+            this.pnlMemebers.TabIndex = 11;
             // 
-            // btnCreateTeam
+            // flowLayoutPanel2
             // 
-            this.btnCreateTeam.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreateTeam.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCreateTeam.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCreateTeam.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCreateTeam.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnCreateTeam.ForeColor = System.Drawing.Color.White;
-            this.btnCreateTeam.Location = new System.Drawing.Point(12, 460);
-            this.btnCreateTeam.Name = "btnCreateTeam";
-            this.btnCreateTeam.Size = new System.Drawing.Size(180, 45);
-            this.btnCreateTeam.TabIndex = 7;
-            this.btnCreateTeam.Text = "New Team";
-            this.btnCreateTeam.Click += new System.EventHandler(this.btnCreateTeam_Click);
+            this.flowLayoutPanel2.BackColor = System.Drawing.Color.Gray;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(982, 25);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(246, 429);
+            this.flowLayoutPanel2.TabIndex = 10;
+            // 
+            // pnlTeams
+            // 
+            this.pnlTeams.BackColor = System.Drawing.Color.Gray;
+            this.pnlTeams.Location = new System.Drawing.Point(12, 25);
+            this.pnlTeams.Name = "pnlTeams";
+            this.pnlTeams.Size = new System.Drawing.Size(246, 429);
+            this.pnlTeams.TabIndex = 9;
+            // 
+            // btnNewTeam
+            // 
+            this.btnNewTeam.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewTeam.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewTeam.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNewTeam.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNewTeam.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnNewTeam.ForeColor = System.Drawing.Color.White;
+            this.btnNewTeam.Location = new System.Drawing.Point(12, 460);
+            this.btnNewTeam.Name = "btnNewTeam";
+            this.btnNewTeam.Size = new System.Drawing.Size(158, 45);
+            this.btnNewTeam.TabIndex = 7;
+            this.btnNewTeam.Text = "New Team";
+            this.btnNewTeam.Click += new System.EventHandler(this.btnNewTeam_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(938, 9);
+            this.label3.Location = new System.Drawing.Point(1026, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Grup İstekleri";
+            this.label3.Text = "Group Requests";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(512, 9);
+            this.label2.Location = new System.Drawing.Point(575, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Üyeler";
+            this.label2.Text = "Members";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(66, 9);
+            this.label1.Location = new System.Drawing.Point(101, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Teams";
-            // 
-            // pnlTeams
-            // 
-            this.pnlTeams.Location = new System.Drawing.Point(12, 25);
-            this.pnlTeams.Name = "pnlTeams";
-            this.pnlTeams.Size = new System.Drawing.Size(158, 429);
-            this.pnlTeams.TabIndex = 9;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(895, 25);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(158, 429);
-            this.flowLayoutPanel2.TabIndex = 10;
-            // 
-            // pnlMemebers
-            // 
-            this.pnlMemebers.Location = new System.Drawing.Point(176, 25);
-            this.pnlMemebers.Name = "pnlMemebers";
-            this.pnlMemebers.Size = new System.Drawing.Size(713, 429);
-            this.pnlMemebers.TabIndex = 11;
             // 
             // Teams
             // 
@@ -146,6 +130,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Teams";
             this.Text = "Teams";
+            this.Load += new System.EventHandler(this.Teams_Load);
             this.pnlMiddle.ResumeLayout(false);
             this.pnlMiddle.PerformLayout();
             this.ResumeLayout(false);
@@ -158,8 +143,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private Guna.UI2.WinForms.Guna2Button btnCreateTeam;
-        private Guna.UI2.WinForms.Guna2Button btnDeleteTeam;
+        private Guna.UI2.WinForms.Guna2Button btnNewTeam;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel pnlTeams;
         private System.Windows.Forms.FlowLayoutPanel pnlMemebers;
