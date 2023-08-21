@@ -51,7 +51,7 @@
             // 
             // pnlTop
             // 
-            this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnlTop.BackColor = System.Drawing.Color.Black;
             this.pnlTop.Controls.Add(this.lblAdSoyad);
             this.pnlTop.Controls.Add(this.lblMail);
             this.pnlTop.Controls.Add(this.pbExit);
@@ -66,6 +66,7 @@
             // 
             this.lblAdSoyad.AutoSize = true;
             this.lblAdSoyad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdSoyad.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblAdSoyad.Location = new System.Drawing.Point(1052, 33);
             this.lblAdSoyad.Name = "lblAdSoyad";
             this.lblAdSoyad.Size = new System.Drawing.Size(116, 20);
@@ -76,6 +77,7 @@
             // 
             this.lblMail.AutoSize = true;
             this.lblMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMail.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblMail.Location = new System.Drawing.Point(1052, 57);
             this.lblMail.Name = "lblMail";
             this.lblMail.Size = new System.Drawing.Size(75, 20);
@@ -95,7 +97,7 @@
             // 
             // pnlBottom
             // 
-            this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnlBottom.BackColor = System.Drawing.Color.Black;
             this.pnlBottom.Controls.Add(this.pbTask);
             this.pnlBottom.Controls.Add(this.pbUserSettings);
             this.pnlBottom.Controls.Add(this.pbTeams);

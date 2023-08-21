@@ -41,7 +41,38 @@ namespace ProjectManager
                         {
                             adptr = new SqlDataAdapter("SELECT * FROM [" + arguments[0] + "]", Con);
                         }
+
                         adptr.Fill(dt);
+
+                        if (dt.Columns.Contains("PROJECT_GROUP_ID"))
+                        {
+                            int groupIdColumnIndex = dt.Columns["PROJECT_GROUP_ID"].Ordinal;
+                            
+                            DataColumn newColumn = new DataColumn("PROJECT GROUP", typeof(string));
+                            dt.Columns.Add(newColumn);
+
+                            int groupNameColumnIndex = dt.Columns["PROJECT GROUP"].Ordinal;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                int groupId = Convert.ToInt32(dr[groupIdColumnIndex]);
+                                Group tempGroup = new Group
+                                {
+                                    GroupId = groupId
+                                };
+                                if (groupId != -1)
+                                {
+                                    tempGroup = TakeInformationOfGroup(tempGroup);
+                                    dr[groupNameColumnIndex] = tempGroup.GroupName == null ? "No Group" : tempGroup.GroupName;
+                                }
+                                else
+                                {
+                                    dr[groupNameColumnIndex] = "No Group"; 
+                                }
+                                
+                            }
+                        }
+
+                        
                         Con.Close();
                         //dt.Columns.Remove("Id");
                         return dt;
@@ -344,7 +375,58 @@ namespace ProjectManager
 
             return list;
         }
+        public List<Project> TakeProjectList(string userMail, string status)
+        {
+            List<Project> projectList = new List<Project>();
+            List<int> groupIdList = new List<int>();
+            SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
+            SqlCommand cmd;
+            SqlDataReader rd;
+            try
+            {
+                using (Con)
+                {
+                    cmd= new SqlCommand("SELECT GROUP_ID FROM [USER_GROUPS] WHERE USER_ID=@USER_ID",Con);
+                    cmd.Parameters.AddWithValue("@USER_ID", userMail);
+                    Con.Open();
+                    rd = cmd.ExecuteReader();
+                    while (rd.Read())
+                    {
+                        groupIdList.Add(Convert.ToInt32(rd["GROUP_ID"]));
+                    }
+                    Con.Close();
+                    foreach(int groupId in groupIdList)
+                    { // !!
+                        cmd = new SqlCommand("SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID", Con);
+                        
+                        cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID",groupId);
+                        rd = cmd.ExecuteReader();
+                        while (rd.Read())
+                        {
+                            Project project = new Project();
+                            project.ProjectId = rd.GetInt32(0);
+                            project.ProjectName = rd.GetString(1);
+                            project.ProjectStatus = rd.GetString(2);
+                            project.ProjectPriority = rd.GetString(3);
+                            project.ProjectStartDate = rd.GetDateTime(4);
+                            project.ProjectEndDate = rd.GetDateTime(5);
+                            project.ProjectDuration = rd.GetInt32(6);
+                            project.ProjectGroupId = rd.GetInt32(7);
+                            project.ProjectCreator = rd.GetString(8);
+                            project.ProjectDescription = rd.GetString(9);
+                            projectList.Add(project);
+                        }
 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Con.Close();
+            return projectList;
+        }
         public List<string> TakeProjectsName(params string[] arguments)
         {
             List<string> list = new List<string>();
@@ -740,10 +822,9 @@ namespace ProjectManager
             Con.Close();
             return false;
         }
+
         public Group TakeInformationOfGroup(Group group)
         {
-            Group group2 = new Group();
-
             try
             {
                 SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
@@ -760,7 +841,6 @@ namespace ProjectManager
                 else
                 {
                     cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_ID=@GROUP_ID", Con);
-
                     cmd.Parameters.AddWithValue("@GROUP_ID", group.GroupId);
                     Con.Open();
                     

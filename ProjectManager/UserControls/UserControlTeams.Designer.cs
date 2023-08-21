@@ -28,12 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserControlTeams));
             this.lblFullName = new System.Windows.Forms.Label();
             this.lblAuth = new System.Windows.Forms.Label();
             this.lblMail = new System.Windows.Forms.Label();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.cmbAuth = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
@@ -64,34 +61,6 @@
             this.lblMail.TabIndex = 2;
             this.lblMail.Text = "A.hakan1818@hotmail.com";
             // 
-            // guna2CircleButton1
-            // 
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(593, 12);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(25, 25);
-            this.guna2CircleButton1.TabIndex = 3;
-            this.guna2CircleButton1.Text = "guna2CircleButton1";
-            // 
-            // guna2ImageButton1
-            // 
-            this.guna2ImageButton1.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton1.HoverState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton1.Image = ((System.Drawing.Image)(resources.GetObject("guna2ImageButton1.Image")));
-            this.guna2ImageButton1.ImageOffset = new System.Drawing.Point(0, 0);
-            this.guna2ImageButton1.ImageRotate = 0F;
-            this.guna2ImageButton1.Location = new System.Drawing.Point(644, 1);
-            this.guna2ImageButton1.Name = "guna2ImageButton1";
-            this.guna2ImageButton1.PressedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton1.Size = new System.Drawing.Size(53, 36);
-            this.guna2ImageButton1.TabIndex = 4;
-            // 
             // cmbAuth
             // 
             this.cmbAuth.FormattingEnabled = true;
@@ -100,18 +69,17 @@
             "Member",
             "Admin",
             "Owner"});
-            this.cmbAuth.Location = new System.Drawing.Point(418, 10);
+            this.cmbAuth.Location = new System.Drawing.Point(414, 10);
             this.cmbAuth.Name = "cmbAuth";
             this.cmbAuth.Size = new System.Drawing.Size(121, 21);
             this.cmbAuth.TabIndex = 5;
+            this.cmbAuth.SelectedIndexChanged += new System.EventHandler(this.cmbAuth_SelectedIndexChanged);
             // 
             // UserControlTeams
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.cmbAuth);
-            this.Controls.Add(this.guna2ImageButton1);
-            this.Controls.Add(this.guna2CircleButton1);
             this.Controls.Add(this.lblMail);
             this.Controls.Add(this.lblAuth);
             this.Controls.Add(this.lblFullName);
@@ -128,8 +96,6 @@
         private System.Windows.Forms.Label lblFullName;
         private System.Windows.Forms.Label lblAuth;
         private System.Windows.Forms.Label lblMail;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
         private System.Windows.Forms.ComboBox cmbAuth;
     }
 }

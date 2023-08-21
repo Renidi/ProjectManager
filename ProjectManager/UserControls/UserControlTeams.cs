@@ -30,5 +30,10 @@ namespace ProjectManager.UserControls
             cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization;
             lblAuth.Text = cmbAuth.Text;
         }
+
+        private void cmbAuth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

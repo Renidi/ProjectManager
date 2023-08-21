@@ -50,7 +50,6 @@ namespace ProjectManager
             Mail = usermail;
             openChildForm(new Projects(Mail));
             DoubleBuffered = true;
-
         }
         
         public string Mail { get; set; }
@@ -70,14 +69,14 @@ namespace ProjectManager
             childForm.TopLevel = false;
             childForm.Dock = DockStyle.Fill;
             pnlMiddle.Controls.Add(childForm);
-            pnlMiddle.Tag = childForm; ;
+            pnlMiddle.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
             this.DoubleBuffered = true;
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
-        {  // user settings
+        {  // user settings !!??
             openChildForm (new UserSettings(user.UserMail));
         }
 

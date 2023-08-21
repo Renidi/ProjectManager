@@ -67,10 +67,11 @@ namespace ProjectManager
             task.TaskPriority = cmbTaskPriority.Text;
             task.TaskStartDate = dtTaskStartDate.Value;
             task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays));
+            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays)); // Düzenlenecek
             task.TaskOwner = cmbTaskEmployee.Text;
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
+
 
             DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName+" to tasks ?", "Add Task ", MessageBoxButtons.YesNo , MessageBoxIcon.Question);
             if (result == DialogResult.Yes)

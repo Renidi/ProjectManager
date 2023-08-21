@@ -329,11 +329,29 @@
     <Compile Include="Forms\Calendar.Designer.cs">
       <DependentUpon>Calendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateProject.Designer.cs">
+      <DependentUpon>CreateProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PopupCreateTeam.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PopupCreateTeam.Designer.cs">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RelatingProjects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RelatingProjects.Designer.cs">
+      <DependentUpon>RelatingProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Temp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Temp.Designer.cs">
+      <DependentUpon>Temp.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CardControl.cs">
       <SubType>UserControl</SubType>
@@ -360,6 +378,12 @@
     </Compile>
     <Compile Include="Forms\Projects.Designer.cs">
       <DependentUpon>Projects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProjectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProjectControl.Designer.cs">
+      <DependentUpon>ProjectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TeamControl.cs">
       <SubType>UserControl</SubType>
@@ -405,8 +429,17 @@
     <EmbeddedResource Include="Forms\Calendar.resx">
       <DependentUpon>Calendar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateProject.resx">
+      <DependentUpon>CreateProject.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PopupCreateTeam.resx">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RelatingProjects.resx">
+      <DependentUpon>RelatingProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Temp.resx">
+      <DependentUpon>Temp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\CardControl.resx">
       <DependentUpon>CardControl.cs</DependentUpon>
@@ -422,6 +455,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Projects.resx">
       <DependentUpon>Projects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ProjectControl.resx">
+      <DependentUpon>ProjectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TeamControl.resx">
       <DependentUpon>TeamControl.cs</DependentUpon>
