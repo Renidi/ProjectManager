@@ -353,6 +353,7 @@
     <Compile Include="Forms\Temp.Designer.cs">
       <DependentUpon>Temp.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqlHelper.cs" />
     <Compile Include="UserControls\CardControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -31,24 +31,49 @@ namespace ProjectManager.Forms
 
         private void RelatingProjects_Load(object sender, EventArgs e)
         {
-            DisplayProjects();
             user.UserMail = Mail;
+            DisplayProjects();
         }
 
         public void DisplayProjects()
         {
+            ClearPanels();
+            FillPanel();
+        }
+
+        void ClearPanels()
+        {
             pnlActive.Controls.Clear();
             pnlComplete.Controls.Clear();
             pnlOnHold.Controls.Clear();
+        }
 
-            ProjectControl projectControl = new ProjectControl();
-            pnlActive.Controls.Add(projectControl);
+        void FillPanel()
+        { // OR without group
+            List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
+            {
+                pnlActive,
+                pnlOnHold,
+                pnlCancelled,
+                pnlComplete
+            };
+            List<string> statusList = new List<string>
+            {
+                "ACTIVE",
+                "ON HOLD",
+                "CANCELLED",
+                "COMPLETED"
+            };
 
-            var tempList1 = sqlDbHelper.TakeProjectList(user.UserMail,"ACTIVE");
-            var tempList2 = sqlDbHelper.TakeProjectList(user.UserMail,"ON HOLD");
-            var tempList3 = sqlDbHelper.TakeProjectList(user.UserMail,"CANCELLED");
-            var tempList4 = sqlDbHelper.TakeProjectList(user.UserMail,"COMPLETED");
-
+            for (int i = 0; i<pnlList.Count; i++)
+            {
+                var projectList = sqlDbHelper.TakeProjectList(user.UserMail, statusList[i]);
+                foreach (var project in projectList)
+                {
+                    ProjectControl projectControl = new ProjectControl(project);
+                    pnlList[i].Controls.Add(projectControl);
+                }
+            }
         }
     }
 }

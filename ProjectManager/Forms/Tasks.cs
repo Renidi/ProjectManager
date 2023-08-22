@@ -13,6 +13,7 @@ namespace ProjectManager
     public partial class Tasks : Form
     {
         SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         Task task = new Task();
         User user = new User();
@@ -29,21 +30,15 @@ namespace ProjectManager
             dtTaskEndDate.Value = DateTime.Now;
             dtTaskStartDate.Value = DateTime.Now;
             user.UserMail = Mail;
-            List<string> tempList = new List<string>();
-            tempList = sqlDbHelper.TakeProjectsName("PROJECT");
+            List<string> tempList = sqlDbHelper.TakeProjectsName("PROJECT");
+
 
             for(int i=0; i<tempList.Count; i++)
             {
                 cmbTaskProject.Items.Add(tempList[i]);
-                
             }
 
-            List<string> tempUserList = sqlDbHelper.TakeEmployeeMails();
-
-            for (int i = 0; i < tempUserList.Count; i++)
-            {
-                cmbTaskEmployee.Items.Add(tempUserList[i]);
-            }
+            
 
             cmbTaskProject.StartIndex = 0;
             DoubleBuffered = true;
@@ -52,7 +47,7 @@ namespace ProjectManager
         private void Dt()
         {
             dgvActiveTasks.DataSource = sqlDbHelper.LoadData("TASK",user.UserMail);
-            dgvActiveTasks.Columns["TASK_ID"].Visible = false;
+            //dgvActiveTasks.Columns["TASK_ID"].Visible = false;
 
             for(int i = 1; i < dgvActiveTasks.Columns.Count; i++)
             {
@@ -72,6 +67,11 @@ namespace ProjectManager
             task.TaskProject = cmbTaskProject.Text;
             task.TaskDescription = txTaskComment.Text;
 
+            Project proje = new Project();
+            //proje = sqlDbHelper.proje
+
+            //task.TaskGroupId = cmbTaskProject.Text 
+            //project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
 
             DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName+" to tasks ?", "Add Task ", MessageBoxButtons.YesNo , MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -190,6 +190,18 @@ namespace ProjectManager
         private void cmbTaskProject_SelectedValueChanged(object sender, EventArgs e)
         {
             cmbTaskTeam.Items.Add("TAKIM"); // FROM DB PROJECT 
+        }
+
+        private void cmbTaskProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // SIKINTILI
+            cmbTaskEmployee.Items.Clear();
+            List<User> tempUserList = sqlHelper.GetUserList(user.UserId)!= null ? sqlHelper.GetUserList(user.UserId) : new List<User>();
+
+            for (int i = 0; i < tempUserList.Count; i++)
+            {
+                cmbTaskEmployee.Items.Add(tempUserList[i].UserName);
+            }
         }
     }
 

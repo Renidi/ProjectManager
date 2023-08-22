@@ -25,10 +25,10 @@ namespace ProjectManager
         {                       // arg[0] = Table , arg[1] =? userMail
             try
             {
-                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"); // THINK
-                Con.Open();
+                SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
                 using (Con)
                 {
+                    
                     using(DataTable dt = new DataTable(arguments[0]))
                     {
                         SqlDataAdapter adptr = new SqlDataAdapter();
@@ -72,9 +72,6 @@ namespace ProjectManager
                             }
                         }
 
-                        
-                        Con.Close();
-                        //dt.Columns.Remove("Id");
                         return dt;
                     }
                 }
@@ -139,7 +136,7 @@ namespace ProjectManager
                 cmd.Parameters.AddWithValue("@TASK_OWNER", task.TaskOwner);
                 cmd.Parameters.AddWithValue("@TASK_PROJECT", task.TaskProject);
                 cmd.Parameters.AddWithValue("@TASK_DESCRIPTION", task.TaskDescription);
-                cmd.Parameters.AddWithValue("@TASK_gROUP_ID", task.TaskGroupId);
+                cmd.Parameters.AddWithValue("@TASK_GROUP_ID", task.TaskGroupId);
                 Con.Open();
                 cmd.ExecuteNonQuery();
                 Con.Close();
@@ -267,6 +264,20 @@ namespace ProjectManager
 
             return false;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public List<UserGroup> TakeUserGroupInfo(List<User> userList, int groupId)
         {
             List<UserGroup> userGroupInfo = new List<UserGroup>();
@@ -375,8 +386,16 @@ namespace ProjectManager
 
             return list;
         }
+       
+
         public List<Project> TakeProjectList(string userMail, string status)
         {
+            User user = new User
+            {
+                UserMail = userMail
+            };
+            user = UserInfo(user);
+
             List<Project> projectList = new List<Project>();
             List<int> groupIdList = new List<int>();
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
@@ -387,7 +406,7 @@ namespace ProjectManager
                 using (Con)
                 {
                     cmd= new SqlCommand("SELECT GROUP_ID FROM [USER_GROUPS] WHERE USER_ID=@USER_ID",Con);
-                    cmd.Parameters.AddWithValue("@USER_ID", userMail);
+                    cmd.Parameters.AddWithValue("@USER_ID", user.UserId);
                     Con.Open();
                     rd = cmd.ExecuteReader();
                     while (rd.Read())
@@ -397,27 +416,31 @@ namespace ProjectManager
                     Con.Close();
                     foreach(int groupId in groupIdList)
                     { // !!
-                        cmd = new SqlCommand("SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID", Con);
+                        cmd = new SqlCommand("SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID AND PROJECT_STATUS=@PROJECT_STATUS", Con);
                         
                         cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID",groupId);
                         rd = cmd.ExecuteReader();
                         while (rd.Read())
                         {
-                            Project project = new Project();
-                            project.ProjectId = rd.GetInt32(0);
-                            project.ProjectName = rd.GetString(1);
-                            project.ProjectStatus = rd.GetString(2);
-                            project.ProjectPriority = rd.GetString(3);
-                            project.ProjectStartDate = rd.GetDateTime(4);
-                            project.ProjectEndDate = rd.GetDateTime(5);
-                            project.ProjectDuration = rd.GetInt32(6);
-                            project.ProjectGroupId = rd.GetInt32(7);
-                            project.ProjectCreator = rd.GetString(8);
-                            project.ProjectDescription = rd.GetString(9);
+                            Project project = new Project
+                            {
+                                ProjectId = rd.GetInt32(0),
+                                ProjectName = rd.GetString(1),
+                                ProjectStatus = rd.GetString(2),
+                                ProjectPriority = rd.GetString(3),
+                                ProjectStartDate = rd.GetDateTime(4),
+                                ProjectEndDate = rd.GetDateTime(5),
+                                ProjectDuration = rd.GetInt32(6),
+                                ProjectGroupId = rd.GetInt32(7),
+                                ProjectCreator = rd.GetString(8),
+                                ProjectDescription = rd.GetString(9)
+                            };
                             projectList.Add(project);
                         }
 
                     }
+
+
                 }
             }
             catch (Exception ex)
@@ -744,7 +767,7 @@ namespace ProjectManager
             }
             return false;
         }
-        public bool AddMember(UserGroup userGroup)
+        public bool AddMember(UserGroup userGroup) // !!
         {
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             try
@@ -770,7 +793,7 @@ namespace ProjectManager
             return false;
         }
 
-        public bool InviteUser(Team team)
+        public bool InviteUser(Team team) // !!
         {
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
 
@@ -798,7 +821,7 @@ namespace ProjectManager
             return false;
         }
 
-        public bool HandleGroupInvitation(Team team, string anahtar)
+        public bool HandleGroupInvitation(Team team, string anahtar) // !!
         {
             SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
             try
@@ -895,7 +918,6 @@ namespace ProjectManager
                                     InviteSenderId = rd.GetInt32(5),
                                     UserInviteStatus = rd.GetString(6)
                                 });
-                                Console.WriteLine(teamsList);
                             }
                         }
                     }

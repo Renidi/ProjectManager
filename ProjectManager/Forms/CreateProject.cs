@@ -56,8 +56,8 @@ namespace ProjectManager.Forms
                 cmbProjectPriority.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[3].Value.ToString();
                 dtProjectStartDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[4].Value);
                 dtProjectEndDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[5].Value);
-                txProjectComment.Text = dgvActiveProjects.SelectedRows[0].Cells[8].Value.ToString();
                 varId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
+                txProjectComment.Text = dgvActiveProjects.SelectedRows[0].Cells[9].Value.ToString();
             }
             catch { }
         }
@@ -67,8 +67,6 @@ namespace ProjectManager.Forms
             dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
             dgvActiveProjects.Columns["PROJECT_GROUP_ID"].Visible = false;
             dgvActiveProjects.Columns["PROJECT GROUP"].DisplayIndex = 7;
-            bool bayrak = true;
-            int temp;
             for (int i = 1; i < dgvActiveProjects.Columns.Count; i++)
             {
                 dgvActiveProjects.Columns[i].HeaderText = dgvActiveProjects.Columns[i].HeaderText.Replace('_', ' ');
