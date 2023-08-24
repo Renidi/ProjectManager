@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -151,13 +152,15 @@ namespace ProjectManager
                 {
                     using(DataTable dt =  new DataTable())
                     {
+                        adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE "+ table +"_CREATOR_ID=@" + table + "_CREATOR_ID", Con);
+                        // SELECT * FROM [PROJECT] WHERE PROJECT_CREATOR_ID=@PROJECT_CREATOR_ID
+                        adapter.SelectCommand.Parameters.AddWithValue("@" + table + "_CREATOR_ID", userId);
+                        adapter.Fill(dt);
                         foreach (var groupId in authorizedGroupIds)
                         {
-                            adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE "+table+"_GROUP_ID=@"+table+"_GROUP_ID " +
-                                                        "OR "+table+"_CREATOR_ID=@"+table+"_CREATOR_ID", Con);
-                            // SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID OR PROJECT_CREATOR_ID=@PROJECT_CREATOR_ID
+                            adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE "+table+"_GROUP_ID=@"+table+"_GROUP_ID ", Con);
+                            // SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID
                             adapter.SelectCommand.Parameters.AddWithValue("@"+table+"_GROUP_ID",groupId);
-                            adapter.SelectCommand.Parameters.AddWithValue("@"+table+"_CREATOR_ID",userId);
                             adapter.Fill(dt);
                             if (dt.Columns.Contains("PROJECT_GROUP_ID"))
                             {
@@ -183,6 +186,23 @@ namespace ProjectManager
                                 }
                             }
                         }
+                        Hashtable hTable = new Hashtable();
+                        ArrayList duplicates = new ArrayList();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (hTable.Contains(dr[table + "_ID"]))
+                            {
+                                duplicates.Add(dr);
+                            }
+                            else
+                            {
+                                hTable.Add(dr[table + "_ID"],string.Empty);
+                            }
+                        }
+                        foreach (DataRow dr in duplicates)
+                            dt.Rows.Remove(dr);
+
+                        adapter.Fill(dt);
                         return dt;
                     }
                 }
@@ -409,7 +429,7 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("SELECT * FROM [TASK] WHERE TASK_ID = @TASK_ID");
+                    cmd = new SqlCommand("SELECT * FROM [TASK] WHERE TASK_ID = @TASK_ID",Con);
                     cmd.Parameters.AddWithValue("@TASK_ID",taskId);
                     Con.Open();
                     using (rd = cmd.ExecuteReader())
@@ -430,6 +450,7 @@ namespace ProjectManager
                                 TaskGroupId = Convert.ToInt32(rd["TASK_GROUP_ID"]),
                                 TaskDescription = rd["TASK_DESCRIPTION"].ToString(),
                             };
+                            Con.Close();
                             return task;
                         }
                     }
@@ -449,6 +470,7 @@ namespace ProjectManager
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     List<int> authGroupIdList = GetAuthorityGroupList(userId);
+                    List<int> taskIdList = new List<int>();
                     List<Task> tasks = new List<Task>(); 
                     foreach (var authGroupId in authGroupIdList)
                     {
@@ -461,10 +483,15 @@ namespace ProjectManager
                         {
                             while (rd.Read())
                             {
-                                tasks.Add( GetTaskInfo(rd.GetInt32(0)) );
+                                taskIdList.Add(rd.GetInt32(0));
+                                //tasks.Add( GetTaskInfo(rd.GetInt32(0)) );
                             }
                         }
                         Con.Close();
+                    }
+                    foreach(int taskId in taskIdList)
+                    {
+                        tasks.Add(GetTaskInfo(taskId));
                     }
                     return tasks;
                 }
