@@ -16,9 +16,8 @@ namespace ProjectManager
         public DateTime ProjectEndDate { get; set; }
         public int ProjectDuration { get; set; }
         public int ProjectGroupId { get; set; }
-        public string ProjectCreator { get; set; }
+        public int ProjectCreatorId { get; set; }
         public string ProjectDescription { get; set; }
-        public string ProjectProgress { get; set;}
 
     }
 

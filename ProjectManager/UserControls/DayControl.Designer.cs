@@ -32,6 +32,7 @@
             this.lblProject1 = new System.Windows.Forms.Label();
             this.lblProject2 = new System.Windows.Forms.Label();
             this.lblProject3 = new System.Windows.Forms.Label();
+            this.lblExtra = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl
@@ -68,11 +69,20 @@
             this.lblProject3.Size = new System.Drawing.Size(0, 13);
             this.lblProject3.TabIndex = 3;
             // 
+            // lblExtra
+            // 
+            this.lblExtra.AutoSize = true;
+            this.lblExtra.Location = new System.Drawing.Point(112, 56);
+            this.lblExtra.Name = "lblExtra";
+            this.lblExtra.Size = new System.Drawing.Size(0, 13);
+            this.lblExtra.TabIndex = 4;
+            // 
             // DayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Controls.Add(this.lblExtra);
             this.Controls.Add(this.lblProject3);
             this.Controls.Add(this.lblProject2);
             this.Controls.Add(this.lblProject1);
@@ -92,5 +102,6 @@
         private System.Windows.Forms.Label lblProject1;
         private System.Windows.Forms.Label lblProject2;
         private System.Windows.Forms.Label lblProject3;
+        private System.Windows.Forms.Label lblExtra;
     }
 }

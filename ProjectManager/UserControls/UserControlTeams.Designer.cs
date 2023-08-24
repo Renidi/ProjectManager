@@ -65,7 +65,6 @@
             // 
             this.cmbAuth.FormattingEnabled = true;
             this.cmbAuth.Items.AddRange(new object[] {
-            "Silinecek",
             "Member",
             "Admin",
             "Owner"});

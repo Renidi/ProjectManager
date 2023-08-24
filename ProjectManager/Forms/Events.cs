@@ -22,8 +22,7 @@ namespace ProjectManager
         const int WM_NCLBUTTONDOWN = 0xA1;
         const int HT_CAPTION = 0x2;
 
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
-        Project project = new Project();
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         Log log = new Log();
         private void pnlTop_MouseMove(object sender, MouseEventArgs e)
@@ -56,7 +55,7 @@ namespace ProjectManager
         private void Events_Load(object sender, EventArgs e)
         {
             user.UserMail = Mail;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(-1,user.UserMail);
             lblMail.Text = user.UserMail;
             lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
         }
@@ -82,7 +81,6 @@ namespace ProjectManager
 
         private void pbExit_Click(object sender, EventArgs e)
         {
-            user = sqlDbHelper.UserInfo(user);
             log.LogSource = "User";
             log.LogType = "Logout";
             log.LogDate = DateTime.Now;
@@ -91,7 +89,7 @@ namespace ProjectManager
             log.LogDescription = "Logout";
             log.LogStatus = "true";
 
-            sqlDbHelper.DataLog(log);
+            sqlHelper.DataLog(log);
 
             Entry entry = new Entry();
             entry.Show();
@@ -100,7 +98,7 @@ namespace ProjectManager
 
         private void pbCalender_Click(object sender, EventArgs e)
         {
-            openChildForm(new Calendar());
+            openChildForm(new Calendar(user.UserId));
         }
 
         private void pbTask_Click(object sender, EventArgs e)

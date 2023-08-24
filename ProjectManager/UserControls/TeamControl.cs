@@ -13,35 +13,41 @@ namespace ProjectManager.Forms
 {
     public partial class TeamControl : UserControl
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         Log log = new Log();
-        Team Team = new Team();
         Group group = new Group();
+        UserGroup userGroup = new UserGroup();
+        public int getUserId { get; set; }
         private Teams teams;
-        public TeamControl(Team x, Teams formTeams)
+        public TeamControl(UserGroup x, Teams formTeams,int userId)
         {
             InitializeComponent();
-            Team = x;
+            userGroup = x;
+            getUserId = userId;
+            user = sqlHelper.GetUserInfo(getUserId);
             teams = formTeams;
         }
 
         private void TeamsControl_Load(object sender, EventArgs e)
         {
-            group.GroupId = Team.GroupId;
-            group = sqlDbHelper.TakeInformationOfGroup(group);
+            user = sqlHelper.GetUserInfo(getUserId);
+            group.GroupId = userGroup.GroupId;
+            group = sqlHelper.GetGroupInfo(group.GroupId);
+
             user.UserId = group.GroupManagerId;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(user.UserId);
             label1.Text = group.GroupName;
             label2.Text = "Team Leader: " + user.UserMail;
-            label3.Text = sqlDbHelper.GetCount("PROJECT",group.GroupId)+" Project , " + sqlDbHelper.GetCount("TASK", group.GroupId)+ " Task";
+            var counter = sqlHelper.GetProjectAndTaskCounts(group.GroupId);
+            label3.Text = counter.Item1+" Project , "+ counter.Item2 + " Task";
         }
 
         private void TeamControl_DoubleClick(object sender, EventArgs e)
         {
-            List<User> userList = sqlDbHelper.TakeUserListForComboBox(group);
-            List<UserGroup> userGroups = sqlDbHelper.TakeUserGroupInfo(userList,group.GroupId);
+            List<User> userList = sqlHelper.GetUserList(user.UserId, group.GroupId);
+            List<UserGroup> userGroups = sqlHelper.GetTeams(user.UserId, group.GroupId);
             teams.DisplayTeamUsers(userList,userGroups);
         }
     }

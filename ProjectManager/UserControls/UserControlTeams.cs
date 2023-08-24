@@ -13,9 +13,9 @@ namespace ProjectManager.UserControls
 {
     public partial class UserControlTeams : UserControl
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
         User user = new User();
         UserGroup userGroup = new UserGroup();
+        SqlHelper sqlHelper = new SqlHelper();
         public UserControlTeams(UserGroup userGroups,User users)
         {
             InitializeComponent();
@@ -27,13 +27,24 @@ namespace ProjectManager.UserControls
         {
             lblFullName.Text = user.UserName +" "+ user.UserSurname;
             lblMail.Text = user.UserMail;
-            cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization;
+            cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization-1;
             lblAuth.Text = cmbAuth.Text;
         }
 
         private void cmbAuth_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if(cmbAuth.SelectedIndex+1 != userGroup.UserGroupAuthorization)
+            {
+                DialogResult dialog = MessageBox.Show("R u sure ?","Title", MessageBoxButtons.YesNo);
+                if (DialogResult.Yes == dialog)
+                {
+                    sqlHelper.EditData(null,null,userGroup);
+                }
+                else if(dialog == DialogResult.No)
+                {
+                    cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization - 1;
+                }
+            }
         }
     }
 }

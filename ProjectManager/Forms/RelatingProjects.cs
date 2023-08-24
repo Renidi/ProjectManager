@@ -14,12 +14,8 @@ namespace ProjectManager.Forms
 {
     public partial class RelatingProjects : Form
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
-        Project project = new Project();
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
-        Log log = new Log();
-        Team team = new Team();
-        Group group = new Group();
         public string Mail { get; set; }
 
         public int varId;
@@ -32,6 +28,7 @@ namespace ProjectManager.Forms
         private void RelatingProjects_Load(object sender, EventArgs e)
         {
             user.UserMail = Mail;
+            user = sqlHelper.GetUserInfo(-1, user.UserMail);
             DisplayProjects();
         }
 
@@ -49,7 +46,8 @@ namespace ProjectManager.Forms
         }
 
         void FillPanel()
-        { // OR without group
+        {
+            ClearPanels();
             List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
             {
                 pnlActive,
@@ -64,16 +62,33 @@ namespace ProjectManager.Forms
                 "CANCELLED",
                 "COMPLETED"
             };
+            List<Project> projectList = sqlHelper.GetProjects(user.UserId);
 
-            for (int i = 0; i<pnlList.Count; i++)
+            for(int i = 0; i<projectList.Count; i++)
             {
-                var projectList = sqlDbHelper.TakeProjectList(user.UserMail, statusList[i]);
-                foreach (var project in projectList)
+                Project project = projectList[i];
+                if(project.ProjectStatus == statusList[0])
                 {
                     ProjectControl projectControl = new ProjectControl(project);
-                    pnlList[i].Controls.Add(projectControl);
+                    pnlList[0].Controls.Add(projectControl);
+                }
+                else if (project.ProjectStatus == statusList[1])
+                {
+                    ProjectControl projectControl = new ProjectControl(project);
+                    pnlList[1].Controls.Add(projectControl);
+                }
+                else if (project.ProjectStatus == statusList[2])
+                {
+                    ProjectControl projectControl = new ProjectControl(project);
+                    pnlList[2].Controls.Add(projectControl);
+                }
+                else
+                {
+                    ProjectControl projectControl = new ProjectControl(project);
+                    pnlList[3].Controls.Add(projectControl);
                 }
             }
+
         }
     }
 }

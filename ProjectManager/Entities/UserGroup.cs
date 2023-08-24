@@ -11,9 +11,10 @@ namespace ProjectManager.Entities
         public int UserGroupId { get; set; }
         public int UserId { get; set; }
         public int GroupId { get; set; }
-        public int UserGroupAuthorization { get; set; } 
-        public DateTime UserJoinDate { get; set; }
+        public int UserGroupAuthorization { get; set; }//3 - owner / 2 - admin / 1 - member / 0 - viewer (invited)
+        public DateTime InviteDate { get; set; }
+        public DateTime ProcessDate { get; set; }
         public int InviteSenderId { get; set; }
-        public string InviteStatus { get; set; }
+        public string InviteStatus { get; set; } // -Rejected -Accepted -Waiting
     }
 }

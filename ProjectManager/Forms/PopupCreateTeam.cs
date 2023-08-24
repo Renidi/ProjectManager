@@ -15,16 +15,13 @@ namespace ProjectManager.Forms
     {
         private Teams teams;
 
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
-        Project project = new Project();
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
-        Log log = new Log();
-        Team Team = new Team();
         Group group = new Group();
 
         public PopupCreateTeam(int userId, Teams formTeams)
         {
-            user.UserId = userId;
+            user = sqlHelper.GetUserInfo(userId);
             InitializeComponent();
             teams = formTeams;
         }
@@ -37,7 +34,7 @@ namespace ProjectManager.Forms
             group.GroupDescription = txGroupDescription.Text;
             group.GroupFormationDate = DateTime.Now;
 
-            if(sqlDbHelper.CreateTeam(group))
+            if(sqlHelper.NewTeam(group))
             {
                 this.Close();
             }

@@ -14,11 +14,10 @@ namespace ProjectManager
 {
     public partial class Projects : Form
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         Log log = new Log();
-        Team team = new Team();
         Group group = new Group();
         public string Mail { get; set; }
 
@@ -48,13 +47,13 @@ namespace ProjectManager
         {
             // SHOW PROJECTS WITH USER CONTROL 
             user.UserMail = Mail;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(-1,user.UserMail);
 
-            List<Team> tempTeamList = sqlDbHelper.TakeTeams(user.UserId);
+            List<UserGroup> tempTeamList = sqlHelper.GetTeams(user.UserId);
             for (int i = 0; i< tempTeamList.Count; i++)
             {
                 group.GroupId = tempTeamList[i].GroupId;
-                group = sqlDbHelper.TakeInformationOfGroup(group);
+                group = sqlHelper.GetGroupInfo(group.GroupId);
 
             }
 

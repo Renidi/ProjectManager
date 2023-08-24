@@ -12,6 +12,7 @@ namespace ProjectManager.UserControls
 {
     public partial class ProjectControl : UserControl
     {
+        SqlHelper sqlHelper = new SqlHelper();
         public ProjectControl(Project project)
         {
             InitializeComponent();
@@ -24,13 +25,18 @@ namespace ProjectManager.UserControls
             //                               " ante sagittis elementum. Sed tincidunt facilisis enim, ac aliquet nibh commodo eget. ";
             lblProjectName.Text = project.ProjectName;
             lblProjectDescription.Text = project.ProjectDescription;
-            lblProjectDescription.MaximumSize = new Size(300, 0);
+            lblProjectDescription.MaximumSize = new Size(240, 0);
             lblProjectDescription.AutoSize = true;
-            this.Width = 0; 
-            this.Height = 0;
 
-            this.Width = Math.Max(lblProjectName.Width, lblProjectDescription.Width);
-            this.Height = lblProjectName.Height + lblProjectDescription.Height;
+            lblTaskCount.Text = sqlHelper.GetTaskCounts(project.ProjectId) + " Task";
+            lblStartEndDate.Text = project.ProjectStartDate.ToString("dd/MM/yyyy") + " / " + project.ProjectEndDate.ToString("dd/MM/yyyy");
+            Width = Math.Max(lblProjectName.Width, lblProjectDescription.Width)>245 ? Math.Max(lblProjectName.Width, lblProjectDescription.Width) : 245;
+            Height = (lblProjectName.Height + lblProjectDescription.Height)>105 ? Math.Max(lblProjectName.Width, lblProjectDescription.Width) : 105;
+        }
+
+        private void ProjectControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

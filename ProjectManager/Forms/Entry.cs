@@ -91,7 +91,7 @@ namespace ProjectManager
 
         // -----------------------------------------------------------------------------------------------------------------------------------
 
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         Log log = new Log();
 
@@ -125,7 +125,7 @@ namespace ProjectManager
         {
             if (txResetMail.Text != "" && txResetSecretWord.Text != "")
             {
-                if (sqlDbHelper.CheckSecretWord(txResetMail.Text, txResetSecretWord.Text))
+                if (sqlHelper.SecretWordCheck(txResetMail.Text, txResetSecretWord.Text))
                 {
                     user.UserMail = txResetMail.Text;
                     SHOW(panelResetPassword);
@@ -147,22 +147,22 @@ namespace ProjectManager
 
             if (!String.IsNullOrEmpty(txLoginPassword.Text) && !String.IsNullOrEmpty(txLoginMail.Text))
             {
-                bool loginStatus = sqlDbHelper.Login(txLoginMail.Text, txLoginPassword.Text);
+                bool loginStatus = sqlHelper.Login(txLoginMail.Text, txLoginPassword.Text);
                 user.UserMail = txLoginMail.Text;
                 if (loginStatus)
                 {
                     user.UserName= txLoginMail.Text;
-                    user = sqlDbHelper.UserInfo(user);
+                    user = sqlHelper.GetUserInfo(-1, txLoginMail.Text);
 
                     log.LogSource = "User";
                     log.LogType = "Login";
                     log.LogDate = DateTime.Now;
-                    log.LogUser = user.UserMail;
+                    log.LogUser = txLoginMail.Text;
                     log.LogUserId = user.UserId;
                     log.LogDescription = "Login";
                     log.LogStatus = loginStatus+"";
 
-                    sqlDbHelper.DataLog(log);
+                    sqlHelper.DataLog(log);
 
                     if (cbRememberMe.Checked)
                     {
@@ -198,12 +198,12 @@ namespace ProjectManager
             {
                 if (txResetPasswordFirst.Text == txResetPasswordSecond.Text)
                 {
-                    sqlDbHelper.ChangePassword(txResetMail.Text, txResetPasswordFirst.Text);
+                    sqlHelper.ChangePassword(txResetMail.Text, txResetPasswordFirst.Text);
                     user.UserPassword = txResetPasswordFirst.Text;
                     user.UserMail = txResetMail.Text;
                     Clear();
                     MessageBox.Show("Password Successfully Changed");
-                    if(sqlDbHelper.Login(user.UserMail,user.UserPassword))
+                    if(sqlHelper.Login(user.UserMail,user.UserPassword))
                     {
                         Clear();
                         Events events = new Events(user.UserMail);
@@ -236,7 +236,7 @@ namespace ProjectManager
                     user.UserLastLoginDate = DateTime.Now;
                     user.UserRegisterDate = DateTime.Now;
 
-                    sqlDbHelper.Register(user);
+                    sqlHelper.Register(user);
 
                     log.LogSource = "User";
                     log.LogType = "Login";
@@ -245,7 +245,7 @@ namespace ProjectManager
                     log.LogUserId = user.UserId;
                     log.LogDescription = "Login";
                     log.LogStatus = "true";
-                    sqlDbHelper.DataLog(log);
+                    sqlHelper.DataLog(log);
 
                     Clear();
                     MessageBox.Show("Registration Successful");

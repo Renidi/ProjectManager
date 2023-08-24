@@ -195,7 +195,6 @@
             this.cmbTaskProject.Name = "cmbTaskProject";
             this.cmbTaskProject.Size = new System.Drawing.Size(199, 36);
             this.cmbTaskProject.TabIndex = 37;
-            this.cmbTaskProject.SelectedIndexChanged += new System.EventHandler(this.cmbTaskProject_SelectedIndexChanged);
             this.cmbTaskProject.SelectedValueChanged += new System.EventHandler(this.cmbTaskProject_SelectedValueChanged);
             // 
             // txTaskComment

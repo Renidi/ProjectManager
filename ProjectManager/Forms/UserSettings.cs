@@ -13,7 +13,7 @@ namespace ProjectManager
     public partial class UserSettings : Form
     {
 
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         public string Mail { get; set; }
 
@@ -26,7 +26,7 @@ namespace ProjectManager
         private void UserSettings_Load(object sender, EventArgs e)
         {
             user.UserMail = Mail;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(-1, user.UserMail);
             lblUserMail.Text = user.UserMail;
             lblUserName.Text = user.UserName + " " + user.UserSurname;
         }
@@ -55,9 +55,9 @@ namespace ProjectManager
                 {
                     if (!cbPasswordOrSecret.Checked) 
                     {
-                        if (sqlDbHelper.Login(Mail, txCurrentPasswordOrSecretWord.Text))
+                        if (sqlHelper.Login(Mail, txCurrentPasswordOrSecretWord.Text))
                         {
-                            sqlDbHelper.ChangePassword(Mail, txNewPassword.Text);
+                            sqlHelper.ChangePassword(Mail, txNewPassword.Text);
                             MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }
@@ -68,9 +68,9 @@ namespace ProjectManager
                     }
                     else
                     {
-                        if (sqlDbHelper.CheckSecretWord(user.UserMail, txCurrentPasswordOrSecretWord.Text))
+                        if (sqlHelper.SecretWordCheck(user.UserMail, txCurrentPasswordOrSecretWord.Text))
                         {
-                            sqlDbHelper.ChangePassword(user.UserMail, txNewPassword.Text);
+                            sqlHelper.ChangePassword(user.UserMail, txNewPassword.Text);
                             MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }

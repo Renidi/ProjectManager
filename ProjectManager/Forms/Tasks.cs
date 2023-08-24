@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ProjectManager.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,12 +14,13 @@ namespace ProjectManager
 {
     public partial class Tasks : Form
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
         SqlHelper sqlHelper = new SqlHelper();
-        Project project = new Project();
-        Task task = new Task();
         User user = new User();
+        Task task = new Task();
         Log log = new Log();
+
+        List<Project> projectsList;
+        List<User> userList;
         public string Mail { get; set; }
         public int varId;
         public Tasks(string mail)
@@ -27,32 +30,35 @@ namespace ProjectManager
         }
         private void Tasks_Load(object sender, EventArgs e)
         {
-            dtTaskEndDate.Value = DateTime.Now;
-            dtTaskStartDate.Value = DateTime.Now;
-            user.UserMail = Mail;
-            List<string> tempList = sqlDbHelper.TakeProjectsName("PROJECT");
+            user = sqlHelper.GetUserInfo(-1,Mail);
+            projectsList = sqlHelper.GetProjects(user.UserId);
 
-
-            for(int i=0; i<tempList.Count; i++)
+            for(int i=0; i<projectsList.Count; i++)
             {
-                cmbTaskProject.Items.Add(tempList[i]);
+                cmbTaskProject.Items.Add(projectsList[i].ProjectName);
             }
 
-            
+            userList = sqlHelper.GetUserList(user.UserId);
+            for(int i =0; i<userList.Count; i++)
+            {
+                cmbTaskEmployee.Items.Add(userList[i].UserMail);
+            }
 
-            cmbTaskProject.StartIndex = 0;
             DoubleBuffered = true;
             Dt();
         }
         private void Dt()
         {
-            dgvActiveTasks.DataSource = sqlDbHelper.LoadData("TASK",user.UserMail);
+            dgvActiveTasks.DataSource = sqlHelper.GetDataTable("TASK", user.UserId);
             //dgvActiveTasks.Columns["TASK_ID"].Visible = false;
 
             for(int i = 1; i < dgvActiveTasks.Columns.Count; i++)
             {
                 dgvActiveTasks.Columns[i].HeaderText = dgvActiveTasks.Columns[i].HeaderText.Replace('_', ' ');
             }
+
+            dtTaskEndDate.Value = DateTime.Now;
+            dtTaskStartDate.Value = DateTime.Now;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -62,30 +68,22 @@ namespace ProjectManager
             task.TaskPriority = cmbTaskPriority.Text;
             task.TaskStartDate = dtTaskStartDate.Value;
             task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays)); // Düzenlenecek
-            task.TaskOwner = cmbTaskEmployee.Text;
-            task.TaskProject = cmbTaskProject.Text;
+            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays)); // Düzenlenecek total task süresini gösteriyor ama sadece kalan olacak ve db den silinecek
+            task.TaskOwnerId = cmbTaskEmployee.SelectedIndex!= -1 ? userList[cmbTaskEmployee.SelectedIndex].UserId : user.UserId;
+            task.TaskProjectId = projectsList[cmbTaskProject.SelectedIndex].ProjectId;
             task.TaskDescription = txTaskComment.Text;
-
-            Project proje = new Project();
-            //proje = sqlDbHelper.proje
-
-            //task.TaskGroupId = cmbTaskProject.Text 
-            //project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
 
             DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName+" to tasks ?", "Add Task ", MessageBoxButtons.YesNo , MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                // sqlDbHelper.SaveTask(task);
-
                 log.LogSource = "Task";
                 log.LogType = "Save";
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Add " + task.TaskName + " and Id : " + task.TaskId;
-                log.LogStatus = sqlDbHelper.SaveTask(task).ToString(); 
+                log.LogStatus = sqlHelper.NewTask(task).ToString();
 
-                sqlDbHelper.DataLog(log);
+                sqlHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -101,8 +99,8 @@ namespace ProjectManager
             task.TaskStartDate = dtTaskStartDate.Value;
             task.TaskEndDate = dtTaskEndDate.Value;
             task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays));
-            task.TaskOwner = user.UserMail;
-            task.TaskProject = cmbTaskProject.Text;
+            task.TaskOwnerId = userList[cmbTaskEmployee.SelectedIndex].UserId;
+            task.TaskProjectId = projectsList[cmbTaskProject.SelectedIndex].ProjectId;
             task.TaskDescription = txTaskComment.Text;
             task.TaskId = varId;
 
@@ -116,9 +114,9 @@ namespace ProjectManager
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Changes on " + task.TaskName + " and Id : "+ task.TaskId;
-                log.LogStatus = sqlDbHelper.EditTask(task).ToString();
+                log.LogStatus = sqlHelper.EditData(null,task).ToString();
 
-                sqlDbHelper.DataLog(log);
+                sqlHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -136,11 +134,9 @@ namespace ProjectManager
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Deleted " + task.TaskName + " and Id : " + task.TaskId;
-                log.LogStatus = sqlDbHelper.Delete("TASK",null,task).ToString();
+                log.LogStatus = sqlHelper.DeleteData("TASK",task.TaskId).ToString();
 
-                sqlDbHelper.DataLog(log);
-
-                //sqlDbHelper.Delete("TASK", null, task);
+                sqlHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -174,14 +170,20 @@ namespace ProjectManager
         {
             try
             {
-                task.TaskName = txTaskName.Text = dgvActiveTasks.SelectedRows[0].Cells[1].Value.ToString();
-                task.TaskOwner = cmbTaskEmployee.Text = dgvActiveTasks.Rows[0].Cells[6].Value.ToString();
-                task.TaskStatus = cmbTaskStatus.Text = dgvActiveTasks.SelectedRows[0].Cells[2].Value.ToString();
-                task.TaskPriority = cmbTaskPriority.Text = dgvActiveTasks.SelectedRows[0].Cells[3].Value.ToString();
-                task.TaskEndDate = dtTaskEndDate.Value = Convert.ToDateTime(dgvActiveTasks.SelectedRows[0].Cells[5].Value);
-                task.TaskProject = cmbTaskProject.Text = dgvActiveTasks.SelectedRows[0].Cells[7].Value.ToString();
-                task.TaskDescription = txTaskComment.Text = dgvActiveTasks.SelectedRows[0].Cells[8].Value.ToString();
-                task.TaskId = varId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
+                varId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
+                task = sqlHelper.GetTaskInfo(varId);
+                Project project = sqlHelper.GetProjectInfo(task.TaskProjectId);
+                User user = sqlHelper.GetUserInfo(task.TaskOwnerId);
+                Entities.Group group = sqlHelper.GetGroupInfo(task.TaskGroupId);
+
+                txTaskName.Text = task.TaskName;
+                cmbTaskStatus.Text = task.TaskStatus;
+                dtTaskStartDate.Value = task.TaskStartDate;
+                dtTaskEndDate.Value = task.TaskEndDate;
+                cmbTaskProject.Text = project.ProjectName;
+                cmbTaskEmployee.Text = user.UserName;
+                cmbTaskTeam.Text = group.GroupName;
+
             }
             catch{ }
   
@@ -189,7 +191,14 @@ namespace ProjectManager
 
         private void cmbTaskProject_SelectedValueChanged(object sender, EventArgs e)
         {
-            cmbTaskTeam.Items.Add("TAKIM"); // FROM DB PROJECT 
+            userList.Clear();
+            cmbTaskEmployee.Items.Clear();
+
+            userList = sqlHelper.GetUserList(user.UserId, projectsList[cmbTaskProject.SelectedIndex].ProjectId);
+            for (int i = 0; i < userList.Count; i++)
+            {
+                cmbTaskEmployee.Items.Add(userList[i].UserMail);
+            }
         }
 
         private void cmbTaskProject_SelectedIndexChanged(object sender, EventArgs e)

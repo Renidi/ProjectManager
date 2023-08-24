@@ -15,14 +15,19 @@ namespace ProjectManager
     {
         static DateTime currentDt = DateTime.Now;
         static int currentMonth = currentDt.Month;
-        static int currentYear = currentDt.Year;  
-        public Calendar()
+        static int currentYear = currentDt.Year;
+        User user = new User();
+        SqlHelper sqlHelper = new SqlHelper();
+        public int userId { get; set; }
+        public Calendar(int getUserId)
         {
+            userId = getUserId;
             InitializeComponent();
         }
 
         private void Calendar_Load(object sender, EventArgs e)
         {
+            user = sqlHelper.GetUserInfo(userId);
             displayDays();
         }
         private void displayDays()
@@ -41,7 +46,7 @@ namespace ProjectManager
             for (int i = 1;i <= days ; i++)
             {
                 DayControl dayControl = new DayControl();
-                dayControl.Days(i, i + "." + currentMonth + "." + currentYear);
+                dayControl.Days(i, i + "." + currentMonth + "." + currentYear,user.UserId);
                 
                 flContainer.Controls.Add(dayControl);
             }

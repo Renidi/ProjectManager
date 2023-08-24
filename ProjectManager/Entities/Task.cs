@@ -15,8 +15,9 @@ namespace ProjectManager
         public DateTime TaskStartDate { get; set; }
         public DateTime TaskEndDate { get; set; }
         public int TaskDuration { get; set; }
-        public string TaskOwner { get; set; }
-        public string TaskProject { get; set; }
+        public int TaskOwnerId { get; set; }
+        public int TaskCreatorId { get; set; }
+        public int TaskProjectId { get; set; }
         public int TaskGroupId { get; set; }
         public string TaskDescription { get; set; }
 

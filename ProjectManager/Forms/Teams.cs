@@ -18,7 +18,7 @@ namespace ProjectManager
     
     public partial class Teams : Form
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         UserGroup userGroup = new UserGroup();  
@@ -26,15 +26,13 @@ namespace ProjectManager
         public string Mail { get; set; }
         public int varId;
 
-
-
         public Teams(string userMail)
         {
             InitializeComponent();
             SetStyle(ControlStyles.UserMouse | ControlStyles.Selectable, true);
             Mail = userMail;
             user.UserMail = Mail;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(-1, user.UserMail);
         }
         
         private void Teams_Load(object sender, EventArgs e)
@@ -45,10 +43,10 @@ namespace ProjectManager
         {
             pnlTeams.Controls.Clear();
             pnlTeams.AutoScroll = false;
-            List<Team> teams = sqlDbHelper.TakeTeams(user.UserId);
-            foreach (Team aTeam in teams)
+            List<UserGroup> groups = sqlHelper.GetTeams(user.UserId);
+            foreach (UserGroup inGroup in groups)
             {
-                TeamControl teamControl = new TeamControl(aTeam,this);
+                TeamControl teamControl = new TeamControl(inGroup,this,user.UserId);
                 pnlTeams.Controls.Add(teamControl);
             }
             pnlTeams.AutoScroll = true;
@@ -60,10 +58,12 @@ namespace ProjectManager
             pnlMemebers.AutoScroll = false;
             for (int i = 0; i < userList.Count; i++)
             {
-                user = userList[i]; userGroup = userGroupInfo[i];
+                user = userList[i]; 
+                userGroup = userGroupInfo[i];
                 UserControlTeams userControlTeams = new UserControlTeams(userGroup,user);
                 pnlMemebers.Controls.Add(userControlTeams);
             }
+            pnlMemebers.AutoScroll=true;
 
         }
 

@@ -14,11 +14,10 @@ namespace ProjectManager.Forms
 {
     public partial class CreateProject : Form
     {
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
+        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         Log log = new Log();
-        Team team = new Team();
         Group group = new Group();
         public string Mail { get; set; }
 
@@ -35,14 +34,14 @@ namespace ProjectManager.Forms
             dtProjectEndDate.Value = DateTime.Now;
 
             user.UserMail = Mail;
-            user = sqlDbHelper.UserInfo(user);
+            user = sqlHelper.GetUserInfo(-1,user.UserMail);
             Dt();
 
-            List<Team> tempTeamList = sqlDbHelper.TakeTeams(user.UserId);
+            List<UserGroup> tempTeamList = sqlHelper.GetTeams(user.UserId);
             for (int i = 0; i < tempTeamList.Count; i++)
             {
                 group.GroupId = tempTeamList[i].GroupId;
-                group = sqlDbHelper.TakeInformationOfGroup(group);
+                group = sqlHelper.GetGroupInfo(group.GroupId);
                 cmbTeam.Items.Add(group.GroupName);
                 cmbProjectTeamIdHidden.Items.Add(group.GroupId);
             }
@@ -51,22 +50,28 @@ namespace ProjectManager.Forms
         {
             try
             {
-                txProjectName.Text = dgvActiveProjects.SelectedRows[0].Cells[1].Value.ToString();
-                cmbProjectStatus.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[2].Value.ToString();
-                cmbProjectPriority.SelectedItem = dgvActiveProjects.SelectedRows[0].Cells[3].Value.ToString();
-                dtProjectStartDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[4].Value);
-                dtProjectEndDate.Value = Convert.ToDateTime(dgvActiveProjects.SelectedRows[0].Cells[5].Value);
                 varId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
-                txProjectComment.Text = dgvActiveProjects.SelectedRows[0].Cells[9].Value.ToString();
+                project = sqlHelper.GetProjectInfo(varId);
+
+                txProjectName.Text = project.ProjectName;
+                cmbProjectStatus.SelectedItem = project.ProjectStatus;
+                cmbProjectPriority.SelectedItem = project.ProjectPriority;
+                dtProjectStartDate.Value = project.ProjectStartDate;
+                dtProjectEndDate.Value = project.ProjectEndDate;
+                txProjectComment.Text = project.ProjectDescription;
             }
             catch { }
         }
         private void Dt()
         {
-            dgvActiveProjects.DataSource = sqlDbHelper.LoadData("PROJECT");
-            dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
-            dgvActiveProjects.Columns["PROJECT_GROUP_ID"].Visible = false;
-            dgvActiveProjects.Columns["PROJECT GROUP"].DisplayIndex = 7;
+            dgvActiveProjects.DataSource = sqlHelper.GetDataTable("PROJECT",user.UserId);
+            if(dgvActiveProjects.Columns["PROJECT_ID"]!= null)
+                dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
+            if(dgvActiveProjects.Columns["PROJECT_GROUP_ID"]!=null)
+                dgvActiveProjects.Columns["PROJECT_GROUP_ID"].Visible = false;
+            if(dgvActiveProjects.Columns["PROJECT GROUP"]!=null)
+                dgvActiveProjects.Columns["PROJECT GROUP"].DisplayIndex = 7;
+
             for (int i = 1; i < dgvActiveProjects.Columns.Count; i++)
             {
                 dgvActiveProjects.Columns[i].HeaderText = dgvActiveProjects.Columns[i].HeaderText.Replace('_', ' ');
@@ -95,7 +100,7 @@ namespace ProjectManager.Forms
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectCreator = user.UserMail;
+            project.ProjectCreatorId = user.UserId;
             project.ProjectStartDate = dtProjectStartDate.Value;
             project.ProjectEndDate = dtProjectEndDate.Value;
             project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays)); // Düzenlenecek
@@ -112,9 +117,9 @@ namespace ProjectManager.Forms
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Add Project " + project.ProjectName;
-                log.LogStatus = sqlDbHelper.SaveProject(project).ToString();
+                log.LogStatus = sqlHelper.NewProject(project).ToString();
 
-                sqlDbHelper.DataLog(log);
+                sqlHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -126,9 +131,8 @@ namespace ProjectManager.Forms
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectCreator = user.UserMail;
             project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));
+            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));  // Değişecek mantığı
             project.ProjectDescription = txProjectComment.Text;
             project.ProjectId = varId;
             project.ProjectGroupId = Convert.ToInt32(cmbProjectTeamIdHidden.Text);
@@ -141,10 +145,10 @@ namespace ProjectManager.Forms
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Changes on " + project.ProjectName + ", Id : " + project.ProjectId;
-                log.LogStatus = sqlDbHelper.EditProject(project).ToString();
+                log.LogStatus = sqlHelper.EditData(project).ToString();
 
                 // sqlDbHelper.EditProject(project);
-                sqlDbHelper.DataLog(log);
+                sqlHelper.DataLog(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -157,7 +161,7 @@ namespace ProjectManager.Forms
             project.ProjectName = txProjectName.Text;
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectCreator = user.UserMail;
+            project.ProjectCreatorId = user.UserId;
             project.ProjectEndDate = dtProjectEndDate.Value;
             project.ProjectId = varId;
 
@@ -169,9 +173,9 @@ namespace ProjectManager.Forms
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
-                log.LogStatus = sqlDbHelper.Delete("PROJECT", project).ToString();
+                log.LogStatus = sqlHelper.DeleteData("PROJECT", project.ProjectId).ToString();
 
-                sqlDbHelper.DataLog(log);
+                sqlHelper.DataLog(log);
 
             }
             else

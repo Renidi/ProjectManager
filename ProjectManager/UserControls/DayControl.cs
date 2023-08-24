@@ -16,69 +16,49 @@ namespace ProjectManager
         {
             InitializeComponent();
         }
-        SqlDbHelper sqlDbHelper = new SqlDbHelper();
         Project project = new Project();
         User user = new User();
+        SqlHelper sqlHelper = new SqlHelper();
         static DateTime currentDt = DateTime.Now.Date;
 
         private void DayControl_Load(object sender, EventArgs e)
         {
             
         }
-        public void Days(int numDay, string dateDay)
+        public void Days(int numDay, string dateDay,int userId)
         {
             lbl.Text = numDay.ToString();
-            List <string> tempList = new List <string>();
-            tempList = sqlDbHelper.TakeProjectsName("PROJECT",dateDay);
+
             if (Convert.ToDateTime(dateDay).ToString() == currentDt.ToString())
             {
                 lbl.Font = new Font("Microsoft Sans Serif", 12,FontStyle.Bold);
                 lbl.ForeColor = Color.Blue;
             }
 
-
-            for (int i = 0; i < tempList.Count; i+=2)
+            List<Task> taskList = sqlHelper.GetTasks(userId);
+            List<Task> todaysTask = new List<Task>();
+            foreach (Task temp in taskList)
             {
-                switch(i)
-                {
-                    case 0:
-                        lblProject1.Text = tempList[i];
-                        if (tempList[i + 1] == "MEDIUM")
-                        {
-                            lblProject1.ForeColor = Color.Orange;
-
-                        }
-                        else if (tempList[i + 1] == "HIGH")
-                        {
-                            lblProject1.ForeColor = Color.Red;
-                        }
-                        break;
-                    case 2:
-                        lblProject2.Text = tempList[i];
-                        if (tempList[i + 1] == "MEDIUM")
-                        {
-                            lblProject2.ForeColor = Color.Orange;
-
-                        }
-                        else if (tempList[i + 1] == "HIGH")
-                        {
-                            lblProject2.ForeColor = Color.Red;
-                        }
-                        break;
-                    case 4:
-                        lblProject3.Text = tempList[i];
-                        if (tempList[i + 1] == "MEDIUM")
-                        {
-                            lblProject3.ForeColor = Color.Orange;
-
-                        }
-                        else if (tempList[i + 1] == "HIGH")
-                        {
-                            lblProject3.ForeColor = Color.Red;
-                        }
-                        break;
-                }
+                if (temp.TaskEndDate == currentDt)
+                    todaysTask.Add(temp);
             }
+
+            int loopCount = todaysTask.Count>3 ? 3 : todaysTask.Count;
+            List<Label> labels = new List<Label>() { lblProject1,lblProject2,lblProject3 };
+            for (int i = 0; i < loopCount; i++)
+            {
+                Task task = todaysTask[i];
+                Label label = labels[i];
+
+                label.Text = task.TaskName;
+                if (task.TaskStatus == "COMPLETED")
+                    label.ForeColor = Color.Green;
+                else if (task.TaskPriority == "MEDIUM")
+                    label.ForeColor = Color.OrangeRed;
+                else if (task.TaskPriority == "HIGH")
+                    label.ForeColor = Color.Red;
+            }
+
         }
 
         private void DayControl_Click(object sender, EventArgs e)

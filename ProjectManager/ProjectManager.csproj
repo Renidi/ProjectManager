@@ -321,7 +321,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Group.cs" />
-    <Compile Include="Entities\Team.cs" />
     <Compile Include="Entities\UserGroup.cs" />
     <Compile Include="Forms\Calendar.cs">
       <SubType>Form</SubType>
@@ -392,7 +391,6 @@
     <Compile Include="UserControls\TeamControl.Designer.cs">
       <DependentUpon>TeamControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SqlDbHelper.cs" />
     <Compile Include="Forms\Entry.cs">
       <SubType>Form</SubType>
     </Compile>
