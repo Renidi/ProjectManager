@@ -25,8 +25,8 @@ namespace ProjectManager
                 string tableName = typeof(T).Name;
                 PropertyInfo[] properties = typeof(T).GetProperties();
 
-                var strCol = string.Join(",", properties.Skip(1).Select(r => ConvertPropName(r.Name)));
-                var strParam = string.Join(",", properties.Skip(1).Select(r => "@"+ConvertPropName(r.Name)));
+                string strCol = string.Join(",", properties.Skip(1).Select(r => ConvertPropName(r.Name)));
+                string strParam = string.Join(",", properties.Skip(1).Select(r => "@"+ConvertPropName(r.Name)));
                 string sql = "INSERT INTO [" + tableName + "] (" + strCol + ") VALUES(" + strParam + ")";
 
                 using (con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
@@ -51,17 +51,24 @@ namespace ProjectManager
             return false;
         }
         public T Read(T t)
-        {
-            List<T> list = new List<T>();   
+        { 
             try
             {
                 string tableName = typeof(T).Name;
                 PropertyInfo[] properties = typeof(T).GetProperties();
 
-                var strCol = string.Join(",",properties.Select(p=>ConvertPropName(p.Name)));
-                var strParam = string.Join(",",properties.Select(p=>"@"+ConvertPropName(p.Name)));
+                string strCol = string.Join(",",properties.Select(p=>ConvertPropName(p.Name)));
+                string strParam = string.Join(",",properties.Select(p=>"@"+ConvertPropName(p.Name)));
+                string sql = "SELECT * FROM [" + tableName + "] WHERE "+tableName+"_ID=@"+tableName+"_ID";
 
-
+                using (con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    con.Open();
+                    cmd = new SqlCommand(sql, con);
+                    cmd.Parameters.AddWithValue("@"+ tableName + "_ID", properties[0].GetValue(t));
+                    
+                
+                }
 
 
             }
