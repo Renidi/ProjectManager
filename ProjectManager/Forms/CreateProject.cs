@@ -69,7 +69,9 @@ namespace ProjectManager.Forms
                 dgvActiveProjects.Columns["PROJECT_ID"].Visible = false;
             if(dgvActiveProjects.Columns["PROJECT_GROUP_ID"]!=null)
                 dgvActiveProjects.Columns["PROJECT_GROUP_ID"].Visible = false;
-            if(dgvActiveProjects.Columns["PROJECT GROUP"]!=null)
+            if (dgvActiveProjects.Columns["PROJECT_CREATOR_ID"]!= null)
+                dgvActiveProjects.Columns["PROJECT_CREATOR_ID"].Visible = false;
+            if (dgvActiveProjects.Columns["PROJECT GROUP"]!=null)
                 dgvActiveProjects.Columns["PROJECT GROUP"].DisplayIndex = 7;
 
             for (int i = 1; i < dgvActiveProjects.Columns.Count; i++)
@@ -103,7 +105,6 @@ namespace ProjectManager.Forms
             project.ProjectCreatorId = user.UserId;
             project.ProjectStartDate = dtProjectStartDate.Value;
             project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays)); // Düzenlenecek
             project.ProjectDescription = txProjectComment.Text;
             project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1; 
             
@@ -117,7 +118,9 @@ namespace ProjectManager.Forms
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Add Project " + project.ProjectName;
-                log.LogStatus = sqlHelper.NewProject(project).ToString();
+                //log.LogStatus = sqlHelper.NewProject(project).ToString();
+                GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
+                log.LogStatus = genericSqlHelper.Create(project).ToString();
 
                 sqlHelper.DataLog(log);
             }
@@ -132,7 +135,6 @@ namespace ProjectManager.Forms
             project.ProjectStatus = cmbProjectStatus.Text;
             project.ProjectPriority = cmbProjectPriority.Text;
             project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectDuration = Convert.ToInt32(Math.Ceiling((dtProjectEndDate.Value - dtProjectStartDate.Value).TotalDays));  // Değişecek mantığı
             project.ProjectDescription = txProjectComment.Text;
             project.ProjectId = varId;
             project.ProjectGroupId = Convert.ToInt32(cmbProjectTeamIdHidden.Text);

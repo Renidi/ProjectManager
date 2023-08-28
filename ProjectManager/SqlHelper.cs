@@ -2,20 +2,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace ProjectManager
 {
-    internal class SqlHelper
+    public class SqlHelper
     {
         SqlCommand cmd;
         SqlDataReader rd;
@@ -41,7 +35,7 @@ namespace ProjectManager
                     Con.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -67,17 +61,18 @@ namespace ProjectManager
                     Con.Close();
                     return true;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
-        public bool SecretWordCheck(string userMail, string userSecretWord) 
+        public bool SecretWordCheck(string userMail, string userSecretWord)
         {
-            try 
+            try
             {
-                using(SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     SqlCommand cmd = new SqlCommand("SELECT * FROM [USER] WHERE USER_MAIL = @USER_MAIL AND USER_SECRET_WORD = @USER_SECRET_WORD", Con);
                     cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
@@ -91,7 +86,7 @@ namespace ProjectManager
                     Con.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -110,7 +105,7 @@ namespace ProjectManager
                     cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
                     Con.Open();
                     cmd.ExecuteNonQuery();
-                    Con.Close();    
+                    Con.Close();
                     UpdateLastLoginDate(userMail);
                     return true;
                 }
@@ -150,39 +145,35 @@ namespace ProjectManager
                 List<int> authorizedGroupIds = GetAuthorityGroupList(userId);
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    using(DataTable dt =  new DataTable())
+                    using (DataTable dt = new DataTable())
                     {
-                        adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE "+ table +"_CREATOR_ID=@" + table + "_CREATOR_ID", Con);
+                        adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE " + table + "_CREATOR_ID=@" + table + "_CREATOR_ID", Con);
                         // SELECT * FROM [PROJECT] WHERE PROJECT_CREATOR_ID=@PROJECT_CREATOR_ID
                         adapter.SelectCommand.Parameters.AddWithValue("@" + table + "_CREATOR_ID", userId);
                         adapter.Fill(dt);
+                        DataColumn newColumn = new DataColumn(table + " GROUP", typeof(string));
+                        dt.Columns.Add(newColumn);
+
                         foreach (var groupId in authorizedGroupIds)
                         {
-                            adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE "+table+"_GROUP_ID=@"+table+"_GROUP_ID ", Con);
+                            adapter = new SqlDataAdapter("SELECT * FROM [" + table + "] WHERE " + table + "_GROUP_ID=@" + table + "_GROUP_ID ", Con);
                             // SELECT * FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID
-                            adapter.SelectCommand.Parameters.AddWithValue("@"+table+"_GROUP_ID",groupId);
+                            adapter.SelectCommand.Parameters.AddWithValue("@" + table + "_GROUP_ID", groupId);
                             adapter.Fill(dt);
-                            if (dt.Columns.Contains("PROJECT_GROUP_ID"))
+                            int groupIdColumnIndex = dt.Columns[table + "_GROUP_ID"].Ordinal;
+                            int groupNameColumnIndex = dt.Columns[table + " GROUP"].Ordinal;
+                            foreach (DataRow dr in dt.Rows)
                             {
-                                int groupIdColumnIndex = dt.Columns["PROJECT_GROUP_ID"].Ordinal;
-
-                                DataColumn newColumn = new DataColumn("PROJECT GROUP", typeof(string));
-                                dt.Columns.Add(newColumn);
-
-                                int groupNameColumnIndex = dt.Columns["PROJECT GROUP"].Ordinal;
-                                foreach (DataRow dr in dt.Rows)
+                                int projectGroupId = Convert.ToInt32(dr[groupIdColumnIndex]);
+                                Group tempGroup = new Group();
+                                if (groupId != -1 && projectGroupId != -1)
                                 {
-                                    int projectGroupId = Convert.ToInt32(dr[groupIdColumnIndex]);
-                                    Group tempGroup = new Group();
-                                    if (groupId != -1 && projectGroupId != -1)
-                                    {
-                                        tempGroup = GetGroupInfo(projectGroupId);
-                                        dr[groupNameColumnIndex] = tempGroup == null ? "No Group" : tempGroup.GroupName;
-                                    }
-                                    else
-                                    {
-                                        dr[groupNameColumnIndex] = "No Group";
-                                    }
+                                    tempGroup = GetGroupInfo(projectGroupId);
+                                    dr[groupNameColumnIndex] = tempGroup == null ? "No Group" : tempGroup.GroupName;
+                                }
+                                else
+                                {
+                                    dr[groupNameColumnIndex] = "No Group";
                                 }
                             }
                         }
@@ -196,7 +187,7 @@ namespace ProjectManager
                             }
                             else
                             {
-                                hTable.Add(dr[table + "_ID"],string.Empty);
+                                hTable.Add(dr[table + "_ID"], string.Empty);
                             }
                         }
                         foreach (DataRow dr in duplicates)
@@ -206,7 +197,8 @@ namespace ProjectManager
                         return dt;
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -217,11 +209,11 @@ namespace ProjectManager
             List<int> groupIdList = new List<int>();
             try
             {
-                
+
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("SELECT GROUP_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUPS] WHERE USER_ID=@USER_ID", Con);
-                    cmd.Parameters.AddWithValue("@USER_ID",userId);
+                    cmd = new SqlCommand("SELECT GROUP_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUP] WHERE USER_ID=@USER_ID", Con);
+                    cmd.Parameters.AddWithValue("@USER_ID", userId);
                     using (Con)
                     {
                         Con.Open();
@@ -248,10 +240,10 @@ namespace ProjectManager
 
             return groupIdList;
         }
-        
-        public User GetUserInfo(int userId,string userMail=null)
+
+        public User GetUserInfo(int userId, string userMail = null)
         {
-            
+
             try
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
@@ -267,9 +259,9 @@ namespace ProjectManager
                         cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
                     }
                     Con.Open();
-                    using (rd = cmd.ExecuteReader()) 
+                    using (rd = cmd.ExecuteReader())
                     {
-                        while(rd.Read())
+                        while (rd.Read())
                         {
                             User user = new User()
                             {
@@ -287,14 +279,14 @@ namespace ProjectManager
                 }
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return null;
         }
-        public List<User> GetUserList(int userId,int filteredGroupId = -1)
+        public List<User> GetUserList(int userId, int filteredGroupId = -1)
         {
             try
             {
@@ -306,7 +298,7 @@ namespace ProjectManager
 
                     void innerFunc(int innerGroupId)
                     {
-                        cmd = new SqlCommand("SELECT USER_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUPS] WHERE GROUP_ID=@GROUP_ID", Con);
+                        cmd = new SqlCommand("SELECT USER_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUP] WHERE GROUP_ID=@GROUP_ID", Con);
                         cmd.Parameters.AddWithValue("@GROUP_ID", innerGroupId);
                         Con.Open();
                         using (rd = cmd.ExecuteReader())
@@ -331,15 +323,15 @@ namespace ProjectManager
                     }
                     else
                     {
-                        innerFunc(filteredGroupId);
+                        innerFunc(userId);
                     }
 
                     userIdList = userIdList.Distinct().ToList(); // Remove duplicates
-                    foreach(int tempUserId in userIdList)
+                    foreach (int tempUserId in userIdList)
                     {
                         userList.Add(GetUserInfo(tempUserId));
                     }
-                    
+
                     return userList;
                 }
             }
@@ -356,20 +348,20 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("SELECT USER_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUPS] WHERE GROUP_ID=@GROUP_ID", Con);
-                    cmd.Parameters.AddWithValue("@GROUP_ID",groupId);
+                    cmd = new SqlCommand("SELECT USER_ID,USER_GROUP_AUTHORIZATION FROM [USER_GROUP] WHERE GROUP_ID=@GROUP_ID", Con);
+                    cmd.Parameters.AddWithValue("@GROUP_ID", groupId);
                     Con.Open();
                     using (rd = cmd.ExecuteReader())
                     {
                         var tempUserIdList = new List<int>();
                         List<User> userList = new List<User>();
-                        while(rd.Read())
+                        while (rd.Read())
                         {
-                            if (rd.GetInt32(1)>0) // USER_GROUP_AUTHORIZATION = 0 invited 
+                            if (rd.GetInt32(1) > 0) // USER_GROUP_AUTHORIZATION = 0 invited 
                                 tempUserIdList.Add(rd.GetInt32(0));
                         }
-                        
-                        foreach(int userId in tempUserIdList)
+
+                        foreach (int userId in tempUserIdList)
                         {
                             User user = GetUserInfo(userId);
                             userList.Add(user);
@@ -392,7 +384,7 @@ namespace ProjectManager
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     cmd = new SqlCommand("SELECT * FROM [PROJECT] WHERE PROJECT_ID=@PROJECT_ID", Con);
-                    cmd.Parameters.AddWithValue("@PROJECT_ID",projectId);
+                    cmd.Parameters.AddWithValue("@PROJECT_ID", projectId);
                     Con.Open();
                     using (rd = cmd.ExecuteReader())
                     {
@@ -406,7 +398,6 @@ namespace ProjectManager
                                 ProjectPriority = rd["PROJECT_PRIORITY"].ToString(),
                                 ProjectStartDate = Convert.ToDateTime(rd["PROJECT_START_DATE"]),
                                 ProjectEndDate = Convert.ToDateTime(rd["PROJECT_END_DATE"]),
-                                ProjectDuration = Convert.ToInt32(rd["PROJECT_DURATION"]),
                                 ProjectGroupId = Convert.ToInt32(rd["PROJECT_GROUP_ID"]),
                                 ProjectCreatorId = Convert.ToInt32(rd["PROJECT_CREATOR_ID"]),
                                 ProjectDescription = rd["PROJECT_DESCRIPTION"].ToString(),
@@ -429,8 +420,8 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("SELECT * FROM [TASK] WHERE TASK_ID = @TASK_ID",Con);
-                    cmd.Parameters.AddWithValue("@TASK_ID",taskId);
+                    cmd = new SqlCommand("SELECT * FROM [TASK] WHERE TASK_ID = @TASK_ID", Con);
+                    cmd.Parameters.AddWithValue("@TASK_ID", taskId);
                     Con.Open();
                     using (rd = cmd.ExecuteReader())
                     {
@@ -454,7 +445,7 @@ namespace ProjectManager
                             return task;
                         }
                     }
-                       
+
                 }
             }
             catch (Exception ex)
@@ -471,13 +462,13 @@ namespace ProjectManager
                 {
                     List<int> authGroupIdList = GetAuthorityGroupList(userId);
                     List<int> taskIdList = new List<int>();
-                    List<Task> tasks = new List<Task>(); 
+                    List<Task> tasks = new List<Task>();
                     foreach (var authGroupId in authGroupIdList)
                     {
                         cmd = new SqlCommand("SELECT TASK_ID FROM [TASK] WHERE TASK_GROUP_ID=@TASK_GROUP_ID OR TASK_CREATOR_ID=@TASK_CREATOR_ID OR TASK_OWNER_ID=@TASK_OWNER_ID ", Con);
-                        cmd.Parameters.AddWithValue("@TASK_GROUP_ID",authGroupId);
+                        cmd.Parameters.AddWithValue("@TASK_GROUP_ID", authGroupId);
                         cmd.Parameters.AddWithValue("@TASK_CREATOR_ID", userId);
-                        cmd.Parameters.AddWithValue("@TASK_OWNER_ID",userId);
+                        cmd.Parameters.AddWithValue("@TASK_OWNER_ID", userId);
                         Con.Open();
                         using (rd = cmd.ExecuteReader())
                         {
@@ -489,7 +480,7 @@ namespace ProjectManager
                         }
                         Con.Close();
                     }
-                    foreach(int taskId in taskIdList)
+                    foreach (int taskId in taskIdList)
                     {
                         tasks.Add(GetTaskInfo(taskId));
                     }
@@ -513,7 +504,7 @@ namespace ProjectManager
                     List<int> projectIdList = new List<int>();
                     List<Project> projects = new List<Project>();
                     cmd = new SqlCommand("SELECT PROJECT_ID FROM [PROJECT] WHERE PROJECT_CREATOR_ID=@PROJECT_CREATOR_ID", Con);
-                    cmd.Parameters.AddWithValue("@PROJECT_CREATOR_ID",userId);
+                    cmd.Parameters.AddWithValue("@PROJECT_CREATOR_ID", userId);
                     Con.Open();
                     using (rd = cmd.ExecuteReader())
                     {
@@ -526,10 +517,10 @@ namespace ProjectManager
                     foreach (int groupId in authorizedGroupIds)
                     {
                         cmd = new SqlCommand("SELECT PROJECT_ID FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID", Con);
-                        cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID",groupId);
+                        cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID", groupId);
                         Con.Open();
-                        using(rd = cmd.ExecuteReader())
-                        {   
+                        using (rd = cmd.ExecuteReader())
+                        {
                             while (rd.Read())
                             {
                                 projectIdList.Add(rd.GetInt32(0));
@@ -538,9 +529,9 @@ namespace ProjectManager
                         Con.Close();
                     }
                     projectIdList = projectIdList.Distinct().ToList();
-                    foreach(int projectId in projectIdList)
+                    foreach (int projectId in projectIdList)
                     {
-                        projects.Add( GetProjectInfo(projectId) );
+                        projects.Add(GetProjectInfo(projectId));
                     }
 
                     return projects;
@@ -592,7 +583,7 @@ namespace ProjectManager
             return null;
         }
 
-        public List<UserGroup> GetTeams(int userId,int filteredGroupId = -1)
+        public List<UserGroup> GetTeams(int userId, int filteredGroupId = -1)
         {
             try
             {
@@ -601,18 +592,18 @@ namespace ProjectManager
                     List<UserGroup> userGroups = new List<UserGroup>();
                     if (filteredGroupId == -1)
                     {
-                        cmd = new SqlCommand("SELECT * FROM [USER_GROUPS] WHERE USER_ID=@USER_ID", Con);
+                        cmd = new SqlCommand("SELECT * FROM [USER_GROUP] WHERE USER_ID=@USER_ID", Con);
                         cmd.Parameters.AddWithValue("@USER_ID", userId);
                     }
                     else
                     {
-                        cmd = new SqlCommand("SELECT * FROM [USER_GROUPS] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID", Con);
+                        cmd = new SqlCommand("SELECT * FROM [USER_GROUP] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID", Con);
                         cmd.Parameters.AddWithValue("@USER_ID", userId);
                         cmd.Parameters.AddWithValue("@GROUP_ID", filteredGroupId);
                     }
-                    
+
                     Con.Open();
-                    using(rd = cmd.ExecuteReader())
+                    using (rd = cmd.ExecuteReader())
                     {
                         while (rd.Read())// USER_GROUP_ID / USER_ID / GROUP_ID / USER_GROUP_AUTH / INVITE_DATE / PROCESS_DATE / INVITE_SENDER_ID / INVITE_STATUS
                         {               //         0     /    1    /    2     /        3        /      4      /      5       /       6          /       7
@@ -640,7 +631,7 @@ namespace ProjectManager
 
             return null;
         }
-        public (int,int) GetProjectAndTaskCounts(int groupId)
+        public (int, int) GetProjectAndTaskCounts(int groupId)
         {//  Project,Task
             int counterProject = 0;
             int counterTask = 0;
@@ -675,9 +666,9 @@ namespace ProjectManager
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return (counterProject,counterTask);
+            return (counterProject, counterTask);
         }
-        public int GetTaskCounts(int projectId) 
+        public int GetTaskCounts(int projectId)
         {
             var counter = 0;
             using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
@@ -686,9 +677,9 @@ namespace ProjectManager
                 {
                     using (cmd = new SqlCommand("SELECT COUNT(TASK_PROJECT_ID) FROM [TASK] WHERE TASK_PROJECT_ID=@TASK_PROJECT_ID", Con))
                     {
-                        cmd.Parameters.AddWithValue("@TASK_PROJECT_ID",projectId);
+                        cmd.Parameters.AddWithValue("@TASK_PROJECT_ID", projectId);
                         Con.Open();
-                        cmd.ExecuteNonQuery ();
+                        cmd.ExecuteNonQuery();
                         counter = Convert.ToInt32(cmd.ExecuteScalar());
                         Con.Close();
                         return counter;
@@ -702,7 +693,7 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    if(group.GroupName != null || group.GroupName != "")
+                    if (group.GroupName != null || group.GroupName != "")
                     {
                         cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_NAME=@GROUP_NAME AND GROUP_FOUNDER_ID=@GROUP_FOUNDER_ID AND GROUP_FORMATION_DATE=@GROUP_FORMATION_DATE", Con);
                         cmd.Parameters.AddWithValue("@GROUP_NAME", group.GroupName);
@@ -749,14 +740,13 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("INSERT INTO [PROJECT](PROJECT_NAME,PROJECT_STATUS,PROJECT_PRIORITY,PROJECT_START_DATE,PROJECT_END_DATE,PROJECT_DURATION,PROJECT_GROUP_ID,PROJECT_CREATOR_ID,PROJECT_DESCRIPTION)" +
-                                                     "values(@PROJECT_NAME,@PROJECT_STATUS,@PROJECT_PRIORITY,@PROJECT_START_DATE,@PROJECT_END_DATE,@PROJECT_DURATION,@PROJECT_GROUP_ID,@PROJECT_CREATOR_ID,@PROJECT_DESCRIPTION)", Con);
+                    cmd = new SqlCommand("INSERT INTO [PROJECT](PROJECT_NAME,PROJECT_STATUS,PROJECT_PRIORITY,PROJECT_START_DATE,PROJECT_END_DATE,PROJECT_GROUP_ID,PROJECT_CREATOR_ID,PROJECT_DESCRIPTION)" +
+                                                     "values(@PROJECT_NAME,@PROJECT_STATUS,@PROJECT_PRIORITY,@PROJECT_START_DATE,@PROJECT_END_DATE,@PROJECT_GROUP_ID,@PROJECT_CREATOR_ID,@PROJECT_DESCRIPTION)", Con);
                     cmd.Parameters.AddWithValue("@PROJECT_NAME", project.ProjectName);
                     cmd.Parameters.AddWithValue("@PROJECT_STATUS", project.ProjectStatus);
                     cmd.Parameters.AddWithValue("@PROJECT_PRIORITY", project.ProjectPriority);
                     cmd.Parameters.AddWithValue("@PROJECT_START_DATE", project.ProjectStartDate);
                     cmd.Parameters.AddWithValue("@PROJECT_END_DATE", project.ProjectEndDate);
-                    cmd.Parameters.AddWithValue("@PROJECT_DURATION", project.ProjectDuration);
                     cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID", project.ProjectGroupId);
                     cmd.Parameters.AddWithValue("@PROJECT_CREATOR_ID", project.ProjectCreatorId);
                     cmd.Parameters.AddWithValue("@PROJECT_DESCRIPTION", project.ProjectDescription);
@@ -772,7 +762,7 @@ namespace ProjectManager
             }
             return false;
         }
-        public bool NewTask(Task task) 
+        public bool NewTask(Task task)
         {
             try
             {
@@ -848,7 +838,7 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("INSERT INTO [USER_GROUPS](USER_ID , GROUP_ID , USER_GROUP_AUTHORIZATION , INVITE_DATE , INVITE_SENDER_ID , INVITE_STATUS )" +
+                    cmd = new SqlCommand("INSERT INTO [USER_GROUP](USER_ID , GROUP_ID , USER_GROUP_AUTHORIZATION , INVITE_DATE , INVITE_SENDER_ID , INVITE_STATUS )" +
                                                            "values(@USER_ID, @GROUP_ID, @USER_GROUP_AUTHORIZATION, @INVITE_DATE , @INVITE_SENDER_ID, @INVITE_STATUS )", Con);
                     cmd.Parameters.AddWithValue("@USER_ID", userGroup.UserId);
                     cmd.Parameters.AddWithValue("@GROUP_ID", userGroup.GroupId);
@@ -876,7 +866,7 @@ namespace ProjectManager
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("UPDATE [USER_GROUPS] SET USER_GROUP_AUTHORIZATION=@USER_GROUP_AUTHORIZATION , USER_INVITE_STATUS=@USER_INVITE_STATUS , USER_JOIN_DATE=@USER_JOIN_DATE WHERE USER_GROUP_ID=@USER_GROUP_ID", Con);
+                    cmd = new SqlCommand("UPDATE [USER_GROUP] SET USER_GROUP_AUTHORIZATION=@USER_GROUP_AUTHORIZATION , USER_INVITE_STATUS=@USER_INVITE_STATUS , USER_JOIN_DATE=@USER_JOIN_DATE WHERE USER_GROUP_ID=@USER_GROUP_ID", Con);
                     cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION", userGroup.UserGroupAuthorization);
                     cmd.Parameters.AddWithValue("@PROCESS_DATE", userGroup.ProcessDate);
                     cmd.Parameters.AddWithValue("@USER_INVITE_STATUS", userGroup.InviteStatus);
@@ -893,28 +883,22 @@ namespace ProjectManager
             }
             return false;
         }
-        public static T EditGenericData<T>(T entitiyData)
-        {
-            // Yaplıcak
-            return (T)Convert.ChangeType(null, typeof(T));
-        }
-        public bool EditData(Project project=null,Task task=null,UserGroup userGroup=null)
+        public bool EditData(Project project = null, Task task = null, UserGroup userGroup = null)
         { // Edit project or task
             try
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    if (task == null)
+                    if (project != null)
                     {
                         cmd = new SqlCommand("UPDATE [PROJECT] SET PROJECT_NAME=@PROJECT_NAME,PROJECT_STATUS=PROJECT_STATUS,PROJECT_PRIORITY=@PROJECT_PRIORITY," +
-                                        "PROJECT_END_DATE=@PROJECT_END_DATE, PROJECT_DURATION=@PROJECT_DURATION ,PROJECT_GROUP_ID=@PROJECT_GROUP_ID," +
+                                        "PROJECT_END_DATE=@PROJECT_END_DATE,PROJECT_GROUP_ID=@PROJECT_GROUP_ID," +
                                         "PROJECT_CREATOR_ID=@PROJECT_CREATOR_ID,PROJECT_DESCRIPTION=@PROJECT_DESCRIPTION WHERE PROJECT_ID=@PROJECT_ID", Con);
                         cmd.Parameters.AddWithValue("@PROJECT_NAME", project.ProjectName);
                         cmd.Parameters.AddWithValue("@PROJECT_STATUS", project.ProjectStatus);
                         cmd.Parameters.AddWithValue("@PROJECT_PRIORITY", project.ProjectPriority);
                         cmd.Parameters.AddWithValue("@PROJECT_START_DATE", project.ProjectStartDate);
                         cmd.Parameters.AddWithValue("@PROJECT_END_DATE", project.ProjectEndDate);
-                        cmd.Parameters.AddWithValue("@PROJECT_DURATION", project.ProjectDuration);
                         cmd.Parameters.AddWithValue("@PROJECT_GROUP_ID", project.ProjectGroupId);
                         cmd.Parameters.AddWithValue("@PROJECT_CREATOR_ID", project.ProjectCreatorId);
                         cmd.Parameters.AddWithValue("@PROJECT_DESCRIPTION", project.ProjectDescription);
@@ -926,10 +910,10 @@ namespace ProjectManager
                     }
                     else if (userGroup != null)
                     {
-                        cmd = new SqlCommand("UPDATE [USER_GROUPS] SET PROCESS_DATE=@PROCESS_DATE , INVITE_STATUS=@INVITE_STATUS , USER_GROUP_AUTHORIZATION=@USER_GROUP_AUTHORIZATION", Con);
-                        cmd.Parameters.AddWithValue("@PROCESS_DATE=@PROCESS_DATE",userGroup.ProcessDate); // DateTime.Now
-                        cmd.Parameters.AddWithValue("@INVITE_STATUS",userGroup.InviteStatus);
-                        cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION",userGroup.UserGroupAuthorization);
+                        cmd = new SqlCommand("UPDATE [USER_GROUP] SET PROCESS_DATE=@PROCESS_DATE , INVITE_STATUS=@INVITE_STATUS , USER_GROUP_AUTHORIZATION=@USER_GROUP_AUTHORIZATION", Con);
+                        cmd.Parameters.AddWithValue("@PROCESS_DATE=@PROCESS_DATE", userGroup.ProcessDate); // DateTime.Now
+                        cmd.Parameters.AddWithValue("@INVITE_STATUS", userGroup.InviteStatus);
+                        cmd.Parameters.AddWithValue("@USER_GROUP_AUTHORIZATION", userGroup.UserGroupAuthorization);
                         Con.Open();
                         cmd.ExecuteNonQuery();
                         Con.Close();
@@ -950,14 +934,14 @@ namespace ProjectManager
                         cmd.Parameters.AddWithValue("@TASK_PROJECT_ID", task.TaskProjectId);
                         cmd.Parameters.AddWithValue("@TASK_GROUP_ID", task.TaskGroupId);
                         cmd.Parameters.AddWithValue("@TASK_DESCRIPTION", task.TaskDescription);
-                        cmd.Parameters.AddWithValue("@TASK_ID",task.TaskId);
+                        cmd.Parameters.AddWithValue("@TASK_ID", task.TaskId);
                         Con.Open();
                         cmd.ExecuteNonQuery();
                         Con.Close();
                         return true;
                     }
 
-                    
+
                 }
             }
             catch (Exception ex)
@@ -966,14 +950,14 @@ namespace ProjectManager
             }
             return false;
         }
-        public bool DeleteData(string table,int itemId)
+        public bool DeleteData(string table, int itemId)
         {
             try
             {
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    cmd = new SqlCommand("DELETE FROM ["+table+"] WHERE "+table+"_ID = @"+table+"_ID",Con);
-                    cmd.Parameters.AddWithValue("@"+table+"_ID",itemId);
+                    cmd = new SqlCommand("DELETE FROM [" + table + "] WHERE " + table + "_ID = @" + table + "_ID", Con);
+                    cmd.Parameters.AddWithValue("@" + table + "_ID", itemId);
                     Con.Open();
                     cmd.ExecuteNonQuery();
                     Con.Close();
@@ -985,7 +969,7 @@ namespace ProjectManager
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -999,7 +983,7 @@ namespace ProjectManager
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     cmd = new SqlCommand("DELETE FROM [TASK] WHERE TASK_PROJECT_ID = @TASK_PROJECT_ID");
-                    cmd.Parameters.AddWithValue("@TASK_PROJECT_ID",itemId);
+                    cmd.Parameters.AddWithValue("@TASK_PROJECT_ID", itemId);
                     Con.Open();
                     cmd.ExecuteNonQuery();
                     Con.Close();
@@ -1024,7 +1008,7 @@ namespace ProjectManager
                 using (SqlConnection Con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     Con.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO [LOG_DATA](LOG_SOURCE , LOG_TYPE , LOG_DATE , LOG_USER , LOG_USER_ID , LOG_DESCRIPTION , LOG_STATUS)" +
+                    SqlCommand cmd = new SqlCommand("INSERT INTO [LOG](LOG_SOURCE , LOG_TYPE , LOG_DATE , LOG_USER , LOG_USER_ID , LOG_DESCRIPTION , LOG_STATUS)" +
                                                                "values(@LOG_SOURCE,@LOG_TYPE,@LOG_DATE,@LOG_USER,@LOG_USER_ID,@LOG_DESCRIPTION,@LOG_STATUS)", Con);
                     cmd.Parameters.AddWithValue("@LOG_SOURCE", log.LogSource);
                     cmd.Parameters.AddWithValue("@LOG_TYPE", log.LogType);
