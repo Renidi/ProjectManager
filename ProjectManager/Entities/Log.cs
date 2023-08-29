@@ -8,7 +8,7 @@ namespace ProjectManager
 {
     public class Log
     {
-        public int LOGId { get; set; }
+        public int LogId { get; set; }
         public string LogSource { get; set; }
         public string LogType { get; set; }
         public DateTime LogDate { get; set; }

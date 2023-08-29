@@ -62,7 +62,9 @@ namespace ProjectManager.Forms
                 "CANCELLED",
                 "COMPLETED"
             };
-            List<Project> projectList = sqlHelper.GetProjects(user.UserId);
+            GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
+            Project projectL = new Project();
+            List<Project> projectList = genericSqlHelper.Read(projectL,user);
 
             for(int i = 0; i<projectList.Count; i++)
             {

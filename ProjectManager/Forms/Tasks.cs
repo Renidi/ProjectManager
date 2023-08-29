@@ -31,14 +31,17 @@ namespace ProjectManager
         private void Tasks_Load(object sender, EventArgs e)
         {
             user = sqlHelper.GetUserInfo(-1,Mail);
-            projectsList = sqlHelper.GetProjects(user.UserId);
+            GenericSqlHelper<Project> genericSqlProject = new GenericSqlHelper<Project>();
+            Project projectL = new Project();
+            projectsList = genericSqlProject.Read(projectL,user);
 
             for(int i=0; i<projectsList.Count; i++)
             {
                 cmbTaskProject.Items.Add(projectsList[i].ProjectName);
             }
-
-            userList = sqlHelper.GetUserList(user.UserId);
+            GenericSqlHelper<User> genericSqlUser = new GenericSqlHelper<User>();
+            User userL = new User();
+            userList = genericSqlUser.Read(userL,user);
             for(int i =0; i<userList.Count; i++)
             {
                 cmbTaskEmployee.Items.Add(userList[i].UserMail);

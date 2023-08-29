@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,12 +13,8 @@ namespace ProjectManager
     public class GenericSqlHelper<T>
     {
         SqlCommand cmd;
-        SqlDataReader rd;
-        SqlDataAdapter adptr;
         SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;");
 
-        readonly List<string> projectColumns = new List<string>() {"PROJECT_NAME","PROJECT_STATUS", "PROJECT_PRIORITY", "PROJECT_START_DATE", "PROJECT_END_DATE", "PROJECT_GROUP_ID", "PROJECT_CREATOR_ID", "PROJECT_DESCRIPTION" };
-        readonly List<string> taskColumns = new List<string>() {"TASK_NAME", "TASK_STATUS", "TASK_PRIORITY", "TASK_START_DATE", "TASK_END_DATE" , "TASK_DURATION" , "TASK_OWNER_ID" , "TASK_CREATOR_ID" , "TASK_PROJECT_ID" , "TASK_GROUP_ID" , "TASK_DESCRIPTION" };
         public bool Create(T t)
         {
             try
@@ -50,26 +47,73 @@ namespace ProjectManager
             }
             return false;
         }
-        public T Read(T t)
+        public List<T> Read(T t, User user=null)
         { 
+            List<T> result = new List<T>();
             try
             {
-                string tableName = typeof(T).Name;
+                string tableName = typeof(T).Name.ToUpper();
                 PropertyInfo[] properties = typeof(T).GetProperties();
 
                 string strCol = string.Join(",",properties.Select(p=>ConvertPropName(p.Name)));
                 string strParam = string.Join(",",properties.Select(p=>"@"+ConvertPropName(p.Name)));
-                string sql = "SELECT * FROM [" + tableName + "] WHERE "+tableName+"_ID=@"+tableName+"_ID";
+
 
                 using (con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
-                    con.Open();
-                    cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.AddWithValue("@"+ tableName + "_ID", properties[0].GetValue(t));
-                    
-                
-                }
+                    var lookingFor = strCol.Contains(tableName+"_GROUP_ID");
+                    if (lookingFor)
+                    {
+                        cmd = new SqlCommand("SELECT GROUP_ID FROM [USER_GROUP] WHERE USER_ID=@USER_ID AND INVITE_STATUS=@INVITE_STATUS", con);
+                        cmd.Parameters.AddWithValue("@USER_ID", user.UserId);
+                        cmd.Parameters.AddWithValue("@INVITE_STATUS", "Accepted");
+                        List<int> authIdList = new List<int> { -1 };
+                        con.Open();
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                authIdList.Add(Convert.ToInt32(rd["GROUP_ID"]));
+                            }
+                        }
+                        con.Close();
 
+                        string idData = string.Join(",", authIdList.Select((id, index) => "@id" + (index + 1)));
+                        string sql = "SELECT * FROM [" + tableName + "] WHERE " + tableName + "_GROUP_ID IN (" + idData + ") OR " + tableName + "_CREATOR_ID=@" + tableName + "_CREATOR_ID";
+                        cmd = new SqlCommand(sql, con);
+                        for (int i = 0; i < authIdList.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue("@id" + (i + 1), authIdList[i]);
+                        }
+                        cmd.Parameters.AddWithValue("@" + tableName + "_CREATOR_ID", user.UserId);
+                        
+                    }
+                    else
+                    {
+                        string sql = "SELECT * FROM ["+tableName+"] WHERE "+tableName+"_ID=@"+tableName+"=_ID";
+                        cmd = new SqlCommand(sql, con); // Change sql to SqlHelper.cs -> 301
+                        var prop = properties[0];
+                        cmd.Parameters.AddWithValue("@"+tableName+"_ID",GetItemId(t));
+                    }
+                    con.Open();
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            T item = Activator.CreateInstance<T>();
+                            for (int i = 0; i < rd.FieldCount; i++)
+                            {
+                                PropertyInfo property = typeof(T).GetProperty(ConvertName(rd.GetName(i)));
+                                property?.SetValue(item, rd[i] == DBNull.Value ? null : rd[i]);
+                            }
+
+                            result.Add(item);
+                        }
+                    }
+                    con.Close();
+
+                    return result;
+                }
 
             }
             catch (Exception ex)
@@ -77,7 +121,7 @@ namespace ProjectManager
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             //return (T) Convert.ChangeType(yat, typeof(T)); // sometimes
-            return t;
+            return result;
         }
         public bool Update(T t) 
         {
@@ -89,7 +133,21 @@ namespace ProjectManager
 
             return false;
         }
-
+        private int GetItemId(T t)
+        {
+            if (t is Project project)
+                return project.ProjectId;
+            else if (t is Task task)
+                return task.TaskId;
+            else if (t is User user)
+                return user.UserId;
+            else if (t is Group group)
+                return group.GroupId;
+            else if (t is UserGroup userGroup)
+                return userGroup.UserId;
+            else
+                throw new ArgumentException("Unsupported Type");
+        }
         private string ConvertPropName(string input)
         {
             StringBuilder result = new StringBuilder();
@@ -104,6 +162,31 @@ namespace ProjectManager
                 result.Append(char.ToUpper(currentChar));
             }
 
+            return result.ToString();
+        }
+        private string ConvertName(string input)
+        {
+            StringBuilder result = new StringBuilder();
+            bool bayrak = true;
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currentChar = input[i];
+                if (bayrak)
+                {
+                    result.Append(currentChar);
+                    bayrak = false;
+                }
+                else
+                {
+                    currentChar = currentChar == 'I' ? 'İ' : currentChar;
+                    if (currentChar != '_')
+                    {
+                        result.Append(char.ToLower(currentChar));
+                    }
+                    else
+                        bayrak = true;
+                }
+            }
             return result.ToString();
         }
 
