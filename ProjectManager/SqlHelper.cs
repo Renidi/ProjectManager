@@ -314,7 +314,7 @@ namespace ProjectManager
                         Con.Close();
                     }
 
-                    if (filteredGroupId != -1)
+                    if (filteredGroupId == -1)
                     {
                         foreach (var groupId in authorizedGroupIds)
                         {
@@ -323,7 +323,7 @@ namespace ProjectManager
                     }
                     else
                     {
-                        innerFunc(userId);
+                        innerFunc(filteredGroupId);
                     }
 
                     userIdList = userIdList.Distinct().ToList(); // Remove duplicates
@@ -597,8 +597,8 @@ namespace ProjectManager
                     }
                     else
                     {
-                        cmd = new SqlCommand("SELECT * FROM [USER_GROUP] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID", Con);
-                        cmd.Parameters.AddWithValue("@USER_ID", userId);
+                        cmd = new SqlCommand("SELECT * FROM [USER_GROUP] WHERE GROUP_ID=@GROUP_ID", Con); // USER_ID=@USER_ID AND
+                        //cmd.Parameters.AddWithValue("@USER_ID", userId);
                         cmd.Parameters.AddWithValue("@GROUP_ID", filteredGroupId);
                     }
 

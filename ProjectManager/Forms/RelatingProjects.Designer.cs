@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.pnlMiddle = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlCancelled = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlComplete = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlActive = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlOnHold = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlMiddle.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
@@ -48,14 +48,6 @@
             this.pnlMiddle.Name = "pnlMiddle";
             this.pnlMiddle.Size = new System.Drawing.Size(1150, 551);
             this.pnlMiddle.TabIndex = 0;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1150, 54);
-            this.flowLayoutPanel1.TabIndex = 4;
             // 
             // pnlMain
             // 
@@ -71,10 +63,10 @@
             // 
             // pnlCancelled
             // 
-            this.pnlCancelled.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlCancelled.Location = new System.Drawing.Point(780, 0);
+            this.pnlCancelled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCancelled.Location = new System.Drawing.Point(843, 0);
             this.pnlCancelled.Name = "pnlCancelled";
-            this.pnlCancelled.Size = new System.Drawing.Size(260, 497);
+            this.pnlCancelled.Size = new System.Drawing.Size(307, 497);
             this.pnlCancelled.TabIndex = 7;
             // 
             // pnlComplete
@@ -82,7 +74,7 @@
             this.pnlComplete.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlComplete.Location = new System.Drawing.Point(520, 0);
             this.pnlComplete.Name = "pnlComplete";
-            this.pnlComplete.Size = new System.Drawing.Size(260, 497);
+            this.pnlComplete.Size = new System.Drawing.Size(323, 497);
             this.pnlComplete.TabIndex = 6;
             // 
             // pnlActive
@@ -100,6 +92,14 @@
             this.pnlOnHold.Name = "pnlOnHold";
             this.pnlOnHold.Size = new System.Drawing.Size(260, 497);
             this.pnlOnHold.TabIndex = 4;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1150, 54);
+            this.flowLayoutPanel1.TabIndex = 4;
             // 
             // RelatingProjects
             // 

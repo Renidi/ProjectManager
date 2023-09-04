@@ -41,6 +41,7 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblUserMail = new System.Windows.Forms.Label();
             this.cbPasswordOrSecret = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
@@ -199,12 +200,21 @@
             this.cbPasswordOrSecret.UseVisualStyleBackColor = true;
             this.cbPasswordOrSecret.CheckedChanged += new System.EventHandler(this.cbPasswordOrSecret_CheckedChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(417, 512);
+            this.panel1.TabIndex = 34;
+            // 
             // UserSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(1264, 512);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbPasswordOrSecret);
             this.Controls.Add(this.lblUserMail);
             this.Controls.Add(this.lblUserName);
@@ -242,5 +252,6 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblUserMail;
         private System.Windows.Forms.CheckBox cbPasswordOrSecret;
+        private System.Windows.Forms.Panel panel1;
     }
 }

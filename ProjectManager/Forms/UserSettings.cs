@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.UserControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace ProjectManager
 
         SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
+        TaskCard taskCard = new TaskCard();
         public string Mail { get; set; }
 
         public UserSettings(string mail)
@@ -29,6 +31,7 @@ namespace ProjectManager
             user = sqlHelper.GetUserInfo(-1, user.UserMail);
             lblUserMail.Text = user.UserMail;
             lblUserName.Text = user.UserName + " " + user.UserSurname;
+            panel1.Controls.Add(taskCard);
         }
 
         private void Clear()

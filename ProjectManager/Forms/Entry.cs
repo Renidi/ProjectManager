@@ -19,6 +19,7 @@ namespace ProjectManager
         public static extern bool ReleaseCapture();
         const int WM_NCLBUTTONDOWN = 0xA1;
         const int HT_CAPTION = 0x2;
+        
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -64,7 +65,6 @@ namespace ProjectManager
                 item.Visible = false;
                 item.Hide();
             }
-
 
             //Show only wanted panel
             frontPanel.Size = new Size(480, 450);
@@ -119,7 +119,6 @@ namespace ProjectManager
         {
             SHOW(panelRegister);
         }
-
 
         private void btnReset_Click(object sender, EventArgs e)
         {

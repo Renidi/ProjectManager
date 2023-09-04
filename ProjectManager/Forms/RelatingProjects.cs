@@ -64,7 +64,7 @@ namespace ProjectManager.Forms
             };
             GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
             Project projectL = new Project();
-            List<Project> projectList = genericSqlHelper.Read(projectL,user);
+            List<Project> projectList = genericSqlHelper.ReadForList(user);
 
             for(int i = 0; i<projectList.Count; i++)
             {

@@ -354,6 +354,12 @@
     </Compile>
     <Compile Include="GenericSqlHelper.cs" />
     <Compile Include="SqlHelper.cs" />
+    <Compile Include="UserControls\Badge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Badge.Designer.cs">
+      <DependentUpon>Badge.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CardControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -385,6 +391,12 @@
     </Compile>
     <Compile Include="UserControls\ProjectControl.Designer.cs">
       <DependentUpon>ProjectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TaskCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TaskCard.Designer.cs">
+      <DependentUpon>TaskCard.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TeamControl.cs">
       <SubType>UserControl</SubType>
@@ -441,6 +453,9 @@
     <EmbeddedResource Include="Forms\Temp.resx">
       <DependentUpon>Temp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Badge.resx">
+      <DependentUpon>Badge.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\CardControl.resx">
       <DependentUpon>CardControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -458,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ProjectControl.resx">
       <DependentUpon>ProjectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TaskCard.resx">
+      <DependentUpon>TaskCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TeamControl.resx">
       <DependentUpon>TeamControl.cs</DependentUpon>

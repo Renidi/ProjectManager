@@ -33,7 +33,7 @@ namespace ProjectManager
             user = sqlHelper.GetUserInfo(-1,Mail);
             GenericSqlHelper<Project> genericSqlProject = new GenericSqlHelper<Project>();
             Project projectL = new Project();
-            projectsList = genericSqlProject.Read(projectL,user);
+            projectsList = genericSqlProject.ReadForList(user);
 
             for(int i=0; i<projectsList.Count; i++)
             {
@@ -41,7 +41,7 @@ namespace ProjectManager
             }
             GenericSqlHelper<User> genericSqlUser = new GenericSqlHelper<User>();
             User userL = new User();
-            userList = genericSqlUser.Read(userL,user);
+            userList = genericSqlUser.ReadForList(user);
             for(int i =0; i<userList.Count; i++)
             {
                 cmbTaskEmployee.Items.Add(userList[i].UserMail);
