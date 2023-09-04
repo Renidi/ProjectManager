@@ -346,12 +346,6 @@
     <Compile Include="Forms\RelatingProjects.Designer.cs">
       <DependentUpon>RelatingProjects.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Temp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Temp.Designer.cs">
-      <DependentUpon>Temp.cs</DependentUpon>
-    </Compile>
     <Compile Include="GenericSqlHelper.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="UserControls\Badge.cs">
@@ -449,9 +443,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelatingProjects.resx">
       <DependentUpon>RelatingProjects.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Temp.resx">
-      <DependentUpon>Temp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Badge.resx">
       <DependentUpon>Badge.cs</DependentUpon>
