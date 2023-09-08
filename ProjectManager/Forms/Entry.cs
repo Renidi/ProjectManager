@@ -91,7 +91,6 @@ namespace ProjectManager
 
         // -----------------------------------------------------------------------------------------------------------------------------------
 
-        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         Log log = new Log();
 
