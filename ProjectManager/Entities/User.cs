@@ -12,12 +12,12 @@ namespace ProjectManager
         public string UserName { get; set; }
         public string UserSurname { get; set; }
         public string UserMail { get; set; }
-        public string UserRole { get; set; }
-        public string UserTeam { get; set; }
+        //public string UserRole { get; set; }
         public string UserPassword { get; set; }
         public DateTime UserRegisterDate { get; set; }
         public DateTime UserLastLoginDate { get; set; }
         public string UserSecretWord { get; set; }
+
     }
 
 }

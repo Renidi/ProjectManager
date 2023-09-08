@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.Forms
 {
-    partial class RelatingProjects
+    partial class RelatingTasks
     {
         /// <summary>
         /// Required designer variable.
@@ -28,49 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.pnlOut = new System.Windows.Forms.Panel();
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pnlCancelled = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlComplete = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlActive = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlOnHold = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlMiddle.SuspendLayout();
+            this.pnlOut.SuspendLayout();
             this.pnlMain.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnlMiddle
+            // pnlOut
             // 
-            this.pnlMiddle.Controls.Add(this.pnlMain);
-            this.pnlMiddle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMiddle.Location = new System.Drawing.Point(0, 0);
-            this.pnlMiddle.Name = "pnlMiddle";
-            this.pnlMiddle.Size = new System.Drawing.Size(1150, 551);
-            this.pnlMiddle.TabIndex = 0;
+            this.pnlOut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
+            this.pnlOut.Controls.Add(this.pnlMain);
+            this.pnlOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlOut.Location = new System.Drawing.Point(0, 0);
+            this.pnlOut.Name = "pnlOut";
+            this.pnlOut.Size = new System.Drawing.Size(1156, 551);
+            this.pnlOut.TabIndex = 0;
             // 
             // pnlMain
             // 
-            this.pnlMain.Controls.Add(this.pnlCancelled);
-            this.pnlMain.Controls.Add(this.pnlComplete);
-            this.pnlMain.Controls.Add(this.pnlActive);
-            this.pnlMain.Controls.Add(this.pnlOnHold);
+            this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
+            this.pnlMain.Controls.Add(this.panel1);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1150, 551);
-            this.pnlMain.TabIndex = 5;
+            this.pnlMain.Size = new System.Drawing.Size(1156, 551);
+            this.pnlMain.TabIndex = 47;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pnlCancelled);
+            this.panel1.Controls.Add(this.pnlComplete);
+            this.panel1.Controls.Add(this.pnlActive);
+            this.panel1.Controls.Add(this.pnlOnHold);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1156, 551);
+            this.panel1.TabIndex = 7;
             // 
             // pnlCancelled
             // 
             this.pnlCancelled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCancelled.Location = new System.Drawing.Point(861, 0);
+            this.pnlCancelled.Location = new System.Drawing.Point(874, 0);
             this.pnlCancelled.Name = "pnlCancelled";
-            this.pnlCancelled.Size = new System.Drawing.Size(289, 551);
+            this.pnlCancelled.Size = new System.Drawing.Size(282, 551);
             this.pnlCancelled.TabIndex = 7;
             // 
             // pnlComplete
             // 
             this.pnlComplete.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlComplete.Location = new System.Drawing.Point(574, 0);
+            this.pnlComplete.Location = new System.Drawing.Point(587, 0);
             this.pnlComplete.Name = "pnlComplete";
             this.pnlComplete.Size = new System.Drawing.Size(287, 551);
             this.pnlComplete.TabIndex = 6;
@@ -80,7 +93,7 @@
             this.pnlActive.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlActive.Location = new System.Drawing.Point(287, 0);
             this.pnlActive.Name = "pnlActive";
-            this.pnlActive.Size = new System.Drawing.Size(287, 551);
+            this.pnlActive.Size = new System.Drawing.Size(300, 551);
             this.pnlActive.TabIndex = 5;
             // 
             // pnlOnHold
@@ -91,27 +104,28 @@
             this.pnlOnHold.Size = new System.Drawing.Size(287, 551);
             this.pnlOnHold.TabIndex = 4;
             // 
-            // RelatingProjects
+            // RelatingTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(1150, 551);
-            this.Controls.Add(this.pnlMiddle);
+            this.ClientSize = new System.Drawing.Size(1156, 551);
+            this.Controls.Add(this.pnlOut);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RelatingProjects";
-            this.Text = "RelatingProjects";
-            this.Load += new System.EventHandler(this.RelatingProjects_Load);
-            this.pnlMiddle.ResumeLayout(false);
+            this.Name = "RelatingTasks";
+            this.Text = "RelatingTasks";
+            this.Load += new System.EventHandler(this.RelatingTasks_Load);
+            this.pnlOut.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlMiddle;
+        private System.Windows.Forms.Panel pnlOut;
         private System.Windows.Forms.Panel pnlMain;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.FlowLayoutPanel pnlCancelled;
         private System.Windows.Forms.FlowLayoutPanel pnlComplete;
         private System.Windows.Forms.FlowLayoutPanel pnlActive;

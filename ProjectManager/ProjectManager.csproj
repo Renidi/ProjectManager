@@ -334,6 +334,12 @@
     <Compile Include="Forms\CreateProject.Designer.cs">
       <DependentUpon>CreateProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateTask.Designer.cs">
+      <DependentUpon>CreateTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PopupCreateTeam.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,6 +351,12 @@
     </Compile>
     <Compile Include="Forms\RelatingProjects.Designer.cs">
       <DependentUpon>RelatingProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RelatingTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RelatingTasks.Designer.cs">
+      <DependentUpon>RelatingTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericSqlHelper.cs" />
     <Compile Include="SqlHelper.cs" />
@@ -438,11 +450,17 @@
     <EmbeddedResource Include="Forms\CreateProject.resx">
       <DependentUpon>CreateProject.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateTask.resx">
+      <DependentUpon>CreateTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PopupCreateTeam.resx">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelatingProjects.resx">
       <DependentUpon>RelatingProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RelatingTasks.resx">
+      <DependentUpon>RelatingTasks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Badge.resx">
       <DependentUpon>Badge.cs</DependentUpon>

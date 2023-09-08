@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.pnlActive = new System.Windows.Forms.Panel();
             this.pnlControls = new System.Windows.Forms.Panel();
             this.btnMyProjects = new System.Windows.Forms.Button();
             this.btnNewProject = new System.Windows.Forms.Button();
             this.btnProjects = new System.Windows.Forms.Button();
-            this.pnlActive = new System.Windows.Forms.Panel();
             this.pnlMiddle.SuspendLayout();
             this.pnlControls.SuspendLayout();
             this.SuspendLayout();
@@ -41,13 +41,22 @@
             // pnlMiddle
             // 
             this.pnlMiddle.BackColor = System.Drawing.Color.Black;
-            this.pnlMiddle.Controls.Add(this.pnlControls);
             this.pnlMiddle.Controls.Add(this.pnlActive);
+            this.pnlMiddle.Controls.Add(this.pnlControls);
             this.pnlMiddle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMiddle.Location = new System.Drawing.Point(0, 0);
             this.pnlMiddle.Name = "pnlMiddle";
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 3;
+            // 
+            // pnlActive
+            // 
+            this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
+            this.pnlActive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlActive.Location = new System.Drawing.Point(124, 0);
+            this.pnlActive.Name = "pnlActive";
+            this.pnlActive.Size = new System.Drawing.Size(1156, 551);
+            this.pnlActive.TabIndex = 44;
             // 
             // pnlControls
             // 
@@ -59,7 +68,7 @@
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
             this.pnlControls.Size = new System.Drawing.Size(124, 551);
-            this.pnlControls.TabIndex = 45;
+            this.pnlControls.TabIndex = 43;
             // 
             // btnMyProjects
             // 
@@ -69,7 +78,7 @@
             this.btnMyProjects.TabIndex = 2;
             this.btnMyProjects.Text = "MyProjects";
             this.btnMyProjects.UseVisualStyleBackColor = true;
-            this.btnMyProjects.Click += new System.EventHandler(this.btnMyProjects_Click);
+            this.btnMyProjects.Click += new System.EventHandler(this.btnMyProjects_Click_1);
             // 
             // btnNewProject
             // 
@@ -79,7 +88,7 @@
             this.btnNewProject.TabIndex = 1;
             this.btnNewProject.Text = "New Project";
             this.btnNewProject.UseVisualStyleBackColor = true;
-            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
+            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click_1);
             // 
             // btnProjects
             // 
@@ -89,16 +98,7 @@
             this.btnProjects.TabIndex = 0;
             this.btnProjects.Text = "Projects";
             this.btnProjects.UseVisualStyleBackColor = true;
-            this.btnProjects.Click += new System.EventHandler(this.btnProjects_Click);
-            // 
-            // pnlActive
-            // 
-            this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
-            this.pnlActive.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlActive.Location = new System.Drawing.Point(130, 0);
-            this.pnlActive.Name = "pnlActive";
-            this.pnlActive.Size = new System.Drawing.Size(1150, 551);
-            this.pnlActive.TabIndex = 42;
+            this.btnProjects.Click += new System.EventHandler(this.btnProjects_Click_1);
             // 
             // Projects
             // 
@@ -119,10 +119,10 @@
         #endregion
 
         private System.Windows.Forms.Panel pnlMiddle;
-        private System.Windows.Forms.Panel pnlActive;
         private System.Windows.Forms.Panel pnlControls;
         private System.Windows.Forms.Button btnMyProjects;
         private System.Windows.Forms.Button btnNewProject;
         private System.Windows.Forms.Button btnProjects;
+        private System.Windows.Forms.Panel pnlActive;
     }
 }

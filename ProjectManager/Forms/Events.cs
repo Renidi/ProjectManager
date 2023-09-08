@@ -22,9 +22,6 @@ namespace ProjectManager
         const int WM_NCLBUTTONDOWN = 0xA1;
         const int HT_CAPTION = 0x2;
 
-        SqlHelper sqlHelper = new SqlHelper();
-        User user = new User();
-        Log log = new Log();
         private void pnlTop_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -43,19 +40,22 @@ namespace ProjectManager
             }
         }
 
-        public Events(string usermail)
+        public int UserId { get; set; }
+        User user = new User();
+        public Events(int userId)
         {
             InitializeComponent();
-            Mail = usermail;
-            openChildForm(new Projects(Mail));
+            UserId = userId;
+            openChildForm(new Projects(userId));
             DoubleBuffered = true;
         }
         
-        public string Mail { get; set; }
+        
         private void Events_Load(object sender, EventArgs e)
         {
-            user.UserMail = Mail;
-            user = sqlHelper.GetUserInfo(-1,user.UserMail);
+            user.UserId = UserId;
+            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+            user = genericUser.ReadById(user);
             lblMail.Text = user.UserMail;
             lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
         }
@@ -76,20 +76,24 @@ namespace ProjectManager
 
         private void pictureBox6_Click(object sender, EventArgs e)
         {  // user settings !!??
-            openChildForm (new UserSettings(user.UserMail));
+            openChildForm (new UserSettings(user.UserId));
         }
 
         private void pbExit_Click(object sender, EventArgs e)
         {
-            log.LogSource = "User";
-            log.LogType = "Logout";
-            log.LogDate = DateTime.Now;
-            log.LogUser = user.UserMail;
-            log.LogUserId = user.UserId;
-            log.LogDescription = "Logout";
-            log.LogStatus = "true";
+            Log log = new Log
+            {
+                LogSource = "User",
+                LogType = "Logout",
+                LogDate = DateTime.Now,
+                LogUser = user.UserMail,
+                LogUserId = user.UserId,
+                LogDescription = "Logout",
+                LogStatus = "true"
+            };
 
-            sqlHelper.DataLog(log);
+            GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+            genericLog.Create(log);
 
             Entry entry = new Entry();
             entry.Show();
@@ -103,17 +107,17 @@ namespace ProjectManager
 
         private void pbTask_Click(object sender, EventArgs e)
         {
-            openChildForm(new Tasks(user.UserMail));
+            openChildForm(new Tasks(user.UserId));
         }
 
         private void pbProject_Click(object sender, EventArgs e)
         {
-            openChildForm(new Projects(user.UserMail));
+            openChildForm(new Projects(user.UserId));
         }
 
         public void pbTeams_Click(object sender, EventArgs e)
         {
-            openChildForm(new Teams(user.UserMail));
+            openChildForm(new Teams(user.UserId));
         }
 
     }

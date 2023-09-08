@@ -18,21 +18,17 @@ namespace ProjectManager
     
     public partial class Teams : Form
     {
-        SqlHelper sqlHelper = new SqlHelper();
-        Project project = new Project();
         User user = new User();
-        UserGroup userGroup = new UserGroup();  
-        Log log = new Log();
+        UserGroup userGroup = new UserGroup();
         public string Mail { get; set; }
-        public int varId;
 
-        public Teams(string userMail)
+        public Teams(int userId)
         {
             InitializeComponent();
             SetStyle(ControlStyles.UserMouse | ControlStyles.Selectable, true);
-            Mail = userMail;
-            user.UserMail = Mail;
-            user = sqlHelper.GetUserInfo(-1, user.UserMail);
+            user.UserId = userId;
+            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+            user = genericUser.ReadById(user);
         }
         
         private void Teams_Load(object sender, EventArgs e)
@@ -43,7 +39,8 @@ namespace ProjectManager
         {
             pnlTeams.Controls.Clear();
             pnlTeams.AutoScroll = false;
-            List<UserGroup> groups = sqlHelper.GetTeams(user.UserId);
+            GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
+            List<UserGroup> groups = genericUserGroup.ReadList(user);
             foreach (UserGroup inGroup in groups)
             {
                 TeamControl teamControl = new TeamControl(inGroup,this,user.UserId);

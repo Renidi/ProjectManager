@@ -34,18 +34,18 @@
             this.pnlFill = new System.Windows.Forms.Panel();
             this.pnlMid = new Guna.UI2.WinForms.Guna2Panel();
             this.lblContent = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblProjectName = new System.Windows.Forms.Label();
+            this.pnlBottom = new Guna.UI2.WinForms.Guna2Panel();
+            this.lblProjectGroupName = new System.Windows.Forms.Label();
             this.pnlBadge = new Guna.UI2.WinForms.Guna2Panel();
             this.pbMenu = new System.Windows.Forms.PictureBox();
             this.badge1 = new ProjectManager.UserControls.Badge();
             this.guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.pnlBottom = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblProjectName = new System.Windows.Forms.Label();
             this.pnlFill.SuspendLayout();
             this.pnlMid.SuspendLayout();
+            this.pnlBottom.SuspendLayout();
             this.pnlBadge.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).BeginInit();
-            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2Elipse1
@@ -55,23 +55,25 @@
             // 
             // pnlFill
             // 
+            this.pnlFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
             this.pnlFill.Controls.Add(this.pnlMid);
             this.pnlFill.Controls.Add(this.pnlBottom);
             this.pnlFill.Controls.Add(this.pnlBadge);
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(298, 265);
+            this.pnlFill.Size = new System.Drawing.Size(270, 207);
             this.pnlFill.TabIndex = 0;
             // 
             // pnlMid
             // 
+            this.pnlMid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
             this.pnlMid.Controls.Add(this.lblContent);
-            this.pnlMid.Controls.Add(this.lblTitle);
+            this.pnlMid.Controls.Add(this.lblProjectName);
             this.pnlMid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMid.Location = new System.Drawing.Point(0, 48);
             this.pnlMid.Name = "pnlMid";
-            this.pnlMid.Size = new System.Drawing.Size(298, 162);
+            this.pnlMid.Size = new System.Drawing.Size(270, 104);
             this.pnlMid.TabIndex = 2;
             // 
             // lblContent
@@ -82,38 +84,65 @@
             this.lblContent.Location = new System.Drawing.Point(0, 39);
             this.lblContent.Name = "lblContent";
             this.lblContent.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.lblContent.Size = new System.Drawing.Size(298, 123);
+            this.lblContent.Size = new System.Drawing.Size(270, 65);
             this.lblContent.TabIndex = 1;
             this.lblContent.Text = resources.GetString("lblContent.Text");
+            this.lblContent.MouseEnter += new System.EventHandler(this.lblContent_MouseEnter);
+            this.lblContent.MouseLeave += new System.EventHandler(this.lblContent_MouseLeave);
             // 
-            // lblTitle
+            // lblProjectName
             // 
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTitle.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.lblTitle.Size = new System.Drawing.Size(298, 39);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "First design concept";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblProjectName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblProjectName.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProjectName.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblProjectName.Location = new System.Drawing.Point(0, 0);
+            this.lblProjectName.Name = "lblProjectName";
+            this.lblProjectName.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.lblProjectName.Size = new System.Drawing.Size(270, 39);
+            this.lblProjectName.TabIndex = 0;
+            this.lblProjectName.Text = "First design concept";
+            this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
+            this.pnlBottom.Controls.Add(this.lblProjectGroupName);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 152);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(270, 55);
+            this.pnlBottom.TabIndex = 1;
+            // 
+            // lblProjectGroupName
+            // 
+            this.lblProjectGroupName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
+            this.lblProjectGroupName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblProjectGroupName.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProjectGroupName.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblProjectGroupName.Location = new System.Drawing.Point(0, 0);
+            this.lblProjectGroupName.Name = "lblProjectGroupName";
+            this.lblProjectGroupName.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.lblProjectGroupName.Size = new System.Drawing.Size(270, 39);
+            this.lblProjectGroupName.TabIndex = 1;
+            this.lblProjectGroupName.Text = "Project V";
+            this.lblProjectGroupName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlBadge
             // 
+            this.pnlBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
             this.pnlBadge.Controls.Add(this.badge1);
             this.pnlBadge.Controls.Add(this.pbMenu);
             this.pnlBadge.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlBadge.Location = new System.Drawing.Point(0, 0);
             this.pnlBadge.Name = "pnlBadge";
-            this.pnlBadge.Size = new System.Drawing.Size(298, 48);
+            this.pnlBadge.Size = new System.Drawing.Size(270, 48);
             this.pnlBadge.TabIndex = 0;
             // 
             // pbMenu
             // 
             this.pbMenu.Dock = System.Windows.Forms.DockStyle.Right;
             this.pbMenu.Image = ((System.Drawing.Image)(resources.GetObject("pbMenu.Image")));
-            this.pbMenu.Location = new System.Drawing.Point(250, 0);
+            this.pbMenu.Location = new System.Drawing.Point(222, 0);
             this.pbMenu.Name = "pbMenu";
             this.pbMenu.Size = new System.Drawing.Size(48, 48);
             this.pbMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -133,41 +162,21 @@
             this.guna2Elipse2.BorderRadius = 15;
             this.guna2Elipse2.TargetControl = this.badge1;
             // 
-            // pnlBottom
-            // 
-            this.pnlBottom.Controls.Add(this.lblProjectName);
-            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 210);
-            this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(298, 55);
-            this.pnlBottom.TabIndex = 1;
-            // 
-            // lblProjectName
-            // 
-            this.lblProjectName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblProjectName.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProjectName.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblProjectName.Location = new System.Drawing.Point(0, 0);
-            this.lblProjectName.Name = "lblProjectName";
-            this.lblProjectName.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.lblProjectName.Size = new System.Drawing.Size(298, 39);
-            this.lblProjectName.TabIndex = 1;
-            this.lblProjectName.Text = "Project V";
-            this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // TaskCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
             this.Controls.Add(this.pnlFill);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "TaskCard";
-            this.Size = new System.Drawing.Size(298, 265);
+            this.Size = new System.Drawing.Size(270, 207);
+            this.Load += new System.EventHandler(this.TaskCard_Load);
             this.pnlFill.ResumeLayout(false);
             this.pnlMid.ResumeLayout(false);
+            this.pnlBottom.ResumeLayout(false);
             this.pnlBadge.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).EndInit();
-            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -179,11 +188,11 @@
         private Guna.UI2.WinForms.Guna2Panel pnlMid;
         private Guna.UI2.WinForms.Guna2Panel pnlBadge;
         private System.Windows.Forms.Label lblContent;
-        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblProjectName;
         private System.Windows.Forms.PictureBox pbMenu;
         private Badge badge1;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse2;
         private Guna.UI2.WinForms.Guna2Panel pnlBottom;
-        private System.Windows.Forms.Label lblProjectName;
+        private System.Windows.Forms.Label lblProjectGroupName;
     }
 }

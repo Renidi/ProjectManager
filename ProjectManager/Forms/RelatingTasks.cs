@@ -1,5 +1,4 @@
-﻿using ProjectManager.Entities;
-using ProjectManager.UserControls;
+﻿using ProjectManager.UserControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,16 +11,16 @@ using System.Windows.Forms;
 
 namespace ProjectManager.Forms
 {
-    public partial class RelatingProjects : Form
+    public partial class RelatingTasks : Form
     {
-        User user = new User();
-        public RelatingProjects(int userId)
+        User user = new User(); 
+        public RelatingTasks(int userId)
         {
             InitializeComponent();
             user.UserId = userId;
         }
-        
-        private void RelatingProjects_Load(object sender, EventArgs e)
+
+        private void RelatingTasks_Load(object sender, EventArgs e)
         {
             GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
             user = genericUser.ReadById(user);
@@ -43,6 +42,7 @@ namespace ProjectManager.Forms
 
         void FillPanel()
         {
+
             ClearPanels();
             List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
             {
@@ -58,34 +58,45 @@ namespace ProjectManager.Forms
                 "CANCELLED",
                 "COMPLETED"
             };
-            GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
-            List<Project> projectList = genericSqlHelper.ReadList(user);
-
-            for(int i = 0; i<projectList.Count; i++)
+            GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
+            List<Task> taskList = genericSqlHelper.ReadList(user);
+            foreach(var pnl in pnlList)
             {
-                Project project = projectList[i];
-                if(project.ProjectStatus == statusList[0])
+                pnl.AutoScroll = false;
+            }
+            
+            for (int i = 0; i < taskList.Count; i++)
+            {
+                Task task = taskList[i];
+                if (task.TaskStatus == statusList[0])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
-                    pnlList[0].Controls.Add(projectControl);
+                    TaskCard taskCard = new TaskCard(task);
+                    pnlList[0].Controls.Add(taskCard);
                 }
-                else if (project.ProjectStatus == statusList[1])
+                else if (task.TaskStatus == statusList[1])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
-                    pnlList[1].Controls.Add(projectControl);
+                    TaskCard taskCard = new TaskCard(task);
+                    pnlList[1].Controls.Add(taskCard);
                 }
-                else if (project.ProjectStatus == statusList[2])
+                else if (task.TaskStatus == statusList[2])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
-                    pnlList[2].Controls.Add(projectControl);
+                    TaskCard taskCard = new TaskCard(task);
+                    pnlList[2].Controls.Add(taskCard);
                 }
                 else
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
-                    pnlList[3].Controls.Add(projectControl);
+                    TaskCard taskCard = new TaskCard(task);
+                    pnlList[3].Controls.Add(taskCard);
                 }
             }
 
+            foreach (var pnl in pnlList)
+            {
+                pnl.AutoScroll = true;
+                pnl.HorizontalScroll.Visible = false;
+            }
+
         }
+
     }
 }

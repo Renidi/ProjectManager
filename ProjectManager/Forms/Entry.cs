@@ -90,7 +90,7 @@ namespace ProjectManager
         }
 
         // -----------------------------------------------------------------------------------------------------------------------------------
-
+        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         Log log = new Log();
 
@@ -123,10 +123,14 @@ namespace ProjectManager
         {
             if (txResetMail.Text != "" && txResetSecretWord.Text != "")
             {
-                if (sqlHelper.SecretWordCheck(txResetMail.Text, txResetSecretWord.Text))
+                GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+                user.UserMail= txResetMail.Text;
+                user.UserSecretWord = txResetSecretWord.Text;
+                user = genericUser.ReadById(user);
+                if (user.UserId != 0) // sqlHelper.SecretWordCheck(txResetMail.Text, txResetSecretWord.Text) // userId ==0 ise bilgiler yanlış
                 {
-                    user.UserMail = txResetMail.Text;
                     SHOW(panelResetPassword);
+                    lblUserMail.Text = user.UserMail;
                 }
                 else
                 {
@@ -140,17 +144,16 @@ namespace ProjectManager
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            user.UserMail = txLoginMail.Text;
-            //string Query = "SELECT * FROM UserTbl WHERE UserMail=@UserMail AND UserPassword=@UserPassword";
 
             if (!String.IsNullOrEmpty(txLoginPassword.Text) && !String.IsNullOrEmpty(txLoginMail.Text))
             {
-                bool loginStatus = sqlHelper.Login(txLoginMail.Text, txLoginPassword.Text);
-                user.UserMail = txLoginMail.Text;
-                if (loginStatus)
+                GenericSqlHelper<User> genericLogin = new GenericSqlHelper<User>();
+                int loginStatus = genericLogin.Login(txLoginMail.Text, txLoginPassword.Text); // If login succesful loginStatus will get userId
+                if (loginStatus>0)
                 {
-                    user.UserName= txLoginMail.Text;
-                    user = sqlHelper.GetUserInfo(-1, txLoginMail.Text);
+                    user.UserId = loginStatus;
+                    user = genericLogin.ReadById(user);
+                    //user = sqlHelper.GetUserInfo(-1, txLoginMail.Text);
 
                     log.LogSource = "User";
                     log.LogType = "Login";
@@ -160,7 +163,9 @@ namespace ProjectManager
                     log.LogDescription = "Login";
                     log.LogStatus = loginStatus+"";
 
-                    sqlHelper.DataLog(log);
+                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                    genericLog.Create(log);
+                    //sqlHelper.DataLog(log);
 
                     if (cbRememberMe.Checked)
                     {
@@ -176,7 +181,7 @@ namespace ProjectManager
                     }
 
                     Clear();
-                    Events events = new Events(user.UserMail);
+                    Events events = new Events(user.UserId);
                     events.Show();
                     this.Hide();
                 }
@@ -196,18 +201,17 @@ namespace ProjectManager
             {
                 if (txResetPasswordFirst.Text == txResetPasswordSecond.Text)
                 {
-                    sqlHelper.ChangePassword(txResetMail.Text, txResetPasswordFirst.Text);
                     user.UserPassword = txResetPasswordFirst.Text;
-                    user.UserMail = txResetMail.Text;
-                    Clear();
-                    MessageBox.Show("Password Successfully Changed");
-                    if(sqlHelper.Login(user.UserMail,user.UserPassword))
+                    GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+                    if(genericUser.Update(user))
                     {
+                        MessageBox.Show("Password Successfully Changed");
                         Clear();
-                        Events events = new Events(user.UserMail);
+                        Events events = new Events(user.UserId);
                         events.Show();
                         this.Hide();
                     }
+                    
                 }
                 else
                 {
@@ -234,16 +238,16 @@ namespace ProjectManager
                     user.UserLastLoginDate = DateTime.Now;
                     user.UserRegisterDate = DateTime.Now;
 
-                    sqlHelper.Register(user);
-
+                    GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
                     log.LogSource = "User";
                     log.LogType = "Login";
                     log.LogDate = DateTime.Now;
                     log.LogUser = user.UserMail;
                     log.LogUserId = user.UserId;
                     log.LogDescription = "Login";
-                    log.LogStatus = "true";
-                    sqlHelper.DataLog(log);
+                    log.LogStatus = genericUser.Create(user).ToString();
+                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                    genericLog.Create(log);
 
                     Clear();
                     MessageBox.Show("Registration Successful");
