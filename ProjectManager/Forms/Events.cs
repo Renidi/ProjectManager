@@ -14,7 +14,6 @@ namespace ProjectManager
 {
     public partial class Events : Form
     {
-        public PictureBox pbTeamClick {  get { return pbTeams; } }
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
         [DllImportAttribute("user32.dll")]
@@ -40,21 +39,21 @@ namespace ProjectManager
             }
         }
 
-        public int UserId { get; set; }
         User user = new User();
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
         public Events(int userId)
         {
             InitializeComponent();
-            UserId = userId;
             openChildForm(new Projects(userId));
+            activeSection(pbProject);
+            user.UserId = userId;
             DoubleBuffered = true;
         }
         
         
         private void Events_Load(object sender, EventArgs e)
-        {
-            user.UserId = UserId;
-            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        { 
             user = genericUser.ReadById(user);
             lblMail.Text = user.UserMail;
             lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
@@ -74,11 +73,6 @@ namespace ProjectManager
             this.DoubleBuffered = true;
         }
 
-        private void pictureBox6_Click(object sender, EventArgs e)
-        {  // user settings !!??
-            openChildForm (new UserSettings(user.UserId));
-        }
-
         private void pbExit_Click(object sender, EventArgs e)
         {
             Log log = new Log
@@ -91,33 +85,58 @@ namespace ProjectManager
                 LogDescription = "Logout",
                 LogStatus = "true"
             };
-
-            GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
             genericLog.Create(log);
 
             Entry entry = new Entry();
             entry.Show();
             this.Hide();
         }
-
+        void activeSection(PictureBox pbActive)
+        {
+            List<PictureBox> pbList = new List<PictureBox>() { pbProject,pbTask,pbTeams,pbCalender,pbSettings };
+            for (int i =0;i<pbList.Count;i++)
+            {
+                PictureBox pb = pbList[i];
+                if(pb != pbActive)
+                {
+                    pb.Size = new Size(32, 32);
+                    pb.Location = new Point(20, 10);
+                }
+                else
+                {
+                    pb.Size = new Size (45, 45);
+                    pb.Location = new Point(17, 6);
+                }
+            }
+        }
         private void pbCalender_Click(object sender, EventArgs e)
         {
             openChildForm(new Calendar(user.UserId));
+            activeSection(pbCalender);
         }
 
         private void pbTask_Click(object sender, EventArgs e)
         {
             openChildForm(new Tasks(user.UserId));
+            activeSection(pbTask);
         }
 
         private void pbProject_Click(object sender, EventArgs e)
         {
             openChildForm(new Projects(user.UserId));
+            activeSection(pbProject);
         }
 
         public void pbTeams_Click(object sender, EventArgs e)
         {
             openChildForm(new Teams(user.UserId));
+            activeSection(pbTeams);
+        }
+
+        private void pbSettings_Click(object sender, EventArgs e)
+        {
+            openChildForm(new UserSettings(user.UserId));
+            activeSection(pbSettings);
         }
 
     }

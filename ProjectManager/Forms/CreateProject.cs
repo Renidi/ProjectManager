@@ -14,17 +14,22 @@ namespace ProjectManager.Forms
 {
     public partial class CreateProject : Form
     {
-        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         Log log = new Log();
-        
+
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
+        GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
+        GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+        GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+
         public int varId;
         public CreateProject(int userId)
         {
             InitializeComponent();
             user.UserId = userId;
-            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+            
             user = genericUser.ReadById(user);
         }
         private void CreateProject_Load(object sender, EventArgs e)
@@ -35,11 +40,11 @@ namespace ProjectManager.Forms
 
             Dt();
 
-            List<UserGroup> tempTeamList = sqlHelper.GetTeams(user.UserId);
+            List<UserGroup> tempTeamList = genericUserGroup.ReadList(user);
             for (int i = 0; i < tempTeamList.Count; i++)
             {
                 group.GroupId = tempTeamList[i].GroupId;
-                group = sqlHelper.GetGroupInfo(group.GroupId);
+                group = genericGroup.ReadById(group);
                 cmbTeam.Items.Add(group.GroupName);
                 cmbProjectTeamIdHidden.Items.Add(group.GroupId);
             }
@@ -48,9 +53,8 @@ namespace ProjectManager.Forms
         {
             try
             {
-                varId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
-                project = sqlHelper.GetProjectInfo(varId);
-
+                project.ProjectId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
+                project = genericProject.ReadById(project);
                 txProjectName.Text = project.ProjectName;
                 cmbProjectStatus.SelectedItem = project.ProjectStatus;
                 cmbProjectPriority.SelectedItem = project.ProjectPriority;
@@ -63,7 +67,7 @@ namespace ProjectManager.Forms
         }
         private void Dt()
         {
-            GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+            
             dgvActiveProjects.DataSource = genericProject.ReadTable(user);
             
             if (dgvActiveProjects.Columns["PROJECT GROUP"]!=null)
@@ -101,7 +105,8 @@ namespace ProjectManager.Forms
             project.ProjectStartDate = dtProjectStartDate.Value;
             project.ProjectEndDate = dtProjectEndDate.Value;
             project.ProjectDescription = txProjectComment.Text;
-            project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1; 
+            project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
+            
             
             DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName, "Add Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -114,10 +119,10 @@ namespace ProjectManager.Forms
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Add Project " + project.ProjectName;
                 //log.LogStatus = sqlHelper.NewProject(project).ToString();
-                GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
-                log.LogStatus = genericSqlHelper.Create(project).ToString();
+                GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+                log.LogStatus = genericProject.Create(project).ToString();
 
-                sqlHelper.DataLog(log);
+                genericLog.Create(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -144,10 +149,8 @@ namespace ProjectManager.Forms
                 log.LogDescription = "Changes on " + project.ProjectName + ", Id : " + project.ProjectId;
                 GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
                 log.LogStatus = genericProject.Update(project).ToString();
-                //log.LogStatus = sqlHelper.EditData(project).ToString();
 
-                // sqlDbHelper.EditProject(project);
-                sqlHelper.DataLog(log);
+                genericLog.Create(log);
             }
             else
                 MessageBox.Show("Cancelled");
@@ -172,10 +175,7 @@ namespace ProjectManager.Forms
                 log.LogDate = DateTime.Now;
                 log.LogUser = user.UserMail;
                 log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
-                GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
-                log.LogStatus = genericSqlHelper.Delete(project).ToString();
-
-                GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                log.LogStatus = genericProject.Delete(project).ToString();
                 genericLog.Create(log);
 
             }

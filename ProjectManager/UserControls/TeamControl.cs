@@ -13,42 +13,77 @@ namespace ProjectManager.Forms
 {
     public partial class TeamControl : UserControl
     {
-        SqlHelper sqlHelper = new SqlHelper();
         Project project = new Project();
         User user = new User();
         Log log = new Log();
         Group group = new Group();
         UserGroup userGroup = new UserGroup();
-        public int getUserId { get; set; }
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
+        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         private Teams teams;
         public TeamControl(UserGroup x, Teams formTeams,int userId)
         {
             InitializeComponent();
             userGroup = x;
-            getUserId = userId;
-            user = sqlHelper.GetUserInfo(getUserId);
+            user.UserId = userId;
+            user = genericUser.ReadById(user);
             teams = formTeams;
         }
 
         private void TeamsControl_Load(object sender, EventArgs e)
         {
-            user = sqlHelper.GetUserInfo(getUserId);
             group.GroupId = userGroup.GroupId;
-            group = sqlHelper.GetGroupInfo(group.GroupId);
+            group = genericGroup.ReadById(group);
+            User userManager = new User{ UserId = group.GroupManagerId };
+            userManager = genericUser.ReadById(userManager);
+            lblTeamName.Text = group.GroupName;
+            User groupFounder = new User(){ UserId = group.GroupFounderId };
+            groupFounder =  genericUser.ReadById(groupFounder);
+            lblTeamLeaderMail.Text = "Team Leader: " + groupFounder.UserMail;
+            var counter = genericUser.GetProjectAndTaskCounts(group.GroupId);
+            lblTaskProjectCount.Text = counter.Item1 + " Project , " + counter.Item2 + " Task";
 
-            user.UserId = group.GroupManagerId;
-            user = sqlHelper.GetUserInfo(user.UserId);
-            label1.Text = group.GroupName;
-            label2.Text = "Team Leader: " + user.UserMail;
-            var counter = sqlHelper.GetProjectAndTaskCounts(group.GroupId);
-            label3.Text = counter.Item1+" Project , "+ counter.Item2 + " Task";
+            lblDescription.AutoSize = true;
+            lblDescription.Text = group.GroupDescription;
+            lblDescription.AutoSize = false;
         }
 
-        private void TeamControl_DoubleClick(object sender, EventArgs e)
+        private void lblDescription_TextChanged(object sender, EventArgs e)
         {
-            List<User> userList = sqlHelper.GetUserList(user.UserId, group.GroupId);
-            List<UserGroup> userGroups = sqlHelper.GetTeams(user.UserId, group.GroupId);
-            teams.DisplayTeamUsers(userList,userGroups);
+            lblDescription.Size = lblDescription.PreferredSize;
+            AdjustFormSize();
+        }
+        private void AdjustFormSize()
+        {
+            int desiredHeight = lblDescription.Height-20;
+            Height += desiredHeight;
+        }
+
+        private void pnlMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (userGroup.UserGroupAuthorization>0)
+            {
+                List<User> userList = genericUser.ReadList(user, group.GroupId);
+                List<UserGroup> userGroups = genericUserGroup.ReadList(user, group.GroupId);
+                teams.DisplayTeamUsers(userList, userGroups, userGroup.UserGroupAuthorization);
+                teams.disableConclusion();
+            }
+            else
+            {
+                teams.enableConclusion(group.GroupId);
+            }
+            
+        }
+
+        private void lblDescription_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            pnlMain_MouseDoubleClick(sender, e);
+        }
+
+        private void lblTeamName_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            pnlMain_MouseDoubleClick(sender, e);
         }
     }
 }

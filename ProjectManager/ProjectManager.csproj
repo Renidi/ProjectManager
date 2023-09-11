@@ -340,6 +340,12 @@
     <Compile Include="Forms\CreateTask.Designer.cs">
       <DependentUpon>CreateTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PopupAddMembeer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PopupAddMembeer.Designer.cs">
+      <DependentUpon>PopupAddMembeer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PopupCreateTeam.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -359,7 +365,6 @@
       <DependentUpon>RelatingTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericSqlHelper.cs" />
-    <Compile Include="SqlHelper.cs" />
     <Compile Include="UserControls\Badge.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -452,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateTask.resx">
       <DependentUpon>CreateTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PopupAddMembeer.resx">
+      <DependentUpon>PopupAddMembeer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PopupCreateTeam.resx">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
@@ -556,7 +564,10 @@
   <ItemGroup>
     <None Include="Resources\teamwork.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\check.png" />
+    <None Include="Resources\check1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

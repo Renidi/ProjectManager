@@ -17,17 +17,16 @@ namespace ProjectManager
         static int currentMonth = currentDt.Month;
         static int currentYear = currentDt.Year;
         User user = new User();
-        SqlHelper sqlHelper = new SqlHelper();
-        public int userId { get; set; }
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         public Calendar(int getUserId)
         {
-            userId = getUserId;
+            user.UserId = getUserId;
+            user = genericUser.ReadById(user);
             InitializeComponent();
         }
 
         private void Calendar_Load(object sender, EventArgs e)
         {
-            user = sqlHelper.GetUserInfo(userId);
             displayDays();
         }
         private void displayDays()

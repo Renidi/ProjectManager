@@ -13,11 +13,24 @@ namespace ProjectManager.Forms
 {
     public partial class RelatingTasks : Form
     {
-        User user = new User(); 
-        public RelatingTasks(int userId)
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED // cp.Style &= ~0x02000000;  // Turn off WS_CLIPCHILDREN best for pics i think
+                return cp;
+            }
+        }
+        User user = new User();
+        Tasks frmTask;
+        public int ownerID = 0;
+        public RelatingTasks(int userId,Tasks tasks,int ownerId = 0)
         {
             InitializeComponent();
             user.UserId = userId;
+            frmTask = tasks;
+            ownerID = ownerId;
         }
 
         private void RelatingTasks_Load(object sender, EventArgs e)
@@ -38,6 +51,7 @@ namespace ProjectManager.Forms
             pnlActive.Controls.Clear();
             pnlComplete.Controls.Clear();
             pnlOnHold.Controls.Clear();
+            pnlCancelled.Controls.Clear();
         }
 
         void FillPanel()
@@ -60,6 +74,10 @@ namespace ProjectManager.Forms
             };
             GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
             List<Task> taskList = genericSqlHelper.ReadList(user);
+            if(ownerID > 0)
+            {
+                taskList = taskList.Where(task => task.TaskOwnerId != ownerID).ToList();
+            }
             foreach(var pnl in pnlList)
             {
                 pnl.AutoScroll = false;
@@ -70,22 +88,22 @@ namespace ProjectManager.Forms
                 Task task = taskList[i];
                 if (task.TaskStatus == statusList[0])
                 {
-                    TaskCard taskCard = new TaskCard(task);
+                    TaskCard taskCard = new TaskCard(task,user.UserId,frmTask);
                     pnlList[0].Controls.Add(taskCard);
                 }
                 else if (task.TaskStatus == statusList[1])
                 {
-                    TaskCard taskCard = new TaskCard(task);
+                    TaskCard taskCard = new TaskCard(task, user.UserId, frmTask);
                     pnlList[1].Controls.Add(taskCard);
                 }
                 else if (task.TaskStatus == statusList[2])
                 {
-                    TaskCard taskCard = new TaskCard(task);
+                    TaskCard taskCard = new TaskCard(task, user.UserId, frmTask);
                     pnlList[2].Controls.Add(taskCard);
                 }
                 else
                 {
-                    TaskCard taskCard = new TaskCard(task);
+                    TaskCard taskCard = new TaskCard(task, user.UserId, frmTask);
                     pnlList[3].Controls.Add(taskCard);
                 }
             }
@@ -94,6 +112,7 @@ namespace ProjectManager.Forms
             {
                 pnl.AutoScroll = true;
                 pnl.HorizontalScroll.Visible = false;
+                pnl.VerticalScroll.Visible = false;
             }
 
         }

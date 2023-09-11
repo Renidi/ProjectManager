@@ -20,7 +20,6 @@ namespace ProjectManager.Forms
             InitializeComponent();
             user.UserId = userId;
         }
-        
         private void RelatingProjects_Load(object sender, EventArgs e)
         {
             GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
@@ -39,8 +38,8 @@ namespace ProjectManager.Forms
             pnlActive.Controls.Clear();
             pnlComplete.Controls.Clear();
             pnlOnHold.Controls.Clear();
+            pnlCancelled.Controls.Clear();
         }
-
         void FillPanel()
         {
             ClearPanels();
@@ -85,7 +84,6 @@ namespace ProjectManager.Forms
                     pnlList[3].Controls.Add(projectControl);
                 }
             }
-
         }
     }
 }

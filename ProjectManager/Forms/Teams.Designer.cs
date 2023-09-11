@@ -29,21 +29,27 @@
         private void InitializeComponent()
         {
             this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.btnAddMember = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMemebers = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlRequests = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlTeams = new System.Windows.Forms.FlowLayoutPanel();
             this.btnNewTeam = new Guna.UI2.WinForms.Guna2Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnJoinRequest = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRejectRequest = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMiddle.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMiddle
             // 
             this.pnlMiddle.BackColor = System.Drawing.Color.Silver;
+            this.pnlMiddle.Controls.Add(this.btnRejectRequest);
+            this.pnlMiddle.Controls.Add(this.btnJoinRequest);
+            this.pnlMiddle.Controls.Add(this.btnAddMember);
             this.pnlMiddle.Controls.Add(this.pnlMemebers);
-            this.pnlMiddle.Controls.Add(this.flowLayoutPanel2);
+            this.pnlMiddle.Controls.Add(this.pnlRequests);
             this.pnlMiddle.Controls.Add(this.pnlTeams);
             this.pnlMiddle.Controls.Add(this.btnNewTeam);
             this.pnlMiddle.Controls.Add(this.label3);
@@ -55,21 +61,36 @@
             this.pnlMiddle.Size = new System.Drawing.Size(1280, 551);
             this.pnlMiddle.TabIndex = 4;
             // 
+            // btnAddMember
+            // 
+            this.btnAddMember.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAddMember.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAddMember.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAddMember.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAddMember.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnAddMember.ForeColor = System.Drawing.Color.White;
+            this.btnAddMember.Location = new System.Drawing.Point(176, 460);
+            this.btnAddMember.Name = "btnAddMember";
+            this.btnAddMember.Size = new System.Drawing.Size(158, 45);
+            this.btnAddMember.TabIndex = 12;
+            this.btnAddMember.Text = "Invite Member";
+            this.btnAddMember.Click += new System.EventHandler(this.btnAddMember_Click);
+            // 
             // pnlMemebers
             // 
             this.pnlMemebers.BackColor = System.Drawing.Color.Gray;
-            this.pnlMemebers.Location = new System.Drawing.Point(263, 25);
+            this.pnlMemebers.Location = new System.Drawing.Point(264, 25);
             this.pnlMemebers.Name = "pnlMemebers";
-            this.pnlMemebers.Size = new System.Drawing.Size(713, 429);
+            this.pnlMemebers.Size = new System.Drawing.Size(452, 429);
             this.pnlMemebers.TabIndex = 11;
             // 
-            // flowLayoutPanel2
+            // pnlRequests
             // 
-            this.flowLayoutPanel2.BackColor = System.Drawing.Color.Gray;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(982, 25);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(246, 429);
-            this.flowLayoutPanel2.TabIndex = 10;
+            this.pnlRequests.BackColor = System.Drawing.Color.Gray;
+            this.pnlRequests.Location = new System.Drawing.Point(722, 25);
+            this.pnlRequests.Name = "pnlRequests";
+            this.pnlRequests.Size = new System.Drawing.Size(246, 429);
+            this.pnlRequests.TabIndex = 10;
             // 
             // pnlTeams
             // 
@@ -97,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1026, 9);
+            this.label3.Location = new System.Drawing.Point(802, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 6;
@@ -106,7 +127,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(575, 9);
+            this.label2.Location = new System.Drawing.Point(463, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 4;
@@ -115,11 +136,43 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(101, 9);
+            this.label1.Location = new System.Drawing.Point(116, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Teams";
+            // 
+            // btnJoinRequest
+            // 
+            this.btnJoinRequest.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinRequest.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinRequest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnJoinRequest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnJoinRequest.Enabled = false;
+            this.btnJoinRequest.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnJoinRequest.ForeColor = System.Drawing.Color.White;
+            this.btnJoinRequest.Location = new System.Drawing.Point(722, 460);
+            this.btnJoinRequest.Name = "btnJoinRequest";
+            this.btnJoinRequest.Size = new System.Drawing.Size(115, 45);
+            this.btnJoinRequest.TabIndex = 13;
+            this.btnJoinRequest.Text = "Join";
+            this.btnJoinRequest.Click += new System.EventHandler(this.btnJoinRequest_Click);
+            // 
+            // btnRejectRequest
+            // 
+            this.btnRejectRequest.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRejectRequest.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRejectRequest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRejectRequest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRejectRequest.Enabled = false;
+            this.btnRejectRequest.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRejectRequest.ForeColor = System.Drawing.Color.White;
+            this.btnRejectRequest.Location = new System.Drawing.Point(853, 460);
+            this.btnRejectRequest.Name = "btnRejectRequest";
+            this.btnRejectRequest.Size = new System.Drawing.Size(115, 45);
+            this.btnRejectRequest.TabIndex = 14;
+            this.btnRejectRequest.Text = "Reject";
+            this.btnRejectRequest.Click += new System.EventHandler(this.btnRejectRequest_Click);
             // 
             // Teams
             // 
@@ -144,8 +197,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2Button btnNewTeam;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.FlowLayoutPanel pnlRequests;
         private System.Windows.Forms.FlowLayoutPanel pnlTeams;
         private System.Windows.Forms.FlowLayoutPanel pnlMemebers;
+        private Guna.UI2.WinForms.Guna2Button btnAddMember;
+        private Guna.UI2.WinForms.Guna2Button btnRejectRequest;
+        private Guna.UI2.WinForms.Guna2Button btnJoinRequest;
     }
 }

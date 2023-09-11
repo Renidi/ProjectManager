@@ -20,12 +20,14 @@ namespace ProjectManager.Forms
         Log log = new Log();
         List<User> users = new List<User>();
         List<Project> projectList = new List<Project>();
-        public CreateTask(int userId)
+        public int editTaskId = 0; 
+        public CreateTask(int userId,int taskId=0)
         {
             InitializeComponent();
             user.UserId = userId;
             GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
             user = genericUser.ReadById(user);
+            editTaskId = taskId;
         }
 
         private void CreateTask_Load(object sender, EventArgs e)
@@ -51,6 +53,18 @@ namespace ProjectManager.Forms
 
             DoubleBuffered = true;
             Dt();
+            if (editTaskId > 0)
+            {
+                foreach (DataGridViewRow row in dgvActiveTasks.Rows)
+                {
+                    int rowId = Convert.ToInt32(row.Cells[0].Value);
+                    if (rowId == editTaskId)
+                    {
+                        dgvActiveTasks.CurrentCell = dgvActiveTasks.Rows[row.Index].Cells[0];
+                        dgvActiveTasks_CellContentClick(dgvActiveTasks, new DataGridViewCellEventArgs(0, row.Index));
+                    }
+                }
+            }
         }
 
         private void dgvActiveTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -85,8 +99,31 @@ namespace ProjectManager.Forms
                 dtTaskStartDate.Value = task.TaskStartDate;
                 dtTaskEndDate.Value = task.TaskEndDate;
                 cmbTaskProject.Text = projectInfo.ProjectName;
-                cmbTaskEmployee.Text = userInfo.UserName;
+                cmbTaskEmployee.Text = userInfo.UserMail;
                 cmbTaskTeam.Text = groupInfo.GroupName;
+                cmbTaskPriority.Text = task.TaskPriority;
+                txTaskComment.Text = task.TaskDescription;
+                if(task.TaskBadges != null)
+                {
+                    for (int i = 0; i < clb1.Items.Count; i++)
+                    {
+                        string itemText = clb1.Items[i].ToString();
+                        if (task.TaskBadges.Contains(itemText))
+                        {
+                            clb1.SetItemChecked(i, true);
+                        }
+                    }
+                    for (int i = 0; i < clb2.Items.Count; i++)
+                    {
+                        string itemText = clb2.Items[i].ToString();
+                        if (task.TaskBadges.Contains(itemText))
+                        {
+                            clb2.SetItemChecked(i, true);
+                        }
+                    }
+
+                }
+
 
             }
             catch { }
@@ -110,11 +147,11 @@ namespace ProjectManager.Forms
             task.TaskPriority = cmbTaskPriority.Text;
             task.TaskStartDate = dtTaskStartDate.Value;
             task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays)); // Düzenlenecek total task süresini gösteriyor ama sadece kalan olacak ve db den silinecek
             task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
             task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
             task.TaskDescription = txTaskComment.Text;
             task.TaskGroupId = projectList[cmbTaskProject.SelectedIndex].ProjectGroupId;
+            task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>() ) + string.Join(", ", clb2.CheckedItems.Cast<string>());
 
             DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName + " to tasks ?", "Add Task ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -140,16 +177,14 @@ namespace ProjectManager.Forms
             task.TaskPriority = cmbTaskPriority.Text;
             task.TaskStartDate = dtTaskStartDate.Value;
             task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskDuration = Convert.ToInt32(Math.Ceiling((dtTaskEndDate.Value - dtTaskStartDate.Value).TotalDays));
             task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
             task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
             task.TaskDescription = txTaskComment.Text;
+            task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>()) + string.Join(", ", clb2.CheckedItems.Cast<string>());
 
             DialogResult result = MessageBox.Show("Are you sure edit " + task.TaskName, "Edit Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                // sqlDbHelper.EditTask(task); to 111
-
                 log.LogSource = "Task";
                 log.LogType = "Edit";
                 log.LogDate = DateTime.Now;
@@ -232,5 +267,6 @@ namespace ProjectManager.Forms
             else
                 cmbTaskEmployee.Items.Add(user.UserMail);
         }
+
     }
 }

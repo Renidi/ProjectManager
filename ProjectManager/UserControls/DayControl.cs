@@ -18,7 +18,6 @@ namespace ProjectManager
         }
         Project project = new Project();
         User user = new User();
-        SqlHelper sqlHelper = new SqlHelper();
         static DateTime currentDt = DateTime.Now.Date;
 
         private void DayControl_Load(object sender, EventArgs e)
@@ -34,12 +33,13 @@ namespace ProjectManager
                 lbl.Font = new Font("Microsoft Sans Serif", 12,FontStyle.Bold);
                 lbl.ForeColor = Color.Blue;
             }
-
-            List<Task> taskList = sqlHelper.GetTasks(userId);
+            GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
+            user.UserId = userId;
+            List<Task> taskList = genericTask.ReadList(user);
             List<Task> todaysTask = new List<Task>();
             foreach (Task temp in taskList)
             {
-                if (temp.TaskEndDate == currentDt)
+                if (temp.TaskEndDate.Date == Convert.ToDateTime(dateDay).Date)
                     todaysTask.Add(temp);
             }
 

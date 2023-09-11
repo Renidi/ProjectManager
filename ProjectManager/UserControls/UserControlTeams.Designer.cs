@@ -46,7 +46,7 @@
             // lblAuth
             // 
             this.lblAuth.AutoSize = true;
-            this.lblAuth.Location = new System.Drawing.Point(316, 13);
+            this.lblAuth.Location = new System.Drawing.Point(268, 13);
             this.lblAuth.Name = "lblAuth";
             this.lblAuth.Size = new System.Drawing.Size(38, 13);
             this.lblAuth.TabIndex = 1;
@@ -55,7 +55,7 @@
             // lblMail
             // 
             this.lblMail.AutoSize = true;
-            this.lblMail.Location = new System.Drawing.Point(143, 13);
+            this.lblMail.Location = new System.Drawing.Point(124, 13);
             this.lblMail.Name = "lblMail";
             this.lblMail.Size = new System.Drawing.Size(138, 13);
             this.lblMail.TabIndex = 2;
@@ -68,7 +68,7 @@
             "Member",
             "Admin",
             "Owner"});
-            this.cmbAuth.Location = new System.Drawing.Point(414, 10);
+            this.cmbAuth.Location = new System.Drawing.Point(312, 10);
             this.cmbAuth.Name = "cmbAuth";
             this.cmbAuth.Size = new System.Drawing.Size(121, 21);
             this.cmbAuth.TabIndex = 5;
@@ -83,7 +83,7 @@
             this.Controls.Add(this.lblAuth);
             this.Controls.Add(this.lblFullName);
             this.Name = "UserControlTeams";
-            this.Size = new System.Drawing.Size(700, 40);
+            this.Size = new System.Drawing.Size(450, 40);
             this.Load += new System.EventHandler(this.UserControlTeams_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

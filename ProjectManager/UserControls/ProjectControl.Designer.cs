@@ -31,7 +31,6 @@
             this.lblProjectName = new System.Windows.Forms.Label();
             this.lblProjectDescription = new System.Windows.Forms.Label();
             this.lblStartEndDate = new System.Windows.Forms.Label();
-            this.lblTaskCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -70,23 +69,11 @@
             this.lblStartEndDate.TabIndex = 2;
             this.lblStartEndDate.Text = "TarihTarih xx/ Tarih Tarih xx";
             // 
-            // lblTaskCount
-            // 
-            this.lblTaskCount.AutoSize = true;
-            this.lblTaskCount.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblTaskCount.ForeColor = System.Drawing.Color.Gray;
-            this.lblTaskCount.Location = new System.Drawing.Point(0, 92);
-            this.lblTaskCount.Name = "lblTaskCount";
-            this.lblTaskCount.Size = new System.Drawing.Size(46, 13);
-            this.lblTaskCount.TabIndex = 3;
-            this.lblTaskCount.Text = "36 Task";
-            // 
             // ProjectControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(31)))), ((int)(((byte)(33)))));
-            this.Controls.Add(this.lblTaskCount);
             this.Controls.Add(this.lblStartEndDate);
             this.Controls.Add(this.lblProjectDescription);
             this.Controls.Add(this.lblProjectName);
@@ -104,6 +91,5 @@
         private System.Windows.Forms.Label lblProjectName;
         private System.Windows.Forms.Label lblProjectDescription;
         private System.Windows.Forms.Label lblStartEndDate;
-        private System.Windows.Forms.Label lblTaskCount;
     }
 }

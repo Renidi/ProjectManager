@@ -20,7 +20,9 @@ namespace ProjectManager
     {
         User user = new User();
         UserGroup userGroup = new UserGroup();
-        public string Mail { get; set; }
+        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
+        List<UserGroup> groups = new List<UserGroup>();
+        public int btnGroupId;
 
         public Teams(int userId)
         {
@@ -39,25 +41,33 @@ namespace ProjectManager
         {
             pnlTeams.Controls.Clear();
             pnlTeams.AutoScroll = false;
-            GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
-            List<UserGroup> groups = genericUserGroup.ReadList(user);
+            groups = genericUserGroup.ReadList(user);
             foreach (UserGroup inGroup in groups)
             {
-                TeamControl teamControl = new TeamControl(inGroup,this,user.UserId);
-                pnlTeams.Controls.Add(teamControl);
+                if (inGroup.UserGroupAuthorization>0)
+                {
+                    TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
+                    pnlTeams.Controls.Add(teamControl);
+                }else
+                {
+                    TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
+                    pnlRequests.Controls.Add(teamControl);
+                }
+                
             }
             pnlTeams.AutoScroll = true;
         }
         
-        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo)
+        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo,int authLevel)
         {
             pnlMemebers.Controls.Clear();
+            pnlRequests.Controls.Clear();
             pnlMemebers.AutoScroll = false;
             for (int i = 0; i < userList.Count; i++)
             {
                 user = userList[i]; 
                 userGroup = userGroupInfo[i];
-                UserControlTeams userControlTeams = new UserControlTeams(userGroup,user);
+                UserControlTeams userControlTeams = new UserControlTeams(userGroup,user,authLevel);
                 pnlMemebers.Controls.Add(userControlTeams);
             }
             pnlMemebers.AutoScroll=true;
@@ -68,6 +78,47 @@ namespace ProjectManager
         {
             Form popUpForm = new PopupCreateTeam(user.UserId,this);
             popUpForm.ShowDialog();
+
+        }
+
+        private void btnAddMember_Click(object sender, EventArgs e)
+        {
+            Form popUpInviteMember = new PopupAddMembeer(user,groups);
+            popUpInviteMember.ShowDialog();
+        }
+        public void enableConclusion(int groupID)
+        {
+            btnJoinRequest.Enabled = true;
+            btnRejectRequest.Enabled = true;
+            btnGroupId = groupID;
+        }
+        public void disableConclusion()
+        {
+            btnJoinRequest.Enabled = false;
+            btnRejectRequest.Enabled = false;
+        }
+
+        private void btnJoinRequest_Click(object sender, EventArgs e)
+        {
+            UserGroup userGroupInfo = new UserGroup() {GroupId = btnGroupId , UserId=user.UserId};
+            userGroupInfo = genericUserGroup.ReadById(userGroupInfo);
+            userGroupInfo.UserGroupAuthorization = 1;
+            userGroupInfo.ProcessDate = DateTime.Now;
+            userGroupInfo.InviteStatus = "Accepted";
+            if (genericUserGroup.Update(userGroupInfo))
+            {
+                MessageBox.Show("Joined Team");
+
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+            DisplayTeams();
+        }
+
+        private void btnRejectRequest_Click(object sender, EventArgs e)
+        {
 
         }
     }

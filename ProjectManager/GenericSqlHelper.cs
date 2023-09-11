@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Caching;
@@ -19,11 +20,14 @@ namespace ProjectManager
         {
             try
             {
-                string tableName = typeof(T).Name;
+                string tableName = typeof(T).Name.ToUpper() == "USERGROUP" ? "USER_GROUP" : typeof(T).Name.ToUpper();
+                
                 PropertyInfo[] properties = typeof(T).GetProperties();
 
-                string strCol = string.Join(",", properties.Skip(1).Select(r => ConvertPropName(r.Name)));
-                string strParam = string.Join(",", properties.Skip(1).Select(r => "@"+ConvertPropName(r.Name)));
+                string strCol = string.Join(",", properties.Skip(1).Where(r => r.GetValue(t) != null && (r.PropertyType != typeof(DateTime) || (DateTime)r.GetValue(t) != DateTime.MinValue))
+                                .Select(r => ConvertPropName(r.Name)));
+                string strParam = string.Join(",", properties.Skip(1).Where(r => r.GetValue(t) != null && (r.PropertyType != typeof(DateTime) || (DateTime)r.GetValue(t) != DateTime.MinValue))
+                                .Select(r => "@"+ConvertPropName(r.Name)));
                 string sql = "INSERT INTO [" + tableName + "] (" + strCol + ") VALUES(" + strParam + ")";
 
                 using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
@@ -32,12 +36,49 @@ namespace ProjectManager
                     SqlCommand cmd = new SqlCommand(sql, con);
                     for(int i = 0; i < properties.Length-1; i++)
                     {
-                        cmd.Parameters.AddWithValue("@" + ConvertPropName(properties[i+1].Name), properties[i+1].GetValue(t));
+                        if(properties[i + 1].GetValue(t) != null && (properties[i + 1].PropertyType != typeof(DateTime) || (DateTime)properties[i+1].GetValue(t) != DateTime.MinValue))
+                            cmd.Parameters.AddWithValue("@" + ConvertPropName(properties[i+1].Name), properties[i + 1].GetValue(t));
                     }
 
                     cmd.ExecuteNonQuery();
                     con.Close();
+                    if (tableName == "GROUP")
+                    {   
+                        cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_NAME=@GROUP_NAME AND GROUP_FOUNDER_ID=@GROUP_FOUNDER_ID AND GROUP_FORMATION_DATE=@GROUP_FORMATION_DATE", con);
+                        cmd.Parameters.AddWithValue("@GROUP_NAME", properties[1].GetValue(t));
+                        cmd.Parameters.AddWithValue("@GROUP_FOUNDER_ID", properties[2].GetValue(t));
+                        cmd.Parameters.AddWithValue("@GROUP_FORMATION_DATE", properties[5].GetValue(t));
+                        con.Open();
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                Group returnGroupInfo = new Group()
+                                {
+                                    GroupId = Convert.ToInt32(rd["GROUP_ID"]),
+                                    GroupName = rd["GROUP_NAME"].ToString(),
+                                    GroupFounderId = Convert.ToInt32(rd["GROUP_FOUNDER_ID"]),
+                                    GroupManagerId = Convert.ToInt32(rd["GROUP_MANAGER_ID"]),
+                                    GroupDescription = rd["GROUP_DESCRIPTION"].ToString(),
+                                    GroupFormationDate = Convert.ToDateTime(rd["GROUP_FORMATION_DATE"]),
+                                };
+                                UserGroup userGroup = new UserGroup() {UserId = returnGroupInfo.GroupFounderId,
+                                                                       GroupId = returnGroupInfo.GroupId,
+                                                                       UserGroupAuthorization =  3, // creator
+                                                                       InviteDate = returnGroupInfo.GroupFormationDate,
+                                                                       ProcessDate = returnGroupInfo.GroupFormationDate,
+                                                                       InviteSenderId = returnGroupInfo.GroupFounderId,
+                                                                       InviteStatus = "Accepted"
+                                };
+
+                                GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
+                                genericUserGroup.Create(userGroup);
+                            }
+                        }
+                    }
+
                 }
+                return true;
 
             }
             catch (Exception ex)
@@ -86,12 +127,15 @@ namespace ProjectManager
         }
         public T ReadById(T t)
         {
-            string tableName = typeof(T).Name.ToUpper();
+            string tableName = typeof(T).Name.ToUpper() == "USERGROUP" ? "USER_GROUP" : typeof(T).Name.ToUpper();
             PropertyInfo[] properties = typeof(T).GetProperties();
             string sql = "SELECT * FROM [" + tableName + "] WHERE " + ConvertPropName(properties[0].Name) + "=@" + ConvertPropName(properties[0].Name);
             if ((int)properties[0].GetValue(t) == 0) // üye id si yoksa mail ve secret word check yapılır
             {
-                sql = "SELECT * FROM [" + tableName + "] WHERE USER_MAIL=@USER_MAIL AND USER_SECRET_WORD=@USER_SECRET_WORD";
+                if(tableName == "USER")
+                    sql = "SELECT * FROM [" + tableName + "] WHERE USER_MAIL=@USER_MAIL AND USER_SECRET_WORD=@USER_SECRET_WORD";
+                else
+                    sql = "SELECT * FROM [" + tableName + "] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID";
             }
             try
             {
@@ -103,10 +147,19 @@ namespace ProjectManager
                     {
                         cmd.Parameters.AddWithValue("@" + ConvertPropName(properties[0].Name), properties[0].GetValue(t));
                     }
-                    else // üye id si yoksa mail ve secret word check yapılır
+                    else // id yoksa check yapılır
                     {
-                        cmd.Parameters.AddWithValue("@USER_MAIL", properties[3].GetValue(t));
-                        cmd.Parameters.AddWithValue("@USER_SECRET_WORD", properties[8].GetValue(t));
+                        if(tableName == "USER")
+                        {
+                            cmd.Parameters.AddWithValue("@USER_MAIL", properties[3].GetValue(t));
+                            cmd.Parameters.AddWithValue("@USER_SECRET_WORD", properties[8].GetValue(t));
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@USER_ID", properties[1].GetValue(t));
+                            cmd.Parameters.AddWithValue("@GROUP_ID", properties[2].GetValue(t));
+                        }
+                        
                     }
                     
                     using (SqlDataReader rd = cmd.ExecuteReader())
@@ -166,8 +219,6 @@ namespace ProjectManager
             }
 
             List<T> result = new List<T>();
-
-
             try
             {
                 
@@ -220,7 +271,7 @@ namespace ProjectManager
         {
             try
             {
-                string tableName = typeof(T).Name.ToUpper();
+                string tableName = typeof(T).Name.ToUpper() == "USERGROUP" ? "USER_GROUP" : typeof(T).Name.ToUpper();
                 List<PropertyInfo> properties = t.GetType().GetProperties().ToList();
                 PropertyInfo keyProperty = properties.FirstOrDefault(prop => prop.Name.Equals(ConvertName(tableName + "_ID"), StringComparison.OrdinalIgnoreCase)); // ID prop and value
                 string sql = "UPDATE [" + tableName + "] SET ";
@@ -306,6 +357,44 @@ namespace ProjectManager
             return false;
         }
 
+        //---------
+        public (int, int) GetProjectAndTaskCounts(int groupId)
+        {
+            int counterProject = 0;
+            int counterTask = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    using (con)
+                    {
+                        List<string> tableList = new List<string>() { "PROJECT", "TASK" };
+                        foreach (string table in tableList)
+                        {
+                            SqlCommand cmd = new SqlCommand("SELECT COUNT(" + table + "_GROUP_ID) FROM [" + table + "] WHERE " + table + "_GROUP_ID=@" + table + "_GROUP_ID", con);
+                            //                    SELECT COUNT(PROJECT_GROUP_ID) FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID
+                            cmd.Parameters.AddWithValue("@" + table + "_GROUP_ID", groupId);
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            if (table == "PROJECT")
+                                counterProject = Convert.ToInt32(cmd.ExecuteScalar());
+
+                            else
+                                counterTask = Convert.ToInt32(cmd.ExecuteScalar());
+                            con.Close();
+
+                        }
+
+                        return (counterProject, counterTask);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return (counterProject, counterTask);
+        }
         public int Login(string userMail, string userPassword) // İf login succes return userId, otherwise return 0
         {
             int userId = 0; 
@@ -336,6 +425,35 @@ namespace ProjectManager
             }
             return userId;
         }
+        public int CheckUserMail(string userMail)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    con.Open();
+                    string sql = "SELECT USER_ID FROM [USER] WHERE USER_MAIL=@USER_MAIL";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            con.Close() ;
+                            return (int)result;
+                        }
+
+                    }
+                    con.Close();  
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return 0;
+        } 
 
         // Subprocesses
         private string ConvertPropName(string input) // ProjectId => PROJECT_ID / entity to sql

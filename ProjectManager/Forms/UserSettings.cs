@@ -14,22 +14,19 @@ namespace ProjectManager
     public partial class UserSettings : Form
     {
 
-        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
-        public string Mail { get; set; }
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
 
         public UserSettings(int userId)
         {
             user.UserId = userId;
-            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
             user = genericUser.ReadById(user);
+
             InitializeComponent();
         }
 
         private void UserSettings_Load(object sender, EventArgs e)
         {
-            user.UserMail = Mail;
-            user = sqlHelper.GetUserInfo(-1, user.UserMail);
             lblUserMail.Text = user.UserMail;
             lblUserName.Text = user.UserName + " " + user.UserSurname;
         }
@@ -58,9 +55,10 @@ namespace ProjectManager
                 {
                     if (!cbPasswordOrSecret.Checked) 
                     {
-                        if (sqlHelper.Login(Mail, txCurrentPasswordOrSecretWord.Text))
+                        if (genericUser.Login(user.UserMail,txCurrentPasswordOrSecretWord.Text)!=0)
                         {
-                            sqlHelper.ChangePassword(Mail, txNewPassword.Text);
+                            user.UserPassword = txNewPassword.Text;
+                            genericUser.Update(user);
                             MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }
@@ -71,9 +69,12 @@ namespace ProjectManager
                     }
                     else
                     {
-                        if (sqlHelper.SecretWordCheck(user.UserMail, txCurrentPasswordOrSecretWord.Text))
+                        User testUser = genericUser.ReadById(user);
+                        bool test = testUser.UserSecretWord == txCurrentPasswordOrSecretWord.Text ? true : false;
+                        if (test)
                         {
-                            sqlHelper.ChangePassword(user.UserMail, txNewPassword.Text);
+                            user.UserPassword = txNewPassword.Text;
+                            genericUser.Update(user);
                             MessageBox.Show("Password Successfully Changed");
                             Clear();
                         }

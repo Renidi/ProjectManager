@@ -75,25 +75,25 @@
             // pnlCancelled
             // 
             this.pnlCancelled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCancelled.Location = new System.Drawing.Point(874, 0);
+            this.pnlCancelled.Location = new System.Drawing.Point(867, 0);
             this.pnlCancelled.Name = "pnlCancelled";
-            this.pnlCancelled.Size = new System.Drawing.Size(282, 551);
+            this.pnlCancelled.Size = new System.Drawing.Size(289, 551);
             this.pnlCancelled.TabIndex = 7;
             // 
             // pnlComplete
             // 
             this.pnlComplete.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlComplete.Location = new System.Drawing.Point(587, 0);
+            this.pnlComplete.Location = new System.Drawing.Point(578, 0);
             this.pnlComplete.Name = "pnlComplete";
-            this.pnlComplete.Size = new System.Drawing.Size(287, 551);
+            this.pnlComplete.Size = new System.Drawing.Size(289, 551);
             this.pnlComplete.TabIndex = 6;
             // 
             // pnlActive
             // 
             this.pnlActive.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlActive.Location = new System.Drawing.Point(287, 0);
+            this.pnlActive.Location = new System.Drawing.Point(289, 0);
             this.pnlActive.Name = "pnlActive";
-            this.pnlActive.Size = new System.Drawing.Size(300, 551);
+            this.pnlActive.Size = new System.Drawing.Size(289, 551);
             this.pnlActive.TabIndex = 5;
             // 
             // pnlOnHold
@@ -101,7 +101,7 @@
             this.pnlOnHold.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlOnHold.Location = new System.Drawing.Point(0, 0);
             this.pnlOnHold.Name = "pnlOnHold";
-            this.pnlOnHold.Size = new System.Drawing.Size(287, 551);
+            this.pnlOnHold.Size = new System.Drawing.Size(289, 551);
             this.pnlOnHold.TabIndex = 4;
             // 
             // RelatingTasks

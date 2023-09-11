@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Entry));
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelRegister = new System.Windows.Forms.Panel();
             this.lblRegisterReset = new System.Windows.Forms.Label();
@@ -70,12 +71,14 @@
             this.txLoginMail = new Guna.UI2.WinForms.Guna2TextBox();
             this.txLoginPassword = new Guna.UI2.WinForms.Guna2TextBox();
             this.exitApp = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelMain.SuspendLayout();
             this.panelRegister.SuspendLayout();
             this.panelReset.SuspendLayout();
             this.panelResetPassword.SuspendLayout();
             this.panelLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitApp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMain
@@ -654,14 +657,26 @@
             // 
             // exitApp
             // 
+            this.exitApp.BackColor = System.Drawing.Color.Transparent;
             this.exitApp.Image = global::ProjectManager.Properties.Resources.delete;
-            this.exitApp.Location = new System.Drawing.Point(756, 12);
+            this.exitApp.Location = new System.Drawing.Point(709, 29);
             this.exitApp.Name = "exitApp";
             this.exitApp.Size = new System.Drawing.Size(32, 32);
             this.exitApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.exitApp.TabIndex = 5;
             this.exitApp.TabStop = false;
             this.exitApp.Click += new System.EventHandler(this.exitApp_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(480, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(320, 450);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
             // 
             // Entry
             // 
@@ -670,6 +685,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.exitApp);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Entry";
@@ -686,6 +702,7 @@
             this.panelLogin.ResumeLayout(false);
             this.panelLogin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitApp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -733,6 +750,7 @@
         private Guna.UI2.WinForms.Guna2TextBox txRegisterName;
         private Guna.UI2.WinForms.Guna2TextBox txRegisterPasswordFirst;
         private Guna.UI2.WinForms.Guna2CheckBox cbRememberMe;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

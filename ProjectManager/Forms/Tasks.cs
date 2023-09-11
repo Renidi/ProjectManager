@@ -16,14 +16,14 @@ namespace ProjectManager
     public partial class Tasks : Form
     {
         User user = new User();
-
+        public Panel Panel { get { return pnlActive; } set { pnlActive.Controls.Add(value); } }
         public Tasks(int userId)
         {
             InitializeComponent();
             user.UserId = userId;
             GenericSqlHelper<User> genericSqlHelper = new GenericSqlHelper<User>();
             user = genericSqlHelper.ReadById(user);
-            openChildForm(new RelatingTasks(user.UserId));
+            openChildFormTasks(new RelatingTasks(user.UserId,this));
         }
         private void Tasks_Load(object sender, EventArgs e)
         {
@@ -32,7 +32,7 @@ namespace ProjectManager
             DoubleBuffered = true;
         }
         private Form activeForm = null;
-        private void openChildForm(Form childForm)
+        private void openChildFormTasks(Form childForm)
         {
             activeForm?.Close();
             activeForm = childForm;
@@ -44,20 +44,24 @@ namespace ProjectManager
             childForm.Show();
             this.DoubleBuffered = true;
         }
+        public void PerformEditTask(int taskId)
+        {
+            openChildFormTasks(new CreateTask(user.UserId,taskId));
+        }
 
         private void btnTasks_Click(object sender, EventArgs e)
         {
-            openChildForm(new RelatingTasks(user.UserId));
+            openChildFormTasks(new RelatingTasks(user.UserId,this));
         }
 
         private void btnMyTasks_Click(object sender, EventArgs e)
         {
-            openChildForm(new RelatingTasks(user.UserId));
+            openChildFormTasks(new RelatingTasks(user.UserId,this,user.UserId));
         }
 
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-            openChildForm(new CreateTask(user.UserId));
+            openChildFormTasks(new CreateTask(user.UserId));
         }
     }
 

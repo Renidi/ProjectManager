@@ -15,13 +15,17 @@ namespace ProjectManager.Forms
     {
         private Teams teams;
 
-        SqlHelper sqlHelper = new SqlHelper();
         User user = new User();
         Group group = new Group();
+        UserGroup userGroup = new UserGroup();
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
+        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
 
         public PopupCreateTeam(int userId, Teams formTeams)
         {
-            user = sqlHelper.GetUserInfo(userId);
+            user.UserId = userId;
+            user = genericUser.ReadById(user);
             InitializeComponent();
             teams = formTeams;
         }
@@ -34,7 +38,7 @@ namespace ProjectManager.Forms
             group.GroupDescription = txGroupDescription.Text;
             group.GroupFormationDate = DateTime.Now;
 
-            if(sqlHelper.NewTeam(group))
+            if(genericGroup.Create(group))
             {
                 this.Close();
             }

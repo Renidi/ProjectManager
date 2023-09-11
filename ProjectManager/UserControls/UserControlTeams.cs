@@ -15,12 +15,15 @@ namespace ProjectManager.UserControls
     {
         User user = new User();
         UserGroup userGroup = new UserGroup();
-        SqlHelper sqlHelper = new SqlHelper();
-        public UserControlTeams(UserGroup userGroups,User users)
+        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
+        public int authL = 0;
+
+        public UserControlTeams(UserGroup userGroups,User users,int authLevel)
         {
             InitializeComponent();
             userGroup = userGroups;
             user = users;
+            authL = authLevel;
         }
 
         private void UserControlTeams_Load(object sender, EventArgs e)
@@ -29,6 +32,14 @@ namespace ProjectManager.UserControls
             lblMail.Text = user.UserMail;
             cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization-1;
             lblAuth.Text = cmbAuth.Text;
+            if (authL > 1)
+            {
+                cmbAuth.Enabled = true;
+            }
+            else
+            {
+                cmbAuth.Enabled = false;
+            }
         }
 
         private void cmbAuth_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,7 +49,7 @@ namespace ProjectManager.UserControls
                 DialogResult dialog = MessageBox.Show("R u sure ?","Title", MessageBoxButtons.YesNo);
                 if (DialogResult.Yes == dialog)
                 {
-                    sqlHelper.EditData(null,null,userGroup);
+                    genericUserGroup.Update(userGroup);
                 }
                 else if(dialog == DialogResult.No)
                 {
