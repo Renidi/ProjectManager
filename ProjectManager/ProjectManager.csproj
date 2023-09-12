@@ -397,11 +397,35 @@
     <Compile Include="Forms\Projects.Designer.cs">
       <DependentUpon>Projects.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\LoginCompanets.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\LoginCompanets.Designer.cs">
+      <DependentUpon>LoginCompanets.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ProjectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\ProjectControl.Designer.cs">
       <DependentUpon>ProjectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Register.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Register.Designer.cs">
+      <DependentUpon>Register.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ForgotPassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ForgotPassword.Designer.cs">
+      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ResetPassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ResetPassword.Designer.cs">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TaskCard.cs">
       <SubType>UserControl</SubType>
@@ -488,8 +512,20 @@
     <EmbeddedResource Include="Forms\Projects.resx">
       <DependentUpon>Projects.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\LoginCompanets.resx">
+      <DependentUpon>LoginCompanets.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ProjectControl.resx">
       <DependentUpon>ProjectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Register.resx">
+      <DependentUpon>Register.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ForgotPassword.resx">
+      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ResetPassword.resx">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TaskCard.resx">
       <DependentUpon>TaskCard.cs</DependentUpon>

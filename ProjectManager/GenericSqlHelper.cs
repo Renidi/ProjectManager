@@ -356,147 +356,7 @@ namespace ProjectManager
 
             return false;
         }
-
-        //---------
-        public (int, int) GetProjectAndTaskCounts(int groupId)
-        {
-            int counterProject = 0;
-            int counterTask = 0;
-            try
-            {
-                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
-                {
-                    using (con)
-                    {
-                        List<string> tableList = new List<string>() { "PROJECT", "TASK" };
-                        foreach (string table in tableList)
-                        {
-                            SqlCommand cmd = new SqlCommand("SELECT COUNT(" + table + "_GROUP_ID) FROM [" + table + "] WHERE " + table + "_GROUP_ID=@" + table + "_GROUP_ID", con);
-                            //                    SELECT COUNT(PROJECT_GROUP_ID) FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID
-                            cmd.Parameters.AddWithValue("@" + table + "_GROUP_ID", groupId);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            if (table == "PROJECT")
-                                counterProject = Convert.ToInt32(cmd.ExecuteScalar());
-
-                            else
-                                counterTask = Convert.ToInt32(cmd.ExecuteScalar());
-                            con.Close();
-
-                        }
-
-                        return (counterProject, counterTask);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return (counterProject, counterTask);
-        }
-        public int Login(string userMail, string userPassword) // İf login succes return userId, otherwise return 0
-        {
-            int userId = 0; 
-            try
-            {
-                using(SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
-                {
-                    con.Open();
-                    string sql = "SELECT USER_ID FROM [USER] WHERE USER_MAIL=@USER_MAIL AND USER_PASSWORD=@USER_PASSWORD";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
-                    {
-                        cmd.Parameters.AddWithValue("@USER_MAIL",userMail);
-                        cmd.Parameters.AddWithValue("@USER_PASSWORD",userPassword);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null)
-                        {
-                            userId = (int)result;
-                        }
-
-                    }
-                    con.Close();
-                    return userId;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return userId;
-        }
-        public int CheckUserMail(string userMail)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
-                {
-                    con.Open();
-                    string sql = "SELECT USER_ID FROM [USER] WHERE USER_MAIL=@USER_MAIL";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
-                    {
-                        cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null)
-                        {
-                            con.Close() ;
-                            return (int)result;
-                        }
-
-                    }
-                    con.Close();  
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            return 0;
-        } 
-
         // Subprocesses
-        private string ConvertPropName(string input) // ProjectId => PROJECT_ID / entity to sql
-        {
-            StringBuilder result = new StringBuilder();
-            for(int i =0; i < input.Length; i++)
-            {
-                char currentChar = input[i];
-                if (currentChar == 'i')
-                    currentChar = 'ı';
-
-                if (i > 0 && char.IsUpper(currentChar))
-                    result.Append('_');
-                result.Append(char.ToUpper(currentChar));
-            }
-
-            return result.ToString();
-        }
-        private string ConvertName(string input) // PROJECT_ID => ProjectId  / sql to entity
-        {
-            StringBuilder result = new StringBuilder();
-            bool bayrak = true;
-            for (int i = 0; i < input.Length; i++)
-            {
-                char currentChar = input[i];
-                if (bayrak)
-                {
-                    result.Append(currentChar);
-                    bayrak = false;
-                }
-                else
-                {
-                    currentChar = currentChar == 'I' ? 'İ' : currentChar;
-                    if (currentChar != '_')
-                    {
-                        result.Append(char.ToLower(currentChar));
-                    }
-                    else
-                        bayrak = true;
-                }
-            }
-            return result.ToString();
-        }
         private List<int> GetAuthList(int userId, int filteredGroupId = -1) // The user can see the tasks or projects for which user has authority
         {
             List<int> authIdList = new List<int>() { -1,0 }; // -1 for projects with no group 
@@ -544,6 +404,143 @@ namespace ProjectManager
             }
 
             return authIdList;
+        }
+        public (int, int) GetProjectAndTaskCounts(int groupId)
+        {
+            int counterProject = 0;
+            int counterTask = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    using (con)
+                    {
+                        List<string> tableList = new List<string>() { "PROJECT", "TASK" };
+                        foreach (string table in tableList)
+                        {
+                            SqlCommand cmd = new SqlCommand("SELECT COUNT(" + table + "_GROUP_ID) FROM [" + table + "] WHERE " + table + "_GROUP_ID=@" + table + "_GROUP_ID", con);
+                            //                    SELECT COUNT(PROJECT_GROUP_ID) FROM [PROJECT] WHERE PROJECT_GROUP_ID=@PROJECT_GROUP_ID
+                            cmd.Parameters.AddWithValue("@" + table + "_GROUP_ID", groupId);
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            if (table == "PROJECT")
+                                counterProject = Convert.ToInt32(cmd.ExecuteScalar());
+
+                            else
+                                counterTask = Convert.ToInt32(cmd.ExecuteScalar());
+                            con.Close();
+
+                        }
+
+                        return (counterProject, counterTask);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return (counterProject, counterTask);
+        }
+        public int Login(string userMail, string userPassword) // İf login succes return userId, otherwise return 0
+        {
+            int userId = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    con.Open();
+                    string sql = "SELECT USER_ID FROM [USER] WHERE USER_MAIL=@USER_MAIL AND USER_PASSWORD=@USER_PASSWORD";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
+                        cmd.Parameters.AddWithValue("@USER_PASSWORD", userPassword);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            userId = (int)result;
+                        }
+
+                    }
+                    con.Close();
+                    return userId;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return userId;
+        }
+        public int CheckUserMail(string userMail)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
+                {
+                    con.Open();
+                    string sql = "SELECT USER_ID FROM [USER] WHERE USER_MAIL=@USER_MAIL";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@USER_MAIL", userMail);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            con.Close();
+                            return (int)result;
+                        }
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return 0;
+        }
+        private string ConvertPropName(string input) // ProjectId => PROJECT_ID / entity to sql
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currentChar = input[i];
+                if (currentChar == 'i')
+                    currentChar = 'ı';
+
+                if (i > 0 && char.IsUpper(currentChar))
+                    result.Append('_');
+                result.Append(char.ToUpper(currentChar));
+            }
+
+            return result.ToString();
+        }
+        private string ConvertName(string input) // PROJECT_ID => ProjectId  / sql to entity
+        {
+            StringBuilder result = new StringBuilder();
+            bool bayrak = true;
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currentChar = input[i];
+                if (bayrak)
+                {
+                    result.Append(currentChar);
+                    bayrak = false;
+                }
+                else
+                {
+                    currentChar = currentChar == 'I' ? 'İ' : currentChar;
+                    if (currentChar != '_')
+                    {
+                        result.Append(char.ToLower(currentChar));
+                    }
+                    else
+                        bayrak = true;
+                }
+            }
+            return result.ToString();
         }
 
     }

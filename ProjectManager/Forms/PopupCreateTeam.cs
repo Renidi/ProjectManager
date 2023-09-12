@@ -32,17 +32,23 @@ namespace ProjectManager.Forms
 
         private void btnCreateTeam_Click(object sender, EventArgs e)
         {
-            group.GroupName = txGroupName.Text;
-            group.GroupFounderId = user.UserId;
-            group.GroupManagerId = user.UserId;
-            group.GroupDescription = txGroupDescription.Text;
-            group.GroupFormationDate = DateTime.Now;
-
-            if(genericGroup.Create(group))
+            if(group.GroupName != "")
             {
-                this.Close();
-            }
+                group.GroupName = txGroupName.Text;
+                group.GroupFounderId = user.UserId;
+                group.GroupManagerId = user.UserId;
+                group.GroupDescription = txGroupDescription.Text;
+                group.GroupFormationDate = DateTime.Now;
 
+                if (genericGroup.Create(group))
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter team name");
+            }
         }
 
         private void PopupCreateTeam_FormClosing(object sender, FormClosingEventArgs e)

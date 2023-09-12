@@ -35,10 +35,8 @@ namespace ProjectManager.Forms
         {
             group.GroupId = userGroup.GroupId;
             group = genericGroup.ReadById(group);
-            User userManager = new User{ UserId = group.GroupManagerId };
-            userManager = genericUser.ReadById(userManager);
             lblTeamName.Text = group.GroupName;
-            User groupFounder = new User(){ UserId = group.GroupFounderId };
+            User groupFounder = new User(){ UserId = group.GroupManagerId };
             groupFounder =  genericUser.ReadById(groupFounder);
             lblTeamLeaderMail.Text = "Team Leader: " + groupFounder.UserMail;
             var counter = genericUser.GetProjectAndTaskCounts(group.GroupId);

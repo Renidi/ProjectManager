@@ -42,22 +42,42 @@ namespace ProjectManager.Forms
 
         private void btnInvite_Click(object sender, EventArgs e)
         {
-            User invitedUser = new User() { UserId = genericUser.CheckUserMail(txInviteUserMail.Text) };
-            if (invitedUser.UserId>0)
+            if(txInviteUserMail.Text != "" && cmbTeams.SelectedIndex != -1)
             {
-                invitedUser = genericUser.ReadById(invitedUser);
-                UserGroup userGroup = new UserGroup() {UserId = invitedUser.UserId , GroupId = groups[cmbTeams.SelectedIndex].GroupId , UserGroupAuthorization = 0,
-                                                        InviteDate = DateTime.Now , InviteSenderId = user.UserId , InviteStatus = "Waiting"};
-                if(genericUserGroup.Create(userGroup))
-                    MessageBox.Show("User has been successfully invited");
+                User invitedUser = new User() { UserId = genericUser.CheckUserMail(txInviteUserMail.Text) };
+                if (invitedUser.UserId > 0)
+                {
+                    invitedUser = genericUser.ReadById(invitedUser);
+                    UserGroup userGroup = new UserGroup()
+                    {
+                        UserId = invitedUser.UserId,
+                        GroupId = groups[cmbTeams.SelectedIndex].GroupId,
+                        UserGroupAuthorization = 0,
+                        InviteDate = DateTime.Now,
+                        InviteSenderId = user.UserId,
+                        InviteStatus = "Waiting"
+                    };
+                    if (genericUserGroup.Create(userGroup))
+                        MessageBox.Show("User has been successfully invited");
+                    else
+                        MessageBox.Show("Error");
+                }
                 else
-                    MessageBox.Show("Error");
+                {
+                    MessageBox.Show("There is no user with this mail");
+                }
             }
             else
             {
-                MessageBox.Show("There is no user with this mail");
+                if(cmbTeams.SelectedIndex != -1)
+                {
+                    MessageBox.Show("Please select the team you want to invite member");
+                }
+                else
+                {
+                    MessageBox.Show("Pleas enter the mail of the member you want to invite");
+                }
             }
-            
             
         }
     }

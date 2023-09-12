@@ -80,16 +80,12 @@ namespace ProjectManager.Forms
         }
         void Clear()
         {
-            Action<Control.ControlCollection> func = null;
-
-            func = (controls) =>
+            void func(Control.ControlCollection controls)
             {
                 foreach (Control control in controls)
                     if (control is TextBox)
                         (control as TextBox).Clear();
-                    else
-                        func(control.Controls);
-            };
+            }
 
             func(Controls);
             dtProjectStartDate.Value = DateTime.Now;
@@ -98,91 +94,113 @@ namespace ProjectManager.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            project.ProjectName = txProjectName.Text;
-            project.ProjectStatus = cmbProjectStatus.Text;
-            project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectCreatorId = user.UserId;
-            project.ProjectStartDate = dtProjectStartDate.Value;
-            project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectDescription = txProjectComment.Text;
-            project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
-            
-            
-            DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName, "Add Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if(txProjectName.Text !="")
             {
-                // sqlDbHelper.SaveProject(project) to 61
+                project.ProjectName = txProjectName.Text;
+                project.ProjectStatus = cmbProjectStatus.Text;
+                project.ProjectPriority = cmbProjectPriority.Text;
+                project.ProjectCreatorId = user.UserId;
+                project.ProjectStartDate = dtProjectStartDate.Value;
+                project.ProjectEndDate = dtProjectEndDate.Value;
+                project.ProjectDescription = txProjectComment.Text;
+                project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
 
-                log.LogSource = "Project";
-                log.LogType = "Save";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Add Project " + project.ProjectName;
-                //log.LogStatus = sqlHelper.NewProject(project).ToString();
-                GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
-                log.LogStatus = genericProject.Create(project).ToString();
 
-                genericLog.Create(log);
+                DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName, "Add Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    // sqlDbHelper.SaveProject(project) to 61
+
+                    log.LogSource = "Project";
+                    log.LogType = "Save";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Add Project " + project.ProjectName;
+                    //log.LogStatus = sqlHelper.NewProject(project).ToString();
+                    GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+                    log.LogStatus = genericProject.Create(project).ToString();
+
+                    genericLog.Create(log);
+                }
+                else
+                    MessageBox.Show("Cancelled");
+                Dt();
             }
             else
-                MessageBox.Show("Cancelled");
-            Dt();
+            {
+                MessageBox.Show("Missing Info", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            project.ProjectName = txProjectName.Text;
-            project.ProjectStatus = cmbProjectStatus.Text;
-            project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectDescription = txProjectComment.Text;
-            project.ProjectId = varId;
-            project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ?  Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
-
-            DialogResult result = MessageBox.Show("Are you sure to edit " + project.ProjectName, "Edit Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if(txProjectName.Text != "")
             {
-                log.LogSource = "Project";
-                log.LogType = "Edit";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Changes on " + project.ProjectName + ", Id : " + project.ProjectId;
-                GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
-                log.LogStatus = genericProject.Update(project).ToString();
+                project.ProjectName = txProjectName.Text;
+                project.ProjectStatus = cmbProjectStatus.Text;
+                project.ProjectPriority = cmbProjectPriority.Text;
+                project.ProjectEndDate = dtProjectEndDate.Value;
+                project.ProjectDescription = txProjectComment.Text;
+                project.ProjectId = varId;
+                project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
 
-                genericLog.Create(log);
+                DialogResult result = MessageBox.Show("Are you sure to edit " + project.ProjectName, "Edit Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    log.LogSource = "Project";
+                    log.LogType = "Edit";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Changes on " + project.ProjectName + ", Id : " + project.ProjectId;
+                    GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+                    log.LogStatus = genericProject.Update(project).ToString();
+
+                    genericLog.Create(log);
+                }
+                else
+                    MessageBox.Show("Cancelled");
+
+                Dt();
             }
             else
-                MessageBox.Show("Cancelled");
+            {
+                MessageBox.Show("Missing Info", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            Dt();
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            project.ProjectName = txProjectName.Text;
-            project.ProjectStatus = cmbProjectStatus.Text;
-            project.ProjectPriority = cmbProjectPriority.Text;
-            project.ProjectCreatorId = user.UserId;
-            project.ProjectEndDate = dtProjectEndDate.Value;
-            project.ProjectId = varId;
-
-            DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (project.ProjectId !=0)
             {
-                log.LogSource = "Project";
-                log.LogType = "Delete";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
-                log.LogStatus = genericProject.Delete(project).ToString();
-                genericLog.Create(log);
+                project.ProjectName = txProjectName.Text;
+                project.ProjectStatus = cmbProjectStatus.Text;
+                project.ProjectPriority = cmbProjectPriority.Text;
+                project.ProjectCreatorId = user.UserId;
+                project.ProjectEndDate = dtProjectEndDate.Value;
+                project.ProjectId = varId;
 
+                DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    log.LogSource = "Project";
+                    log.LogType = "Delete";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
+                    log.LogStatus = genericProject.Delete(project).ToString();
+                    genericLog.Create(log);
+
+                }
+                else
+                    MessageBox.Show("Cancelled");
+
+                Dt();
             }
             else
-                MessageBox.Show("Cancelled");
-
-            Dt();
+            {
+                MessageBox.Show("Select Project First");
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)

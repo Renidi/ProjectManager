@@ -92,7 +92,8 @@ namespace ProjectManager
             }
             else
             {
-                MessageBox.Show("Missing Info");
+                MessageBox.Show("Missing Info", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
         }
 

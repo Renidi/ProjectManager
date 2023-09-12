@@ -63,11 +63,20 @@ namespace ProjectManager
             pnlMemebers.Controls.Clear();
             pnlRequests.Controls.Clear();
             pnlMemebers.AutoScroll = false;
+            User newUser;
+            UserGroup newUserGroup = new UserGroup();
             for (int i = 0; i < userList.Count; i++)
             {
-                user = userList[i]; 
-                userGroup = userGroupInfo[i];
-                UserControlTeams userControlTeams = new UserControlTeams(userGroup,user,authLevel);
+                newUser = userList[i];
+                foreach(UserGroup ugi in userGroupInfo)
+                {
+                    if(ugi.UserId == newUser.UserId)
+                    {
+                        newUserGroup = ugi;
+                        break;
+                    }
+                }
+                UserControlTeams userControlTeams = new UserControlTeams(newUserGroup,newUser,authLevel);
                 pnlMemebers.Controls.Add(userControlTeams);
             }
             pnlMemebers.AutoScroll=true;

@@ -83,7 +83,7 @@
             this.Controls.Add(this.lblAuth);
             this.Controls.Add(this.lblFullName);
             this.Name = "UserControlTeams";
-            this.Size = new System.Drawing.Size(450, 40);
+            this.Size = new System.Drawing.Size(446, 40);
             this.Load += new System.EventHandler(this.UserControlTeams_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

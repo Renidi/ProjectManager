@@ -42,16 +42,16 @@ namespace ProjectManager
         User user = new User();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-        public Events(int userId)
+        Entry entry;
+        public Events(int userId,Entry ent=null)
         {
             InitializeComponent();
             openChildForm(new Projects(userId));
-            activeSection(pbProject);
+            ActiveSection(pbProject);
             user.UserId = userId;
             DoubleBuffered = true;
+            entry = ent;
         }
-        
-        
         private void Events_Load(object sender, EventArgs e)
         { 
             user = genericUser.ReadById(user);
@@ -87,11 +87,10 @@ namespace ProjectManager
             };
             genericLog.Create(log);
 
-            Entry entry = new Entry();
             entry.Show();
             this.Hide();
         }
-        void activeSection(PictureBox pbActive)
+        void ActiveSection(PictureBox pbActive)
         {
             List<PictureBox> pbList = new List<PictureBox>() { pbProject,pbTask,pbTeams,pbCalender,pbSettings };
             for (int i =0;i<pbList.Count;i++)
@@ -112,31 +111,31 @@ namespace ProjectManager
         private void pbCalender_Click(object sender, EventArgs e)
         {
             openChildForm(new Calendar(user.UserId));
-            activeSection(pbCalender);
+            ActiveSection(pbCalender);
         }
 
         private void pbTask_Click(object sender, EventArgs e)
         {
             openChildForm(new Tasks(user.UserId));
-            activeSection(pbTask);
+            ActiveSection(pbTask);
         }
 
         private void pbProject_Click(object sender, EventArgs e)
         {
             openChildForm(new Projects(user.UserId));
-            activeSection(pbProject);
+            ActiveSection(pbProject);
         }
 
         public void pbTeams_Click(object sender, EventArgs e)
         {
             openChildForm(new Teams(user.UserId));
-            activeSection(pbTeams);
+            ActiveSection(pbTeams);
         }
 
         private void pbSettings_Click(object sender, EventArgs e)
         {
             openChildForm(new UserSettings(user.UserId));
-            activeSection(pbSettings);
+            ActiveSection(pbSettings);
         }
 
     }

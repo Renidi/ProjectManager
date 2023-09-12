@@ -142,85 +142,123 @@ namespace ProjectManager.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            task.TaskName = txTaskName.Text;
-            task.TaskStatus = cmbTaskStatus.Text;
-            task.TaskPriority = cmbTaskPriority.Text;
-            task.TaskStartDate = dtTaskStartDate.Value;
-            task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
-            task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
-            task.TaskDescription = txTaskComment.Text;
-            task.TaskGroupId = projectList[cmbTaskProject.SelectedIndex].ProjectGroupId;
-            task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>() ) + string.Join(", ", clb2.CheckedItems.Cast<string>());
-
-            DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName + " to tasks ?", "Add Task ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if(txTaskName.Text!="" && cmbTaskProject.SelectedIndex != -1 && cmbTaskEmployee.SelectedIndex != -1)
             {
-                log.LogSource = "Task";
-                log.LogType = "Save";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Add " + task.TaskName + " and Id : " + task.TaskId;
-                //log.LogStatus = sqlHelper.NewTask(task).ToString();
-                GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
-                log.LogStatus = genericSqlHelper.Create(task).ToString();
+                task.TaskName = txTaskName.Text;
+                task.TaskStatus = cmbTaskStatus.Text;
+                task.TaskPriority = cmbTaskPriority.Text;
+                task.TaskStartDate = dtTaskStartDate.Value;
+                task.TaskEndDate = dtTaskEndDate.Value;
+                task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
+                task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
+                task.TaskDescription = txTaskComment.Text;
+                task.TaskGroupId = projectList[cmbTaskProject.SelectedIndex].ProjectGroupId;
+                task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>()) + string.Join(", ", clb2.CheckedItems.Cast<string>());
 
-                GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-                genericLog.Create(log);
+                DialogResult result = MessageBox.Show("Are you sure you want to add" + task.TaskName + " to tasks ?", "Add Task ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    log.LogSource = "Task";
+                    log.LogType = "Save";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Add " + task.TaskName + " and Id : " + task.TaskId;
+                    //log.LogStatus = sqlHelper.NewTask(task).ToString();
+                    GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
+                    log.LogStatus = genericSqlHelper.Create(task).ToString();
+
+                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                    genericLog.Create(log);
+                }
+                Dt();
             }
-            Dt();
+            else
+            {
+                if (txTaskName.Text == "")
+                    MessageBox.Show("Task name field cannot be left blank");
+                else if (cmbTaskProject.SelectedIndex == -1)
+                    MessageBox.Show("Task project is not selected");
+                
+                else if (cmbTaskEmployee.SelectedIndex == -1)
+                    MessageBox.Show("Task owner not selected");
+                else
+                    MessageBox.Show("Error");
+            }
         }
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            task.TaskName = txTaskName.Text;
-            task.TaskStatus = cmbTaskStatus.Text;
-            task.TaskPriority = cmbTaskPriority.Text;
-            task.TaskStartDate = dtTaskStartDate.Value;
-            task.TaskEndDate = dtTaskEndDate.Value;
-            task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
-            task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
-            task.TaskDescription = txTaskComment.Text;
-            task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>()) + string.Join(", ", clb2.CheckedItems.Cast<string>());
-
-            DialogResult result = MessageBox.Show("Are you sure edit " + task.TaskName, "Edit Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (txTaskName.Text != "" && cmbTaskProject.SelectedIndex != -1 && cmbTaskEmployee.SelectedIndex != -1)
             {
-                log.LogSource = "Task";
-                log.LogType = "Edit";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Changes on " + task.TaskName + " and Id : " + task.TaskId;
-                GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
-                log.LogStatus = genericTask.Update(task).ToString();
-                
-                GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-                genericLog.Create(log);
+                task.TaskName = txTaskName.Text;
+                task.TaskStatus = cmbTaskStatus.Text;
+                task.TaskPriority = cmbTaskPriority.Text;
+                task.TaskStartDate = dtTaskStartDate.Value;
+                task.TaskEndDate = dtTaskEndDate.Value;
+                task.TaskOwnerId = users[cmbTaskEmployee.SelectedIndex].UserId;
+                task.TaskProjectId = projectList[cmbTaskProject.SelectedIndex].ProjectId;
+                task.TaskDescription = txTaskComment.Text;
+                task.TaskBadges = string.Join(", ", clb1.CheckedItems.Cast<string>()) + string.Join(", ", clb2.CheckedItems.Cast<string>());
+
+                DialogResult result = MessageBox.Show("Are you sure edit " + task.TaskName, "Edit Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    log.LogSource = "Task";
+                    log.LogType = "Edit";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Changes on " + task.TaskName + " and Id : " + task.TaskId;
+                    GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
+                    log.LogStatus = genericTask.Update(task).ToString();
+
+                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                    genericLog.Create(log);
+                }
+                else
+                    MessageBox.Show("Cancelled");
+
+                Dt();
             }
             else
-                MessageBox.Show("Cancelled");
-
-            Dt();
+            {
+                if (txTaskName.Text == "")
+                    MessageBox.Show("Task name field cannot be left blank");
+                else if (cmbTaskProject.SelectedIndex == -1)
+                    MessageBox.Show("Task project is not selected");
+                else if (cmbTaskEmployee.SelectedIndex == -1)
+                    MessageBox.Show("Task owner not selected");
+                else
+                    MessageBox.Show("Error");
+            }
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure to delete " + task.TaskName, "Delete Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if(task.TaskId != 0)
             {
-                log.LogSource = "Task";
-                log.LogType = "Delete";
-                log.LogDate = DateTime.Now;
-                log.LogUser = user.UserMail;
-                log.LogDescription = "Deleted " + task.TaskName + " and Id : " + task.TaskId;
-                GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
-                log.LogStatus = genericTask.Delete(task).ToString();
+                DialogResult result = MessageBox.Show("Are you sure to delete " + task.TaskName, "Delete Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    log.LogSource = "Task";
+                    log.LogType = "Delete";
+                    log.LogDate = DateTime.Now;
+                    log.LogUser = user.UserMail;
+                    log.LogDescription = "Deleted " + task.TaskName + " and Id : " + task.TaskId;
+                    GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
+                    log.LogStatus = genericTask.Delete(task).ToString();
 
-                GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-                genericLog.Create(log);
+                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
+                    genericLog.Create(log);
+                }
+                else
+                    MessageBox.Show("Cancelled");
+                Dt();
             }
             else
-                MessageBox.Show("Cancelled");
-            Dt();
+            {
+                MessageBox.Show("Select Task First");
+            }
+            
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -229,20 +267,21 @@ namespace ProjectManager.Forms
         }
         void Clear()
         {
-            Action<Control.ControlCollection> func = null;
-
-            func = (controls) =>
+            void func(Control.ControlCollection controls)
             {
                 foreach (Control control in controls)
                     if (control is TextBox)
                         (control as TextBox).Clear();
-                    else
-                        func(control.Controls);
-            };
+            }
             func(Controls);
             txTaskComment.Text = string.Empty;
             dtTaskEndDate.Value = DateTime.Now;
             dtTaskStartDate.Value = DateTime.Now;
+            for(int i =0; i < clb1.Items.Count; i++)
+            {
+                clb1.SetItemChecked(i, false);
+                clb2.SetItemChecked(i, false);
+            }
         }
 
         private void cmbTaskProject_SelectedIndexChanged(object sender, EventArgs e)
