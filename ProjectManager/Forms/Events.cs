@@ -14,14 +14,14 @@ namespace ProjectManager
 {
     public partial class Events : Form
     {
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
         [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        const int WM_NCLBUTTONDOWN = 0xA1;
-        const int HT_CAPTION = 0x2;
-
-        private void pnlTop_MouseMove(object sender, MouseEventArgs e)
+        private void pnlTop_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -55,8 +55,8 @@ namespace ProjectManager
         private void Events_Load(object sender, EventArgs e)
         { 
             user = genericUser.ReadById(user);
-            lblMail.Text = user.UserMail;
-            lblAdSoyad.Text = user.UserName + " " + user.UserSurname;
+            btnUserName.Text = user.UserName + " " + user.UserSurname;
+            btnUserMail.Text = user.UserMail;
         }
 
         private Form activeForm = null;
@@ -137,7 +137,7 @@ namespace ProjectManager
             openChildForm(new UserSettings(user.UserId));
             ActiveSection(pbSettings);
         }
-
+        
     }
 
 }

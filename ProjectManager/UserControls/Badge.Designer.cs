@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lblText = new System.Windows.Forms.Label();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.SuspendLayout();
             // 
             // lblText
@@ -44,11 +42,6 @@
             this.lblText.TabIndex = 0;
             this.lblText.Text = "app";
             this.lblText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 15;
-            this.guna2Elipse1.TargetControl = this;
             // 
             // Badge
             // 
@@ -64,6 +57,5 @@
 
         #endregion
         private System.Windows.Forms.Label lblText;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
     }
 }

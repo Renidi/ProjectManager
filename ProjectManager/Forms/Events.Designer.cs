@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Events));
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.lblAdSoyad = new System.Windows.Forms.Label();
-            this.lblMail = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.btnUserMail = new Guna.UI2.WinForms.Guna2Button();
+            this.btnUserName = new Guna.UI2.WinForms.Guna2Button();
             this.pbExit = new System.Windows.Forms.PictureBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -38,8 +40,8 @@
             this.pbSettings = new System.Windows.Forms.PictureBox();
             this.lblSettings = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.pbTeams = new System.Windows.Forms.PictureBox();
             this.lblTeams = new System.Windows.Forms.Label();
+            this.pbTeams = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.pbCalender = new System.Windows.Forms.PictureBox();
             this.lblCalender = new System.Windows.Forms.Label();
@@ -51,6 +53,7 @@
             this.lblProjects = new System.Windows.Forms.Label();
             this.pnlMiddle = new System.Windows.Forms.Panel();
             this.pnlTop.SuspendLayout();
+            this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbExit)).BeginInit();
             this.pnlBottom.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,38 +71,65 @@
             // 
             // pnlTop
             // 
-            this.pnlTop.BackColor = System.Drawing.Color.Black;
-            this.pnlTop.Controls.Add(this.lblAdSoyad);
-            this.pnlTop.Controls.Add(this.lblMail);
+            this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.pnlTop.Controls.Add(this.panel7);
             this.pnlTop.Controls.Add(this.pbExit);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1280, 83);
             this.pnlTop.TabIndex = 0;
-            this.pnlTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseMove);
+            this.pnlTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseDown);
             // 
-            // lblAdSoyad
+            // panel7
             // 
-            this.lblAdSoyad.AutoSize = true;
-            this.lblAdSoyad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAdSoyad.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblAdSoyad.Location = new System.Drawing.Point(1052, 33);
-            this.lblAdSoyad.Name = "lblAdSoyad";
-            this.lblAdSoyad.Size = new System.Drawing.Size(116, 20);
-            this.lblAdSoyad.TabIndex = 3;
-            this.lblAdSoyad.Text = "User Ad Soyad";
+            this.panel7.Controls.Add(this.btnUserMail);
+            this.panel7.Controls.Add(this.btnUserName);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(247, 83);
+            this.panel7.TabIndex = 0;
             // 
-            // lblMail
+            // btnUserMail
             // 
-            this.lblMail.AutoSize = true;
-            this.lblMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMail.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblMail.Location = new System.Drawing.Point(1052, 57);
-            this.lblMail.Name = "lblMail";
-            this.lblMail.Size = new System.Drawing.Size(75, 20);
-            this.lblMail.TabIndex = 2;
-            this.lblMail.Text = "User Mail";
+            this.btnUserMail.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUserMail.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUserMail.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUserMail.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUserMail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUserMail.FillColor = System.Drawing.Color.Transparent;
+            this.btnUserMail.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnUserMail.ForeColor = System.Drawing.Color.White;
+            this.btnUserMail.Image = ((System.Drawing.Image)(resources.GetObject("btnUserMail.Image")));
+            this.btnUserMail.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUserMail.Location = new System.Drawing.Point(0, 44);
+            this.btnUserMail.Name = "btnUserMail";
+            this.btnUserMail.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.btnUserMail.Size = new System.Drawing.Size(247, 39);
+            this.btnUserMail.TabIndex = 1;
+            this.btnUserMail.Text = "Mail";
+            this.btnUserMail.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // btnUserName
+            // 
+            this.btnUserName.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUserName.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUserName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUserName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUserName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUserName.FillColor = System.Drawing.Color.Transparent;
+            this.btnUserName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnUserName.ForeColor = System.Drawing.Color.White;
+            this.btnUserName.Image = ((System.Drawing.Image)(resources.GetObject("btnUserName.Image")));
+            this.btnUserName.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUserName.Location = new System.Drawing.Point(0, 0);
+            this.btnUserName.Name = "btnUserName";
+            this.btnUserName.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.btnUserName.Size = new System.Drawing.Size(247, 44);
+            this.btnUserName.TabIndex = 0;
+            this.btnUserName.Text = "User Ad Soyad";
+            this.btnUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // pbExit
             // 
@@ -114,7 +144,7 @@
             // 
             // pnlBottom
             // 
-            this.pnlBottom.BackColor = System.Drawing.Color.Black;
+            this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
             this.pnlBottom.Controls.Add(this.panel1);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(0, 634);
@@ -178,6 +208,17 @@
             this.panel3.Size = new System.Drawing.Size(77, 80);
             this.panel3.TabIndex = 12;
             // 
+            // lblTeams
+            // 
+            this.lblTeams.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblTeams.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTeams.Location = new System.Drawing.Point(0, 57);
+            this.lblTeams.Name = "lblTeams";
+            this.lblTeams.Size = new System.Drawing.Size(77, 13);
+            this.lblTeams.TabIndex = 8;
+            this.lblTeams.Text = "Teams";
+            this.lblTeams.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // pbTeams
             // 
             this.pbTeams.AccessibleName = "pbTest";
@@ -189,17 +230,6 @@
             this.pbTeams.TabIndex = 3;
             this.pbTeams.TabStop = false;
             this.pbTeams.Click += new System.EventHandler(this.pbTeams_Click);
-            // 
-            // lblTeams
-            // 
-            this.lblTeams.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblTeams.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblTeams.Location = new System.Drawing.Point(0, 57);
-            this.lblTeams.Name = "lblTeams";
-            this.lblTeams.Size = new System.Drawing.Size(77, 13);
-            this.lblTeams.TabIndex = 8;
-            this.lblTeams.Text = "Teams";
-            this.lblTeams.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel5
             // 
@@ -304,7 +334,7 @@
             // 
             // pnlMiddle
             // 
-            this.pnlMiddle.BackColor = System.Drawing.Color.Silver;
+            this.pnlMiddle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlMiddle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMiddle.Location = new System.Drawing.Point(0, 83);
             this.pnlMiddle.Name = "pnlMiddle";
@@ -324,7 +354,7 @@
             this.Text = "Events";
             this.Load += new System.EventHandler(this.Events_Load);
             this.pnlTop.ResumeLayout(false);
-            this.pnlTop.PerformLayout();
+            this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbExit)).EndInit();
             this.pnlBottom.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -352,9 +382,7 @@
         private System.Windows.Forms.PictureBox pbProject;
         private System.Windows.Forms.PictureBox pbCalender;
         private System.Windows.Forms.PictureBox pbTask;
-        private System.Windows.Forms.Label lblMail;
         private System.Windows.Forms.Panel pnlMiddle;
-        private System.Windows.Forms.Label lblAdSoyad;
         private System.Windows.Forms.Label lblProjects;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblSettings;
@@ -366,5 +394,8 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel7;
+        private Guna.UI2.WinForms.Guna2Button btnUserMail;
+        private Guna.UI2.WinForms.Guna2Button btnUserName;
     }
 }

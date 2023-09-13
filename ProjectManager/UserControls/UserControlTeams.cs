@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Entities;
+using ProjectManager.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,29 +15,35 @@ namespace ProjectManager.UserControls
     public partial class UserControlTeams : UserControl
     {
         User user = new User();
-        UserGroup userGroup = new UserGroup();
+        User authUser = new User();
+        UserGroup userGroup;
+        UserGroup authUserGroup;
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
-        public int authL = 0;
-
-        public UserControlTeams(UserGroup userGroups,User users,int authLevel)
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        TeamControl teamControl;
+        public UserControlTeams(UserGroup userGroups,User users,int authUserId,TeamControl teamC) // auth level must to be loginned user
         {
             InitializeComponent();
             userGroup = userGroups;
             user = users;
-            authL = authLevel;
+            authUser.UserId = authUserId;
+            teamControl = teamC;
         }
 
         private void UserControlTeams_Load(object sender, EventArgs e)
         {
             lblFullName.Text = user.UserName +" "+ user.UserSurname;
             lblMail.Text = user.UserMail;
-            cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization-1;
+            cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization;
             lblAuth.Text = cmbAuth.Text;
-            if (authL > 1)
+            authUser = genericUser.ReadById(authUser);
+            authUserGroup = new UserGroup() { UserId = authUser.UserId, GroupId = userGroup.GroupId };
+            authUserGroup = genericUserGroup.ReadById(authUserGroup);
+            if (authUserGroup.UserGroupAuthorization > 1 && authUser.UserId != user.UserId)
             {
                 cmbAuth.Enabled = true;
-                if (authL < 3)
+                if (authUserGroup.UserGroupAuthorization < 3)
                 {
                     cmbAuth.Items.Remove("Owner");
                 }
@@ -53,12 +60,19 @@ namespace ProjectManager.UserControls
 
         private void cmbAuth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmbAuth.SelectedIndex+1 != userGroup.UserGroupAuthorization)
+            authUser = genericUser.ReadById(authUser);
+            authUserGroup = new UserGroup() { UserId = authUser.UserId , GroupId = userGroup.GroupId};
+            authUserGroup = genericUserGroup.ReadById(authUserGroup);
+            if (cmbAuth.SelectedIndex != userGroup.UserGroupAuthorization && authUserGroup.UserGroupAuthorization > 1)
             {
                 DialogResult dialog = MessageBox.Show("R u sure ?","Title", MessageBoxButtons.YesNo);
                 if (DialogResult.Yes == dialog)
                 {
-                    userGroup.UserGroupAuthorization = cmbAuth.SelectedIndex+1;
+                    userGroup.UserGroupAuthorization = cmbAuth.SelectedIndex;
+                    if(cmbAuth.Text == "Remove Member")
+                    {
+                        userGroup.InviteStatus = "Kicked";
+                    }
                     if (genericUserGroup.Update(userGroup))
                     {
                         lblAuth.Text = cmbAuth.Text;
@@ -77,16 +91,21 @@ namespace ProjectManager.UserControls
                                     group.GroupManagerId = userGroup.UserId;
                                     genericGroup.Update(group);
                                 }
-
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong", "Error", MessageBoxButtons.OK);
+                    }
+                    teamControl.refreshTeamUsers(1);
                 }
                 else if(dialog == DialogResult.No)
                 {
-                    cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization - 1;
+                    cmbAuth.SelectedIndex = userGroup.UserGroupAuthorization;
                 }
             }
+            
         }
     }
 }

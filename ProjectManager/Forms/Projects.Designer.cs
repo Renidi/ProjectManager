@@ -31,9 +31,8 @@
             this.pnlMiddle = new System.Windows.Forms.Panel();
             this.pnlActive = new System.Windows.Forms.Panel();
             this.pnlControls = new System.Windows.Forms.Panel();
-            this.btnMyProjects = new System.Windows.Forms.Button();
-            this.btnNewProject = new System.Windows.Forms.Button();
-            this.btnProjects = new System.Windows.Forms.Button();
+            this.btnNewProject = new Guna.UI2.WinForms.Guna2Button();
+            this.btnProject = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMiddle.SuspendLayout();
             this.pnlControls.SuspendLayout();
             this.SuspendLayout();
@@ -51,54 +50,61 @@
             // 
             // pnlActive
             // 
-            this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(20)))));
+            this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlActive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlActive.Location = new System.Drawing.Point(124, 0);
+            this.pnlActive.Location = new System.Drawing.Point(133, 0);
             this.pnlActive.Name = "pnlActive";
-            this.pnlActive.Size = new System.Drawing.Size(1156, 551);
+            this.pnlActive.Size = new System.Drawing.Size(1147, 551);
             this.pnlActive.TabIndex = 44;
             // 
             // pnlControls
             // 
-            this.pnlControls.BackColor = System.Drawing.Color.Black;
-            this.pnlControls.Controls.Add(this.btnMyProjects);
+            this.pnlControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(176)))), ((int)(((byte)(165)))));
             this.pnlControls.Controls.Add(this.btnNewProject);
-            this.pnlControls.Controls.Add(this.btnProjects);
+            this.pnlControls.Controls.Add(this.btnProject);
             this.pnlControls.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(124, 551);
+            this.pnlControls.Padding = new System.Windows.Forms.Padding(10, 30, 10, 0);
+            this.pnlControls.Size = new System.Drawing.Size(133, 551);
             this.pnlControls.TabIndex = 43;
-            // 
-            // btnMyProjects
-            // 
-            this.btnMyProjects.Location = new System.Drawing.Point(12, 53);
-            this.btnMyProjects.Name = "btnMyProjects";
-            this.btnMyProjects.Size = new System.Drawing.Size(94, 36);
-            this.btnMyProjects.TabIndex = 2;
-            this.btnMyProjects.Text = "MyProjects";
-            this.btnMyProjects.UseVisualStyleBackColor = true;
-            this.btnMyProjects.Click += new System.EventHandler(this.btnMyProjects_Click_1);
             // 
             // btnNewProject
             // 
-            this.btnNewProject.Location = new System.Drawing.Point(12, 501);
+            this.btnNewProject.BorderRadius = 15;
+            this.btnNewProject.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewProject.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewProject.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNewProject.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNewProject.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnNewProject.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(167)))), ((int)(((byte)(189)))));
+            this.btnNewProject.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnNewProject.ForeColor = System.Drawing.Color.White;
+            this.btnNewProject.Location = new System.Drawing.Point(10, 85);
             this.btnNewProject.Name = "btnNewProject";
-            this.btnNewProject.Size = new System.Drawing.Size(94, 38);
-            this.btnNewProject.TabIndex = 1;
+            this.btnNewProject.Size = new System.Drawing.Size(113, 53);
+            this.btnNewProject.TabIndex = 3;
             this.btnNewProject.Text = "New Project";
-            this.btnNewProject.UseVisualStyleBackColor = true;
-            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click_1);
+            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
             // 
-            // btnProjects
+            // btnProject
             // 
-            this.btnProjects.Location = new System.Drawing.Point(12, 6);
-            this.btnProjects.Name = "btnProjects";
-            this.btnProjects.Size = new System.Drawing.Size(94, 41);
-            this.btnProjects.TabIndex = 0;
-            this.btnProjects.Text = "Projects";
-            this.btnProjects.UseVisualStyleBackColor = true;
-            this.btnProjects.Click += new System.EventHandler(this.btnProjects_Click_1);
+            this.btnProject.BorderRadius = 15;
+            this.btnProject.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnProject.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnProject.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnProject.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnProject.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnProject.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(167)))), ((int)(((byte)(189)))));
+            this.btnProject.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnProject.ForeColor = System.Drawing.Color.White;
+            this.btnProject.Location = new System.Drawing.Point(10, 30);
+            this.btnProject.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
+            this.btnProject.Name = "btnProject";
+            this.btnProject.Size = new System.Drawing.Size(113, 55);
+            this.btnProject.TabIndex = 2;
+            this.btnProject.Text = "Projects";
+            this.btnProject.Click += new System.EventHandler(this.btnProject_Click);
             // 
             // Projects
             // 
@@ -120,9 +126,8 @@
 
         private System.Windows.Forms.Panel pnlMiddle;
         private System.Windows.Forms.Panel pnlControls;
-        private System.Windows.Forms.Button btnMyProjects;
-        private System.Windows.Forms.Button btnNewProject;
-        private System.Windows.Forms.Button btnProjects;
         private System.Windows.Forms.Panel pnlActive;
+        private Guna.UI2.WinForms.Guna2Button btnNewProject;
+        private Guna.UI2.WinForms.Guna2Button btnProject;
     }
 }

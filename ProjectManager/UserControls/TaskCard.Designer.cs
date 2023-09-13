@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskCard));
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.pnlFill = new System.Windows.Forms.Panel();
             this.pnlMid = new Guna.UI2.WinForms.Guna2Panel();
             this.lblContent = new System.Windows.Forms.Label();
@@ -42,7 +40,6 @@
             this.pnlTop = new Guna.UI2.WinForms.Guna2Panel();
             this.pnlBadge = new System.Windows.Forms.Panel();
             this.pbMenu = new System.Windows.Forms.PictureBox();
-            this.guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.pnlFill.SuspendLayout();
             this.pnlMid.SuspendLayout();
             this.pnlBottom.SuspendLayout();
@@ -50,14 +47,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).BeginInit();
             this.SuspendLayout();
             // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 15;
-            this.guna2Elipse1.TargetControl = this;
-            // 
             // pnlFill
             // 
-            this.pnlFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.pnlFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.pnlFill.Controls.Add(this.pnlMid);
             this.pnlFill.Controls.Add(this.pnlBottom);
             this.pnlFill.Controls.Add(this.pnlTop);
@@ -69,7 +61,7 @@
             // 
             // pnlMid
             // 
-            this.pnlMid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
+            this.pnlMid.BackColor = System.Drawing.Color.Transparent;
             this.pnlMid.Controls.Add(this.lblContent);
             this.pnlMid.Controls.Add(this.lblProjectName);
             this.pnlMid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -80,10 +72,10 @@
             // 
             // lblContent
             // 
-            this.lblContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblContent.BackColor = System.Drawing.Color.Transparent;
             this.lblContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblContent.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblContent.ForeColor = System.Drawing.Color.Silver;
+            this.lblContent.ForeColor = System.Drawing.Color.Linen;
             this.lblContent.Location = new System.Drawing.Point(0, 30);
             this.lblContent.Name = "lblContent";
             this.lblContent.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -93,10 +85,10 @@
             // 
             // lblProjectName
             // 
-            this.lblProjectName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblProjectName.BackColor = System.Drawing.Color.Transparent;
             this.lblProjectName.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblProjectName.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProjectName.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblProjectName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblProjectName.Location = new System.Drawing.Point(0, 0);
             this.lblProjectName.Name = "lblProjectName";
             this.lblProjectName.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -107,7 +99,7 @@
             // 
             // pnlBottom
             // 
-            this.pnlBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(18)))), ((int)(((byte)(25)))));
+            this.pnlBottom.BackColor = System.Drawing.Color.Transparent;
             this.pnlBottom.Controls.Add(this.lblTaskDate);
             this.pnlBottom.Controls.Add(this.lblProjectGroupName);
             this.pnlBottom.Controls.Add(this.lblTaskOwner);
@@ -119,10 +111,10 @@
             // 
             // lblTaskDate
             // 
-            this.lblTaskDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblTaskDate.BackColor = System.Drawing.Color.Transparent;
             this.lblTaskDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTaskDate.Font = new System.Drawing.Font("Yu Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTaskDate.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTaskDate.ForeColor = System.Drawing.Color.YellowGreen;
             this.lblTaskDate.Location = new System.Drawing.Point(105, 0);
             this.lblTaskDate.Name = "lblTaskDate";
             this.lblTaskDate.Size = new System.Drawing.Size(160, 27);
@@ -132,24 +124,24 @@
             // 
             // lblProjectGroupName
             // 
-            this.lblProjectGroupName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblProjectGroupName.BackColor = System.Drawing.Color.Transparent;
             this.lblProjectGroupName.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblProjectGroupName.Font = new System.Drawing.Font("Yu Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProjectGroupName.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblProjectGroupName.ForeColor = System.Drawing.Color.Gold;
             this.lblProjectGroupName.Location = new System.Drawing.Point(0, 0);
             this.lblProjectGroupName.Name = "lblProjectGroupName";
             this.lblProjectGroupName.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblProjectGroupName.Size = new System.Drawing.Size(105, 27);
             this.lblProjectGroupName.TabIndex = 1;
             this.lblProjectGroupName.Text = "Project V";
-            this.lblProjectGroupName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblProjectGroupName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTaskOwner
             // 
-            this.lblTaskOwner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblTaskOwner.BackColor = System.Drawing.Color.Transparent;
             this.lblTaskOwner.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblTaskOwner.Font = new System.Drawing.Font("Yu Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTaskOwner.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTaskOwner.ForeColor = System.Drawing.Color.LightGreen;
             this.lblTaskOwner.Location = new System.Drawing.Point(0, 27);
             this.lblTaskOwner.Name = "lblTaskOwner";
             this.lblTaskOwner.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
@@ -160,7 +152,7 @@
             // 
             // pnlTop
             // 
-            this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.pnlTop.BackColor = System.Drawing.Color.Transparent;
             this.pnlTop.Controls.Add(this.pnlBadge);
             this.pnlTop.Controls.Add(this.pbMenu);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -172,6 +164,7 @@
             // 
             // pnlBadge
             // 
+            this.pnlBadge.BackColor = System.Drawing.Color.Transparent;
             this.pnlBadge.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlBadge.Location = new System.Drawing.Point(3, 3);
             this.pnlBadge.Margin = new System.Windows.Forms.Padding(0);
@@ -190,15 +183,11 @@
             this.pbMenu.TabStop = false;
             this.pbMenu.Click += new System.EventHandler(this.pbMenu_Click);
             // 
-            // guna2Elipse2
-            // 
-            this.guna2Elipse2.BorderRadius = 15;
-            // 
             // TaskCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.Controls.Add(this.pnlFill);
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "TaskCard";
@@ -213,15 +202,12 @@
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private System.Windows.Forms.Panel pnlFill;
         private Guna.UI2.WinForms.Guna2Panel pnlMid;
         private Guna.UI2.WinForms.Guna2Panel pnlTop;
         private System.Windows.Forms.Label lblContent;
         private System.Windows.Forms.Label lblProjectName;
         private System.Windows.Forms.PictureBox pbMenu;
-        private Guna.UI2.WinForms.Guna2Elipse guna2Elipse2;
         private Guna.UI2.WinForms.Guna2Panel pnlBottom;
         private System.Windows.Forms.Label lblProjectGroupName;
         private System.Windows.Forms.Label lblTaskDate;

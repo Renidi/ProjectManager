@@ -62,7 +62,8 @@ namespace ProjectManager
                     Register registerControl = new Register(this);
                     panelMain.Controls.Add(registerControl);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
 

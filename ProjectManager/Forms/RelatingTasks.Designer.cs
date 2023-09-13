@@ -74,6 +74,7 @@
             // 
             // pnlCancelled
             // 
+            this.pnlCancelled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlCancelled.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCancelled.Location = new System.Drawing.Point(867, 0);
             this.pnlCancelled.Name = "pnlCancelled";
@@ -82,6 +83,7 @@
             // 
             // pnlComplete
             // 
+            this.pnlComplete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlComplete.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlComplete.Location = new System.Drawing.Point(578, 0);
             this.pnlComplete.Name = "pnlComplete";
@@ -90,6 +92,7 @@
             // 
             // pnlActive
             // 
+            this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlActive.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlActive.Location = new System.Drawing.Point(289, 0);
             this.pnlActive.Name = "pnlActive";
@@ -98,6 +101,7 @@
             // 
             // pnlOnHold
             // 
+            this.pnlOnHold.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlOnHold.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlOnHold.Location = new System.Drawing.Point(0, 0);
             this.pnlOnHold.Name = "pnlOnHold";

@@ -74,9 +74,10 @@ namespace ProjectManager.Forms
             };
             GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
             List<Task> taskList = genericSqlHelper.ReadList(user);
+            // 0 1 2 3 4 
             if(ownerID > 0)
             {
-                taskList = taskList.Where(task => task.TaskOwnerId != ownerID).ToList();
+                taskList = taskList.Where(task => task.TaskOwnerId == ownerID).ToList();
             }
             foreach(var pnl in pnlList)
             {
@@ -88,7 +89,7 @@ namespace ProjectManager.Forms
                 Task task = taskList[i];
                 if (task.TaskStatus == statusList[0])
                 {
-                    TaskCard taskCard = new TaskCard(task,user.UserId,frmTask);
+                    TaskCard taskCard = new TaskCard(task, user.UserId, frmTask);
                     pnlList[0].Controls.Add(taskCard);
                 }
                 else if (task.TaskStatus == statusList[1])

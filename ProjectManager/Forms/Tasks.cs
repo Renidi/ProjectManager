@@ -46,22 +46,21 @@ namespace ProjectManager
         }
         public void PerformEditTask(int taskId)
         {
-            openChildFormTasks(new CreateTask(user.UserId,taskId));
+            openChildFormTasks(new CreateTask(user.UserId, taskId));
         }
-
-        private void btnTasks_Click(object sender, EventArgs e)
+        private void btnNewTask_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new RelatingTasks(user.UserId,this));
+            openChildFormTasks(new CreateTask(user.UserId));
         }
 
         private void btnMyTasks_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new RelatingTasks(user.UserId,this,user.UserId));
+            openChildFormTasks(new RelatingTasks(user.UserId, this, user.UserId));
         }
 
-        private void btnNewTask_Click(object sender, EventArgs e)
+        private void btnTasks_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new CreateTask(user.UserId));
+            openChildFormTasks(new RelatingTasks(user.UserId, this));
         }
     }
 

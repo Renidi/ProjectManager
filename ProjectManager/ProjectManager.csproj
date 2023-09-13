@@ -352,6 +352,12 @@
     <Compile Include="Forms\PopupCreateTeam.Designer.cs">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PopupEditTeam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PopupEditTeam.Designer.cs">
+      <DependentUpon>PopupEditTeam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RelatingProjects.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -488,6 +494,9 @@
     <EmbeddedResource Include="Forms\PopupCreateTeam.resx">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PopupEditTeam.resx">
+      <DependentUpon>PopupEditTeam.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelatingProjects.resx">
       <DependentUpon>RelatingProjects.cs</DependentUpon>
     </EmbeddedResource>
@@ -602,6 +611,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\check.png" />
+    <Content Include="Resources\email.png" />
+    <Content Include="Resources\userPic.png" />
+    <Content Include="Resources\wp3.jpeg" />
     <None Include="Resources\check1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

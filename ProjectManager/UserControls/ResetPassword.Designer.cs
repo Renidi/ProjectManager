@@ -61,7 +61,7 @@
             this.btnResetPasswordAndLogin.Location = new System.Drawing.Point(32, 187);
             this.btnResetPasswordAndLogin.Name = "btnResetPasswordAndLogin";
             this.btnResetPasswordAndLogin.Size = new System.Drawing.Size(200, 45);
-            this.btnResetPasswordAndLogin.TabIndex = 17;
+            this.btnResetPasswordAndLogin.TabIndex = 23;
             this.btnResetPasswordAndLogin.Text = "Reset Password and Login";
             this.btnResetPasswordAndLogin.Click += new System.EventHandler(this.btnResetPasswordAndLogin_Click);
             // 

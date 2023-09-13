@@ -50,21 +50,16 @@ namespace ProjectManager
             childForm.Show();
             this.DoubleBuffered = true;
         }
-        private void btnNewProject_Click_1(object sender, EventArgs e)
+
+        private void btnProject_Click(object sender, EventArgs e)
+        {
+            openChildForm(new RelatingProjects(user.UserId));
+        }
+
+        private void btnNewProject_Click(object sender, EventArgs e)
         {
             openChildForm(new CreateProject(user.UserId));
         }
 
-        private void btnMyProjects_Click_1(object sender, EventArgs e)
-        {
-            // !!??
-            openChildForm(new RelatingProjects(user.UserId));
-            // !!??
-        }
-
-        private void btnProjects_Click_1(object sender, EventArgs e)
-        {
-            openChildForm(new RelatingProjects(user.UserId));
-        }
     }
 }

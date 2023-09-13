@@ -36,9 +36,11 @@
             this.lblTeamLeaderMail = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblTeamName = new System.Windows.Forms.Label();
+            this.pbMenu = new System.Windows.Forms.PictureBox();
             this.pnlMain.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             this.pnlTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlMain
@@ -50,17 +52,17 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.pnlMain.Size = new System.Drawing.Size(223, 108);
+            this.pnlMain.Size = new System.Drawing.Size(223, 135);
             this.pnlMain.TabIndex = 0;
             this.pnlMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pnlMain_MouseDoubleClick);
             // 
             // lblDescription
             // 
             this.lblDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDescription.Location = new System.Drawing.Point(3, 31);
+            this.lblDescription.Location = new System.Drawing.Point(3, 40);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
-            this.lblDescription.Size = new System.Drawing.Size(217, 29);
+            this.lblDescription.Size = new System.Drawing.Size(217, 47);
             this.lblDescription.TabIndex = 11;
             this.lblDescription.Text = resources.GetString("lblDescription.Text");
             this.lblDescription.TextChanged += new System.EventHandler(this.lblDescription_TextChanged);
@@ -71,7 +73,7 @@
             this.pnlBottom.Controls.Add(this.lblTaskProjectCount);
             this.pnlBottom.Controls.Add(this.lblTeamLeaderMail);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(3, 60);
+            this.pnlBottom.Location = new System.Drawing.Point(3, 87);
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(217, 48);
             this.pnlBottom.TabIndex = 10;
@@ -99,11 +101,12 @@
             // 
             // pnlTop
             // 
+            this.pnlTop.Controls.Add(this.pbMenu);
             this.pnlTop.Controls.Add(this.lblTeamName);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(3, 3);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(217, 28);
+            this.pnlTop.Size = new System.Drawing.Size(217, 37);
             this.pnlTop.TabIndex = 9;
             // 
             // lblTeamName
@@ -112,11 +115,23 @@
             this.lblTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTeamName.Location = new System.Drawing.Point(0, 0);
             this.lblTeamName.Name = "lblTeamName";
-            this.lblTeamName.Size = new System.Drawing.Size(217, 28);
+            this.lblTeamName.Size = new System.Drawing.Size(217, 37);
             this.lblTeamName.TabIndex = 6;
             this.lblTeamName.Text = "Tringle.io Dev Team";
             this.lblTeamName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTeamName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lblTeamName_MouseDoubleClick);
+            // 
+            // pbMenu
+            // 
+            this.pbMenu.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pbMenu.Image = ((System.Drawing.Image)(resources.GetObject("pbMenu.Image")));
+            this.pbMenu.Location = new System.Drawing.Point(169, 0);
+            this.pbMenu.Name = "pbMenu";
+            this.pbMenu.Size = new System.Drawing.Size(48, 37);
+            this.pbMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbMenu.TabIndex = 7;
+            this.pbMenu.TabStop = false;
+            this.pbMenu.Click += new System.EventHandler(this.pbMenu_Click);
             // 
             // TeamControl
             // 
@@ -125,11 +140,12 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.Controls.Add(this.pnlMain);
             this.Name = "TeamControl";
-            this.Size = new System.Drawing.Size(223, 108);
+            this.Size = new System.Drawing.Size(223, 135);
             this.Load += new System.EventHandler(this.TeamsControl_Load);
             this.pnlMain.ResumeLayout(false);
             this.pnlBottom.ResumeLayout(false);
             this.pnlTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -143,5 +159,6 @@
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.PictureBox pbMenu;
     }
 }

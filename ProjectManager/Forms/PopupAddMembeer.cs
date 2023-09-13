@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,16 +52,44 @@ namespace ProjectManager.Forms
                     UserGroup userGroup = new UserGroup()
                     {
                         UserId = invitedUser.UserId,
-                        GroupId = groups[cmbTeams.SelectedIndex].GroupId,
-                        UserGroupAuthorization = 0,
-                        InviteDate = DateTime.Now,
-                        InviteSenderId = user.UserId,
-                        InviteStatus = "Waiting"
+                        GroupId = groups[cmbTeams.SelectedIndex].GroupId
                     };
-                    if (genericUserGroup.Create(userGroup))
-                        MessageBox.Show("User has been successfully invited");
+                    userGroup = genericUserGroup.ReadById(userGroup);
+                    if (userGroup.UserGroupId !=0) // if the user was previously in the group
+                    {
+                        if(userGroup.InviteStatus == "Accepted")
+                        {
+                            MessageBox.Show("User already in this team");
+                        }
+                        else
+                        {
+                            userGroup.InviteStatus = "Waiting";
+                            userGroup.UserGroupAuthorization = 0;
+                            userGroup.InviteDate = DateTime.Now;
+                            userGroup.InviteSenderId = user.UserId;
+                            if (genericUserGroup.Update(userGroup))
+                                MessageBox.Show("User has been successfully invited");
+                            else
+                                MessageBox.Show("Error");
+                        }
+                    }
                     else
-                        MessageBox.Show("Error");
+                    {
+                        userGroup = new UserGroup()
+                        {
+                            UserId = invitedUser.UserId,
+                            GroupId = groups[cmbTeams.SelectedIndex].GroupId,
+                            UserGroupAuthorization = 0,
+                            InviteDate = DateTime.Now,
+                            InviteSenderId = user.UserId,
+                            InviteStatus = "Waiting"
+                        };
+                        if (genericUserGroup.Create(userGroup))
+                            MessageBox.Show("User has been successfully invited");
+                        else
+                            MessageBox.Show("Error");
+                    }
+                    
                 }
                 else
                 {
@@ -79,6 +108,20 @@ namespace ProjectManager.Forms
                 }
             }
             
+        }
+
+        private void pbExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr one, int two, int three, int four);
+        private void PopupAddMembeer_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(Handle, 0x112, 0xf012, 0);
         }
     }
 }

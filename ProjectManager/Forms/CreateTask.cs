@@ -140,7 +140,7 @@ namespace ProjectManager.Forms
             dtTaskStartDate.Value = DateTime.Now;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnCreate_Click(object sender, EventArgs e)
         {
             if(txTaskName.Text!="" && cmbTaskProject.SelectedIndex != -1 && cmbTaskEmployee.SelectedIndex != -1)
             {

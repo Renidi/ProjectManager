@@ -38,6 +38,7 @@ namespace ProjectManager.UserControls
             group = task.TaskGroupId != 0 ? genericGroup.ReadById(group) : group;
             taskOwner.UserId = task.TaskOwnerId;
             taskOwner = genericUser.ReadById(taskOwner);
+            lblTaskOwner.Text = taskOwner.UserMail;
             lblProjectGroupName.Text = group.GroupName==null ? taskOwner.UserMail : group.GroupName + " - " + taskOwner.UserMail;
             lblTaskDate.Text = task.TaskStartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture) +  " - " + task.TaskEndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
             task.TaskBadges = task.TaskBadges == null || task.TaskBadges == "" ? ConvertToTagName(task.TaskPriority) : ConvertToTagName(task.TaskPriority) + ", " + task.TaskBadges; 

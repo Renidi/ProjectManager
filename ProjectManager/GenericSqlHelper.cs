@@ -16,6 +16,7 @@ namespace ProjectManager
 {
     public class GenericSqlHelper<T>
     {
+        // CRUD Op
         public bool Create(T t)
         {
             try
@@ -152,7 +153,7 @@ namespace ProjectManager
                         if(tableName == "USER")
                         {
                             cmd.Parameters.AddWithValue("@USER_MAIL", properties[3].GetValue(t));
-                            cmd.Parameters.AddWithValue("@USER_SECRET_WORD", properties[8].GetValue(t));
+                            cmd.Parameters.AddWithValue("@USER_SECRET_WORD", properties[7].GetValue(t));
                         }
                         else
                         {

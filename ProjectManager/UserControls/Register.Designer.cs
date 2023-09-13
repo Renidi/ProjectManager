@@ -85,7 +85,7 @@
             this.txRegisterMail.PlaceholderText = "Mail";
             this.txRegisterMail.SelectedText = "";
             this.txRegisterMail.Size = new System.Drawing.Size(200, 36);
-            this.txRegisterMail.TabIndex = 32;
+            this.txRegisterMail.TabIndex = 33;
             // 
             // txRegisterSurname
             // 
@@ -109,7 +109,7 @@
             this.txRegisterSurname.PlaceholderText = "Surname";
             this.txRegisterSurname.SelectedText = "";
             this.txRegisterSurname.Size = new System.Drawing.Size(200, 36);
-            this.txRegisterSurname.TabIndex = 33;
+            this.txRegisterSurname.TabIndex = 32;
             // 
             // txRegisterSecretWord
             // 
@@ -225,7 +225,7 @@
             this.lblDoYouHaveAccount.TabIndex = 40;
             this.lblDoYouHaveAccount.Text = "Do You Have Account?";
             // 
-            // RegisterControl
+            // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -239,7 +239,7 @@
             this.Controls.Add(this.txRegisterSecretWord);
             this.Controls.Add(this.txRegisterName);
             this.Controls.Add(this.txRegisterMail);
-            this.Name = "RegisterControl";
+            this.Name = "Register";
             this.Size = new System.Drawing.Size(301, 387);
             this.ResumeLayout(false);
             this.PerformLayout();

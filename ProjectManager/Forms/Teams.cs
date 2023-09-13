@@ -40,6 +40,7 @@ namespace ProjectManager
         public void DisplayTeams()
         {
             pnlTeams.Controls.Clear();
+            pnlRequests.Controls.Clear();
             pnlTeams.AutoScroll = false;
             groups = genericUserGroup.ReadList(user);
             foreach (UserGroup inGroup in groups)
@@ -48,7 +49,7 @@ namespace ProjectManager
                 {
                     TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
                     pnlTeams.Controls.Add(teamControl);
-                }else
+                }else if(inGroup.InviteStatus == "Waiting")
                 {
                     TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
                     pnlRequests.Controls.Add(teamControl);
@@ -58,7 +59,7 @@ namespace ProjectManager
             pnlTeams.AutoScroll = true;
         }
         
-        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo,int authLevel)
+        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo,int authUserId,TeamControl teamC)
         {
             pnlMemebers.Controls.Clear();
             pnlRequests.Controls.Clear();
@@ -76,11 +77,15 @@ namespace ProjectManager
                         break;
                     }
                 }
-                UserControlTeams userControlTeams = new UserControlTeams(newUserGroup,newUser,authLevel);
+                UserControlTeams userControlTeams = new UserControlTeams(newUserGroup,newUser,authUserId,teamC);
                 pnlMemebers.Controls.Add(userControlTeams);
             }
             pnlMemebers.AutoScroll=true;
 
+        }
+        public void ClearTeamUsers()
+        {
+            pnlMemebers.Controls.Clear();
         }
 
         private void btnNewTeam_Click(object sender, EventArgs e)
@@ -128,7 +133,15 @@ namespace ProjectManager
 
         private void btnRejectRequest_Click(object sender, EventArgs e)
         {
-
+            UserGroup userGroupInfo = new UserGroup() { GroupId = btnGroupId, UserId = user.UserId };
+            userGroupInfo = genericUserGroup.ReadById(userGroupInfo);
+            userGroupInfo.ProcessDate = DateTime.Now;
+            userGroupInfo.InviteStatus = "Rejected";
+            if (genericUserGroup.Update(userGroupInfo))
+                MessageBox.Show("Rejected Invite");
+            else
+                MessageBox.Show("Error");
+            DisplayTeams();
         }
     }
 }

@@ -55,19 +55,19 @@ namespace ProjectManager
         private void btnNext_Click(object sender, EventArgs e)
         {
             flContainer.Controls.Clear();
-            if (currentMonth == 12)
-            {
-                currentYear += 1;
-                currentMonth = 1;
-            }
-            else
-            {
-                currentMonth += 1;
-            }
+                        if (currentMonth == 12)
+                        {
+                            currentYear += 1;
+                            currentMonth = 1;
+                        }
+                        else
+                        {
+                            currentMonth += 1;
+                        }
             displayDays();
         }
 
-        private void btnPrevious_Click(object sender, EventArgs e)
+        private void btnPrev_Click(object sender, EventArgs e)
         {
             flContainer.Controls.Clear();
             if (currentMonth == 1)
@@ -79,9 +79,10 @@ namespace ProjectManager
             {
                 currentMonth -= 1;
             }
-            
+
             displayDays();
         }
+
 
     }
 }

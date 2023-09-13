@@ -63,7 +63,7 @@ namespace ProjectManager.Forms
                 txProjectComment.Text = project.ProjectDescription;
                 cmbProjectTeamIdHidden.SelectedItem = project.ProjectGroupId;
             }
-            catch { }
+            catch {  }
         }
         private void Dt()
         {
@@ -92,7 +92,7 @@ namespace ProjectManager.Forms
             dtProjectEndDate.Value = DateTime.Now;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnCreate_Click(object sender, EventArgs e)
         {
             if(txProjectName.Text !="")
             {
