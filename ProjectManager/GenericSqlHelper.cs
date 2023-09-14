@@ -43,7 +43,7 @@ namespace ProjectManager
 
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    if (tableName == "GROUP")
+                    if (tableName == "GROUP") // yeni grup kuruluyorsa kuran kişi için invite accept
                     {   
                         cmd = new SqlCommand("SELECT * FROM [GROUP] WHERE GROUP_NAME=@GROUP_NAME AND GROUP_FOUNDER_ID=@GROUP_FOUNDER_ID AND GROUP_FORMATION_DATE=@GROUP_FORMATION_DATE", con);
                         cmd.Parameters.AddWithValue("@GROUP_NAME", properties[1].GetValue(t));
@@ -177,7 +177,7 @@ namespace ProjectManager
                                     property?.SetValue(item, rd[i] == DBNull.Value ? null : rd[i]);
                                 }
                                 return item;
-
+                                
                             }
                         }
                         else
@@ -337,7 +337,7 @@ namespace ProjectManager
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    if (tableName == "PROJECT") // İf project deleted also delete subtasks
+                    if (tableName == "PROJECT") // If project deleted also delete subtasks
                     {
                         sql = "DELETE FROM [TASK] WHERE TASK_PROJECT_ID=@TASK_PROJECT_ID";
                         cmd = new SqlCommand(sql, con);
@@ -443,7 +443,7 @@ namespace ProjectManager
             }
             return (counterProject, counterTask);
         }
-        public int Login(string userMail, string userPassword) // İf login succes return userId, otherwise return 0
+        public int Login(string userMail, string userPassword) // İf login succes return userId otherwise return 0
         {
             int userId = 0;
             try

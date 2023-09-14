@@ -74,7 +74,7 @@ namespace ProjectManager.UserControls
                     }
 
                     Clear();
-                    Events events = new Events(user.UserId,entry);
+                    Events events = new Events(user,entry);
                     events.Show();
                     if (!cbRememberMe.Checked || txLoginMail.Text == "" || txLoginPassword.Text == "")
                     {

@@ -611,6 +611,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\check.png" />
+    <Content Include="Resources\close.png" />
     <Content Include="Resources\email.png" />
     <Content Include="Resources\userPic.png" />
     <Content Include="Resources\wp3.jpeg" />

@@ -83,7 +83,7 @@ namespace ProjectManager.UserControls
             }
             
         }
-        public void ShowSubMenu()
+        private void ShowSubMenu()
         {
             ContextMenuStrip myMenu = new ContextMenuStrip();
             myMenu.Items.Add("Edit", null, menuEdit_Click);

@@ -16,14 +16,13 @@ namespace ProjectManager
     public partial class Tasks : Form
     {
         User user = new User();
-        public Panel Panel { get { return pnlActive; } set { pnlActive.Controls.Add(value); } }
-        public Tasks(int userId)
+        public Tasks(User recUser)
         {
             InitializeComponent();
-            user.UserId = userId;
+            user = recUser;
             GenericSqlHelper<User> genericSqlHelper = new GenericSqlHelper<User>();
             user = genericSqlHelper.ReadById(user);
-            openChildFormTasks(new RelatingTasks(user.UserId,this));
+            openChildFormTasks(new RelatingTasks(user,this));
         }
         private void Tasks_Load(object sender, EventArgs e)
         {
@@ -46,21 +45,21 @@ namespace ProjectManager
         }
         public void PerformEditTask(int taskId)
         {
-            openChildFormTasks(new CreateTask(user.UserId, taskId));
+            openChildFormTasks(new CreateTask(user, taskId));
         }
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new CreateTask(user.UserId));
+            openChildFormTasks(new CreateTask(user));
         }
 
         private void btnMyTasks_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new RelatingTasks(user.UserId, this, user.UserId));
+            openChildFormTasks(new RelatingTasks(user, this, user.UserId));
         }
 
         private void btnTasks_Click(object sender, EventArgs e)
         {
-            openChildFormTasks(new RelatingTasks(user.UserId, this));
+            openChildFormTasks(new RelatingTasks(user, this));
         }
     }
 

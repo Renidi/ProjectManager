@@ -72,6 +72,7 @@ namespace ProjectManager.UserControls
                     if(cmbAuth.Text == "Remove Member")
                     {
                         userGroup.InviteStatus = "Kicked";
+                        userGroup.InviteSenderId = user.UserId;
                     }
                     if (genericUserGroup.Update(userGroup))
                     {

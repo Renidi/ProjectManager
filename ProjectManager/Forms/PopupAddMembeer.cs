@@ -21,9 +21,9 @@ namespace ProjectManager.Forms
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-        public PopupAddMembeer(User usr,List<UserGroup> list)
+        public PopupAddMembeer(User recUser,List<UserGroup> list)
         {
-            user = usr;
+            user = recUser;
             InitializeComponent();
             foreach (UserGroup inGroup in list)
             {
@@ -33,6 +33,7 @@ namespace ProjectManager.Forms
                 cmbTeams.Items.Add(group.GroupName);
             }
             userGroups = list;
+            StartPosition = FormStartPosition.CenterScreen;
 
         }
 
@@ -122,6 +123,11 @@ namespace ProjectManager.Forms
         {
             ReleaseCapture();
             SendMessage(Handle, 0x112, 0xf012, 0);
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            PopupAddMembeer_MouseDown(sender, e);
         }
     }
 }

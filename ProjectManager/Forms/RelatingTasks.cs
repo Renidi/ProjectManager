@@ -25,10 +25,10 @@ namespace ProjectManager.Forms
         User user = new User();
         Tasks frmTask;
         public int ownerID = 0;
-        public RelatingTasks(int userId,Tasks tasks,int ownerId = 0)
+        public RelatingTasks(User recUser,Tasks tasks,int ownerId = 0)
         {
             InitializeComponent();
-            user.UserId = userId;
+            user = recUser;
             frmTask = tasks;
             ownerID = ownerId;
         }

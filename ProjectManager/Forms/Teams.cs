@@ -18,17 +18,17 @@ namespace ProjectManager
     
     public partial class Teams : Form
     {
-        User user = new User();
+        User user;
         UserGroup userGroup = new UserGroup();
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         List<UserGroup> groups = new List<UserGroup>();
         public int btnGroupId;
 
-        public Teams(int userId)
+        public Teams(User recUser)
         {
             InitializeComponent();
             SetStyle(ControlStyles.UserMouse | ControlStyles.Selectable, true);
-            user.UserId = userId;
+            user = recUser;
             GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
             user = genericUser.ReadById(user);
         }
@@ -42,7 +42,7 @@ namespace ProjectManager
             pnlTeams.Controls.Clear();
             pnlRequests.Controls.Clear();
             pnlTeams.AutoScroll = false;
-            groups = genericUserGroup.ReadList(user);
+            groups = genericUserGroup.ReadList(user).Where(r => (r.InviteStatus == "Accepted" || r.InviteStatus == "Waiting")).ToList();
             foreach (UserGroup inGroup in groups)
             {
                 if (inGroup.UserGroupAuthorization>0)
@@ -90,7 +90,7 @@ namespace ProjectManager
 
         private void btnNewTeam_Click(object sender, EventArgs e)
         {
-            Form popUpForm = new PopupCreateTeam(user.UserId,this);
+            Form popUpForm = new PopupCreateTeam(user,this);
             popUpForm.ShowDialog();
 
         }
@@ -143,5 +143,6 @@ namespace ProjectManager
                 MessageBox.Show("Error");
             DisplayTeams();
         }
+
     }
 }

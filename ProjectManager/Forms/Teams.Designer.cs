@@ -30,7 +30,6 @@
         {
             this.pnlMiddle = new System.Windows.Forms.Panel();
             this.btnRejectRequest = new Guna.UI2.WinForms.Guna2Button();
-            this.btnJoinRequest = new Guna.UI2.WinForms.Guna2Button();
             this.btnAddMember = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMemebers = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlRequests = new System.Windows.Forms.FlowLayoutPanel();
@@ -39,14 +38,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnJoinRequest = new Guna.UI2.WinForms.Guna2Button();
             this.pnlMiddle.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMiddle
             // 
             this.pnlMiddle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
-            this.pnlMiddle.Controls.Add(this.btnRejectRequest);
             this.pnlMiddle.Controls.Add(this.btnJoinRequest);
+            this.pnlMiddle.Controls.Add(this.btnRejectRequest);
             this.pnlMiddle.Controls.Add(this.btnAddMember);
             this.pnlMiddle.Controls.Add(this.pnlMemebers);
             this.pnlMiddle.Controls.Add(this.pnlRequests);
@@ -63,42 +63,32 @@
             // 
             // btnRejectRequest
             // 
+            this.btnRejectRequest.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnRejectRequest.BorderRadius = 15;
             this.btnRejectRequest.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnRejectRequest.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnRejectRequest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnRejectRequest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnRejectRequest.Enabled = false;
+            this.btnRejectRequest.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.btnRejectRequest.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnRejectRequest.ForeColor = System.Drawing.Color.White;
-            this.btnRejectRequest.Location = new System.Drawing.Point(853, 460);
+            this.btnRejectRequest.Location = new System.Drawing.Point(878, 460);
             this.btnRejectRequest.Name = "btnRejectRequest";
             this.btnRejectRequest.Size = new System.Drawing.Size(115, 45);
             this.btnRejectRequest.TabIndex = 14;
             this.btnRejectRequest.Text = "Reject";
             this.btnRejectRequest.Click += new System.EventHandler(this.btnRejectRequest_Click);
             // 
-            // btnJoinRequest
-            // 
-            this.btnJoinRequest.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnJoinRequest.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnJoinRequest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnJoinRequest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnJoinRequest.Enabled = false;
-            this.btnJoinRequest.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnJoinRequest.ForeColor = System.Drawing.Color.White;
-            this.btnJoinRequest.Location = new System.Drawing.Point(722, 460);
-            this.btnJoinRequest.Name = "btnJoinRequest";
-            this.btnJoinRequest.Size = new System.Drawing.Size(115, 45);
-            this.btnJoinRequest.TabIndex = 13;
-            this.btnJoinRequest.Text = "Join";
-            this.btnJoinRequest.Click += new System.EventHandler(this.btnJoinRequest_Click);
-            // 
             // btnAddMember
             // 
+            this.btnAddMember.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnAddMember.BorderRadius = 15;
             this.btnAddMember.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnAddMember.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnAddMember.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnAddMember.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAddMember.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.btnAddMember.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnAddMember.ForeColor = System.Drawing.Color.White;
             this.btnAddMember.Location = new System.Drawing.Point(143, 460);
@@ -110,23 +100,23 @@
             // 
             // pnlMemebers
             // 
-            this.pnlMemebers.BackColor = System.Drawing.Color.Gray;
+            this.pnlMemebers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.pnlMemebers.Location = new System.Drawing.Point(264, 25);
             this.pnlMemebers.Name = "pnlMemebers";
-            this.pnlMemebers.Size = new System.Drawing.Size(452, 429);
+            this.pnlMemebers.Size = new System.Drawing.Size(477, 429);
             this.pnlMemebers.TabIndex = 11;
             // 
             // pnlRequests
             // 
-            this.pnlRequests.BackColor = System.Drawing.Color.Gray;
-            this.pnlRequests.Location = new System.Drawing.Point(722, 25);
+            this.pnlRequests.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.pnlRequests.Location = new System.Drawing.Point(747, 25);
             this.pnlRequests.Name = "pnlRequests";
             this.pnlRequests.Size = new System.Drawing.Size(246, 429);
             this.pnlRequests.TabIndex = 10;
             // 
             // pnlTeams
             // 
-            this.pnlTeams.BackColor = System.Drawing.Color.Gray;
+            this.pnlTeams.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.pnlTeams.Location = new System.Drawing.Point(12, 25);
             this.pnlTeams.Name = "pnlTeams";
             this.pnlTeams.Size = new System.Drawing.Size(246, 429);
@@ -134,10 +124,13 @@
             // 
             // btnNewTeam
             // 
+            this.btnNewTeam.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnNewTeam.BorderRadius = 15;
             this.btnNewTeam.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnNewTeam.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnNewTeam.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnNewTeam.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNewTeam.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.btnNewTeam.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnNewTeam.ForeColor = System.Drawing.Color.White;
             this.btnNewTeam.Location = new System.Drawing.Point(12, 460);
@@ -150,7 +143,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(802, 9);
+            this.label3.Location = new System.Drawing.Point(827, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 6;
@@ -159,7 +152,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(463, 9);
+            this.label2.Location = new System.Drawing.Point(475, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 4;
@@ -173,6 +166,25 @@
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Teams";
+            // 
+            // btnJoinRequest
+            // 
+            this.btnJoinRequest.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnJoinRequest.BorderRadius = 15;
+            this.btnJoinRequest.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinRequest.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinRequest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnJoinRequest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnJoinRequest.Enabled = false;
+            this.btnJoinRequest.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnJoinRequest.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnJoinRequest.ForeColor = System.Drawing.Color.White;
+            this.btnJoinRequest.Location = new System.Drawing.Point(747, 460);
+            this.btnJoinRequest.Name = "btnJoinRequest";
+            this.btnJoinRequest.Size = new System.Drawing.Size(115, 45);
+            this.btnJoinRequest.TabIndex = 15;
+            this.btnJoinRequest.Text = "Join";
+            this.btnJoinRequest.Click += new System.EventHandler(this.btnJoinRequest_Click);
             // 
             // Teams
             // 

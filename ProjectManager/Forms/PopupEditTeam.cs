@@ -15,17 +15,18 @@ namespace ProjectManager.Forms
     public partial class PopupEditTeam : Form
     {
         Teams teams;
-        User user = new User();
+        User user;
         Group group = new Group();  
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
-        public PopupEditTeam(Group groupInfo,int userID,Teams teamS)
+        public PopupEditTeam(Group groupInfo,User recUser,Teams teamS)
         {
             InitializeComponent();
             group = groupInfo;
             teams = teamS;
-            user.UserId = userID;
+            user = recUser;
             txGroupName.Text = group.GroupName;
             txGroupDescription.Text = group.GroupDescription;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnEditTeam_Click(object sender, EventArgs e)
@@ -60,6 +61,11 @@ namespace ProjectManager.Forms
         {
             ReleaseCapture();
             SendMessage(Handle, 0x112, 0xf012, 0);
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            PopupEditTeam_MouseDown(sender, e);
         }
     }
 }

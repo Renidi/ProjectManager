@@ -35,8 +35,8 @@
             this.lblTaskProjectCount = new System.Windows.Forms.Label();
             this.lblTeamLeaderMail = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.lblTeamName = new System.Windows.Forms.Label();
             this.pbMenu = new System.Windows.Forms.PictureBox();
+            this.lblTeamName = new System.Windows.Forms.Label();
             this.pnlMain.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             this.pnlTop.SuspendLayout();
@@ -45,6 +45,7 @@
             // 
             // pnlMain
             // 
+            this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
             this.pnlMain.Controls.Add(this.lblDescription);
             this.pnlMain.Controls.Add(this.pnlBottom);
             this.pnlMain.Controls.Add(this.pnlTop);
@@ -59,6 +60,7 @@
             // lblDescription
             // 
             this.lblDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDescription.ForeColor = System.Drawing.Color.White;
             this.lblDescription.Location = new System.Drawing.Point(3, 40);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
@@ -75,13 +77,15 @@
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(3, 87);
             this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.pnlBottom.Size = new System.Drawing.Size(217, 48);
             this.pnlBottom.TabIndex = 10;
             // 
             // lblTaskProjectCount
             // 
             this.lblTaskProjectCount.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblTaskProjectCount.Location = new System.Drawing.Point(0, 35);
+            this.lblTaskProjectCount.ForeColor = System.Drawing.Color.White;
+            this.lblTaskProjectCount.Location = new System.Drawing.Point(0, 30);
             this.lblTaskProjectCount.Name = "lblTaskProjectCount";
             this.lblTaskProjectCount.Size = new System.Drawing.Size(217, 13);
             this.lblTaskProjectCount.TabIndex = 6;
@@ -91,6 +95,7 @@
             // lblTeamLeaderMail
             // 
             this.lblTeamLeaderMail.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTeamLeaderMail.ForeColor = System.Drawing.Color.White;
             this.lblTeamLeaderMail.Location = new System.Drawing.Point(0, 0);
             this.lblTeamLeaderMail.Margin = new System.Windows.Forms.Padding(3);
             this.lblTeamLeaderMail.Name = "lblTeamLeaderMail";
@@ -109,18 +114,6 @@
             this.pnlTop.Size = new System.Drawing.Size(217, 37);
             this.pnlTop.TabIndex = 9;
             // 
-            // lblTeamName
-            // 
-            this.lblTeamName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTeamName.Location = new System.Drawing.Point(0, 0);
-            this.lblTeamName.Name = "lblTeamName";
-            this.lblTeamName.Size = new System.Drawing.Size(217, 37);
-            this.lblTeamName.TabIndex = 6;
-            this.lblTeamName.Text = "Tringle.io Dev Team";
-            this.lblTeamName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblTeamName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lblTeamName_MouseDoubleClick);
-            // 
             // pbMenu
             // 
             this.pbMenu.Dock = System.Windows.Forms.DockStyle.Right;
@@ -133,11 +126,24 @@
             this.pbMenu.TabStop = false;
             this.pbMenu.Click += new System.EventHandler(this.pbMenu_Click);
             // 
+            // lblTeamName
+            // 
+            this.lblTeamName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTeamName.ForeColor = System.Drawing.Color.White;
+            this.lblTeamName.Location = new System.Drawing.Point(0, 0);
+            this.lblTeamName.Name = "lblTeamName";
+            this.lblTeamName.Size = new System.Drawing.Size(163, 37);
+            this.lblTeamName.TabIndex = 6;
+            this.lblTeamName.Text = "Tringle.io Dev Team";
+            this.lblTeamName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTeamName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lblTeamName_MouseDoubleClick);
+            // 
             // TeamControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DimGray;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.Controls.Add(this.pnlMain);
             this.Name = "TeamControl";
             this.Size = new System.Drawing.Size(223, 135);

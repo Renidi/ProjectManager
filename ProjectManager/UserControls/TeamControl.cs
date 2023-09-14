@@ -39,12 +39,12 @@ namespace ProjectManager.Forms
             lblTeamName.Text = group.GroupName;
             groupFounder = new User(){ UserId = group.GroupManagerId };
             groupFounder =  genericUser.ReadById(groupFounder);
-            lblTeamLeaderMail.Text = "Team Leader: " + groupFounder.UserMail;
+            lblTeamLeaderMail.Text = groupFounder!=null ? "Team Leader: " + groupFounder.UserMail : "NOPE";
             var counter = genericUser.GetProjectAndTaskCounts(group.GroupId);
             lblTaskProjectCount.Text = counter.Item1 + " Project , " + counter.Item2 + " Task";
 
             lblDescription.AutoSize = true;
-            lblDescription.Text = group.GroupDescription;
+            lblDescription.Text = "    "+group.GroupDescription;
             lblDescription.AutoSize = false;
         }
 
@@ -55,7 +55,7 @@ namespace ProjectManager.Forms
         }
         private void AdjustFormSize()
         {
-            int desiredHeight = lblDescription.Height-20;
+            int desiredHeight = lblDescription.Height-30;
             Height += desiredHeight;
         }
 
@@ -74,7 +74,7 @@ namespace ProjectManager.Forms
             }
             
         }
-        public void refreshTeamUsers(int test=0)
+        public void refreshTeamUsers(int test=0) // 1 for refresh userList otherwise 0 or nothing
         {
             List<User> userList = genericUser.ReadList(user, group.GroupId);
             List<UserGroup> userGroups = genericUserGroup.ReadList(user, group.GroupId);
@@ -109,20 +109,49 @@ namespace ProjectManager.Forms
             if (user.UserId == groupFounder.UserId)
             {
                 myMenu.Items.Add("Edit", null, menuEdit_Click);
+                myMenu.Items.Add("Close Team", null, menuClose_Click);
             }
             myMenu.Items.Add("Leave", null, menuLeave_Click);
             if(user.UserId == groupFounder.UserId)
             {
 
-                myMenu.Items[1].Enabled = false;
+                myMenu.Items[2].Enabled = false;
             }
             
             myMenu.Show(pbMenu, new Point(-15, pbMenu.Height / 2 + 15));
         }
 
+        private void menuClose_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Dou you want to close this team ?", "Close Team ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                group.GroupStatus = "Closed";
+                group.GroupManagerId = 0;
+                group.GroupFormationDate = DateTime.Now;
+                genericGroup.Update(group);
+                List<UserGroup> userGroups = genericUserGroup.ReadList(user, group.GroupId);
+                for(int i= userGroups.Count-1 ;i>=0 ;i--)
+                {
+                    UserGroup userGroupInfo = userGroups[i];
+                    userGroupInfo.UserGroupAuthorization = 0;
+                    userGroupInfo.ProcessDate = DateTime.Now;
+                    userGroupInfo.InviteSenderId = user.UserId;
+                    userGroupInfo.InviteStatus = "Kicked";
+                    genericUserGroup.Update(userGroupInfo);
+                }
+
+                refreshTeamUsers();
+            }
+            else
+            {
+                MessageBox.Show("Cancelled");
+            }
+        }
+
         private void menuEdit_Click(object sender, EventArgs e)
         {
-            Form popupForm = new PopupEditTeam(group,user.UserId,teams);
+            Form popupForm = new PopupEditTeam(group,user,teams);
             popupForm.ShowDialog();
         }
 
@@ -148,7 +177,7 @@ namespace ProjectManager.Forms
             }
             else
             {
-
+                MessageBox.Show("Cancelled");
             }
         }
     }

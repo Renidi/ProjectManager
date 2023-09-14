@@ -18,17 +18,16 @@ namespace ProjectManager.Forms
 
         User user = new User();
         Group group = new Group();
-        UserGroup userGroup = new UserGroup();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
-        GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
 
-        public PopupCreateTeam(int userId, Teams formTeams)
+        public PopupCreateTeam(User recUser, Teams formTeams)
         {
-            user.UserId = userId;
+            user = recUser;
             user = genericUser.ReadById(user);
             InitializeComponent();
             teams = formTeams;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnCreateTeam_Click(object sender, EventArgs e)
@@ -40,11 +39,10 @@ namespace ProjectManager.Forms
                 group.GroupManagerId = user.UserId;
                 group.GroupDescription = txGroupDescription.Text;
                 group.GroupFormationDate = DateTime.Now;
+                group.GroupStatus = "Active";
 
                 if (genericGroup.Create(group))
-                {
                     this.Close();
-                }
             }
             else
             {
@@ -64,11 +62,21 @@ namespace ProjectManager.Forms
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr one, int two, int three, int four);
+        private extern static void SendMessage(IntPtr one, int two, int three, int four);
         private void PopupCreateTeam_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(Handle, 0x112, 0xf012, 0);
+        }
+
+        private void guna2Panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            PopupCreateTeam_MouseDown(sender, e);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

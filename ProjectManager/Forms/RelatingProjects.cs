@@ -15,10 +15,12 @@ namespace ProjectManager.Forms
     public partial class RelatingProjects : Form
     {
         User user = new User();
-        public RelatingProjects(int userId)
+        Projects frmProjects;
+        public RelatingProjects(User recUser,Projects recProjects)
         {
             InitializeComponent();
-            user.UserId = userId;
+            user = recUser;
+            frmProjects = recProjects;
         }
         private void RelatingProjects_Load(object sender, EventArgs e)
         {
@@ -40,7 +42,7 @@ namespace ProjectManager.Forms
             pnlOnHold.Controls.Clear();
             pnlCancelled.Controls.Clear();
         }
-        void FillPanel()
+        private void FillPanel()
         {
             ClearPanels();
             List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
@@ -65,22 +67,22 @@ namespace ProjectManager.Forms
                 Project project = projectList[i];
                 if(project.ProjectStatus == statusList[0])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
+                    ProjectControl projectControl = new ProjectControl(project,user,frmProjects);
                     pnlList[0].Controls.Add(projectControl);
                 }
                 else if (project.ProjectStatus == statusList[1])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
+                    ProjectControl projectControl = new ProjectControl(project, user,frmProjects);
                     pnlList[1].Controls.Add(projectControl);
                 }
                 else if (project.ProjectStatus == statusList[2])
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
+                    ProjectControl projectControl = new ProjectControl(project, user,frmProjects);
                     pnlList[2].Controls.Add(projectControl);
                 }
                 else
                 {
-                    ProjectControl projectControl = new ProjectControl(project);
+                    ProjectControl projectControl = new ProjectControl(project, user, frmProjects);
                     pnlList[3].Controls.Add(projectControl);
                 }
             }

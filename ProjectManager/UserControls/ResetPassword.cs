@@ -39,7 +39,8 @@ namespace ProjectManager.UserControls
                     {
                         MessageBox.Show("Password Successfully Changed");
                         Clear();
-                        Events events = new Events(user.UserId,entry);
+                        entry.SetPanelSettings("Login");
+                        Events events = new Events(user,entry);
                         events.Show();
                         entry.Hide();
                     }

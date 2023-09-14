@@ -18,10 +18,9 @@ namespace ProjectManager
         static int currentYear = currentDt.Year;
         User user = new User();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-        public Calendar(int getUserId)
+        public Calendar(User recUser)
         {
-            user.UserId = getUserId;
-            user = genericUser.ReadById(user);
+            user = recUser;
             InitializeComponent();
         }
 

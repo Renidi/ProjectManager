@@ -17,9 +17,9 @@ namespace ProjectManager
         User user = new User();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
 
-        public UserSettings(int userId)
+        public UserSettings(User recUser)
         {
-            user.UserId = userId;
+            user = recUser;
             user = genericUser.ReadById(user);
 
             InitializeComponent();

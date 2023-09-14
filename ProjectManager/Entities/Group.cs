@@ -14,5 +14,6 @@ namespace ProjectManager.Entities
         public int GroupManagerId { get; set; }
         public string GroupDescription { get; set; }
         public DateTime GroupFormationDate { get; set; }
+        public string GroupStatus { get; set; }
     }
 }

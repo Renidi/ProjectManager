@@ -15,16 +15,16 @@ namespace ProjectManager.Forms
 {
     public partial class CreateTask : Form
     {
-        User user = new User();
+        User user;
         Task task = new Task();
         Log log = new Log();
         List<User> users = new List<User>();
         List<Project> projectList = new List<Project>();
         public int editTaskId = 0; 
-        public CreateTask(int userId,int taskId=0)
+        public CreateTask(User recUser,int taskId=0)
         {
             InitializeComponent();
-            user.UserId = userId;
+            user = recUser;
             GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
             user = genericUser.ReadById(user);
             editTaskId = taskId;

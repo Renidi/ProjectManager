@@ -41,12 +41,14 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblUserMail = new System.Windows.Forms.Label();
             this.cbPasswordOrSecret = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(514, 55);
+            this.label1.Location = new System.Drawing.Point(54, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
@@ -55,7 +57,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(523, 83);
+            this.label2.Location = new System.Drawing.Point(63, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 1;
@@ -65,7 +67,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(487, 150);
+            this.label3.Location = new System.Drawing.Point(49, 107);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(138, 20);
             this.label3.TabIndex = 2;
@@ -74,7 +76,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(458, 285);
+            this.label6.Location = new System.Drawing.Point(20, 242);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 13);
             this.label6.TabIndex = 19;
@@ -83,7 +85,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(458, 340);
+            this.label4.Location = new System.Drawing.Point(20, 297);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(116, 13);
             this.label4.TabIndex = 18;
@@ -97,7 +99,7 @@
             this.btnResetPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnResetPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnResetPassword.ForeColor = System.Drawing.Color.White;
-            this.btnResetPassword.Location = new System.Drawing.Point(461, 398);
+            this.btnResetPassword.Location = new System.Drawing.Point(23, 355);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(200, 45);
             this.btnResetPassword.TabIndex = 17;
@@ -115,7 +117,7 @@
             this.txNewPassword.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txNewPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txNewPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txNewPassword.Location = new System.Drawing.Point(461, 301);
+            this.txNewPassword.Location = new System.Drawing.Point(23, 258);
             this.txNewPassword.Name = "txNewPassword";
             this.txNewPassword.PasswordChar = '\0';
             this.txNewPassword.PlaceholderText = "";
@@ -134,7 +136,7 @@
             this.txNewPasswordSecond.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txNewPasswordSecond.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txNewPasswordSecond.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txNewPasswordSecond.Location = new System.Drawing.Point(461, 356);
+            this.txNewPasswordSecond.Location = new System.Drawing.Point(23, 313);
             this.txNewPasswordSecond.Name = "txNewPasswordSecond";
             this.txNewPasswordSecond.PasswordChar = '\0';
             this.txNewPasswordSecond.PlaceholderText = "";
@@ -153,7 +155,7 @@
             this.txCurrentPasswordOrSecretWord.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txCurrentPasswordOrSecretWord.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txCurrentPasswordOrSecretWord.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txCurrentPasswordOrSecretWord.Location = new System.Drawing.Point(461, 211);
+            this.txCurrentPasswordOrSecretWord.Location = new System.Drawing.Point(23, 168);
             this.txCurrentPasswordOrSecretWord.Name = "txCurrentPasswordOrSecretWord";
             this.txCurrentPasswordOrSecretWord.PasswordChar = '\0';
             this.txCurrentPasswordOrSecretWord.PlaceholderText = "";
@@ -164,7 +166,7 @@
             // lblPasswordOrSecretWord
             // 
             this.lblPasswordOrSecretWord.AutoSize = true;
-            this.lblPasswordOrSecretWord.Location = new System.Drawing.Point(458, 195);
+            this.lblPasswordOrSecretWord.Location = new System.Drawing.Point(20, 152);
             this.lblPasswordOrSecretWord.Name = "lblPasswordOrSecretWord";
             this.lblPasswordOrSecretWord.Size = new System.Drawing.Size(90, 13);
             this.lblPasswordOrSecretWord.TabIndex = 21;
@@ -173,7 +175,7 @@
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Location = new System.Drawing.Point(561, 55);
+            this.lblUserName.Location = new System.Drawing.Point(101, 20);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(35, 13);
             this.lblUserName.TabIndex = 22;
@@ -182,7 +184,7 @@
             // lblUserMail
             // 
             this.lblUserMail.AutoSize = true;
-            this.lblUserMail.Location = new System.Drawing.Point(561, 83);
+            this.lblUserMail.Location = new System.Drawing.Point(101, 48);
             this.lblUserMail.Name = "lblUserMail";
             this.lblUserMail.Size = new System.Drawing.Size(35, 13);
             this.lblUserMail.TabIndex = 23;
@@ -191,7 +193,7 @@
             // cbPasswordOrSecret
             // 
             this.cbPasswordOrSecret.AutoSize = true;
-            this.cbPasswordOrSecret.Location = new System.Drawing.Point(461, 253);
+            this.cbPasswordOrSecret.Location = new System.Drawing.Point(23, 210);
             this.cbPasswordOrSecret.Name = "cbPasswordOrSecret";
             this.cbPasswordOrSecret.Size = new System.Drawing.Size(108, 17);
             this.cbPasswordOrSecret.TabIndex = 33;
@@ -199,31 +201,40 @@
             this.cbPasswordOrSecret.UseVisualStyleBackColor = true;
             this.cbPasswordOrSecret.CheckedChanged += new System.EventHandler(this.cbPasswordOrSecret_CheckedChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnResetPassword);
+            this.panel1.Controls.Add(this.cbPasswordOrSecret);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.lblUserMail);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.lblUserName);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.lblPasswordOrSecretWord);
+            this.panel1.Controls.Add(this.txNewPasswordSecond);
+            this.panel1.Controls.Add(this.txCurrentPasswordOrSecretWord);
+            this.panel1.Controls.Add(this.txNewPassword);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Location = new System.Drawing.Point(505, 42);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(249, 422);
+            this.panel1.TabIndex = 34;
+            // 
             // UserSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.ClientSize = new System.Drawing.Size(1264, 512);
-            this.Controls.Add(this.cbPasswordOrSecret);
-            this.Controls.Add(this.lblUserMail);
-            this.Controls.Add(this.lblUserName);
-            this.Controls.Add(this.lblPasswordOrSecretWord);
-            this.Controls.Add(this.txCurrentPasswordOrSecretWord);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnResetPassword);
-            this.Controls.Add(this.txNewPassword);
-            this.Controls.Add(this.txNewPasswordSecond);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UserSettings";
             this.Text = "UserSettings";
             this.Load += new System.EventHandler(this.UserSettings_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -242,5 +253,6 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblUserMail;
         private System.Windows.Forms.CheckBox cbPasswordOrSecret;
+        private System.Windows.Forms.Panel panel1;
     }
 }

@@ -30,6 +30,7 @@ namespace ProjectManager
         {
             InitializeComponent();
             DoubleBuffered = true;
+            StartPosition = FormStartPosition.CenterScreen;
         }
         public void Entry_MouseMove(object sender, MouseEventArgs e)
         {

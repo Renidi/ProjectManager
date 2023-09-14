@@ -17,13 +17,13 @@ namespace ProjectManager
         User user = new User();
         Group group = new Group();
 
-        public Projects(int userId)
+        public Projects(User recUser)
         {
             InitializeComponent();
-            user.UserId = userId;
+            user = recUser;
             GenericSqlHelper<User> genericSqlHelper = new GenericSqlHelper<User>();
             user = genericSqlHelper.ReadById(user);
-            openChildForm(new RelatingProjects(userId));
+            openChildForm(new RelatingProjects(user,this));
         }
         private void Projects_Load(object sender, EventArgs e)
         {
@@ -53,13 +53,17 @@ namespace ProjectManager
 
         private void btnProject_Click(object sender, EventArgs e)
         {
-            openChildForm(new RelatingProjects(user.UserId));
+            openChildForm(new RelatingProjects(user, this));
         }
 
         private void btnNewProject_Click(object sender, EventArgs e)
         {
-            openChildForm(new CreateProject(user.UserId));
+            openChildForm(new CreateProject(user));
         }
 
+        internal void PerformEditProject(int projectId)
+        {
+            openChildForm(new CreateProject(user, projectId));
+        }
     }
 }

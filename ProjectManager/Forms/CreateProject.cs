@@ -24,13 +24,13 @@ namespace ProjectManager.Forms
         GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
 
-        public int varId;
-        public CreateProject(int userId)
+        public int editId;
+        public CreateProject(User recUser,int varEditId =0)
         {
             InitializeComponent();
-            user.UserId = userId;
-            
+            user = recUser;
             user = genericUser.ReadById(user);
+            editId = varEditId;
         }
         private void CreateProject_Load(object sender, EventArgs e)
         {
@@ -38,9 +38,7 @@ namespace ProjectManager.Forms
             dtProjectEndDate.Value = DateTime.Now;
             Group group = new Group();
 
-            Dt();
-
-            List<UserGroup> tempTeamList = genericUserGroup.ReadList(user);
+            List<UserGroup> tempTeamList = genericUserGroup.ReadList(user).Where(r => r.InviteStatus == "Accepted").ToList();
             for (int i = 0; i < tempTeamList.Count; i++)
             {
                 group.GroupId = tempTeamList[i].GroupId;
@@ -48,36 +46,12 @@ namespace ProjectManager.Forms
                 cmbTeam.Items.Add(group.GroupName);
                 cmbProjectTeamIdHidden.Items.Add(group.GroupId);
             }
+            lblStartEndDate.Text = dtProjectStartDate.Value.ToString("dd/MM/yyy") + " / " + dtProjectEndDate.Value.ToString("dd/MM/yy");
+            lblPriority.Text = cmbProjectPriority.Text;
+            lblProjectStatus.Text = cmbProjectStatus.Text;
+            btnEdit.Enabled = editId>0;
         }
-        private void dgvActiveProjects_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                project.ProjectId = Convert.ToInt32(dgvActiveProjects.SelectedRows[0].Cells[0].Value);
-                project = genericProject.ReadById(project);
-                txProjectName.Text = project.ProjectName;
-                cmbProjectStatus.SelectedItem = project.ProjectStatus;
-                cmbProjectPriority.SelectedItem = project.ProjectPriority;
-                dtProjectStartDate.Value = project.ProjectStartDate;
-                dtProjectEndDate.Value = project.ProjectEndDate;
-                txProjectComment.Text = project.ProjectDescription;
-                cmbProjectTeamIdHidden.SelectedItem = project.ProjectGroupId;
-            }
-            catch {  }
-        }
-        private void Dt()
-        {
-            
-            dgvActiveProjects.DataSource = genericProject.ReadTable(user);
-            
-            if (dgvActiveProjects.Columns["PROJECT GROUP"]!=null)
-                dgvActiveProjects.Columns["PROJECT GROUP"].DisplayIndex = 7;
-
-            for (int i = 1; i < dgvActiveProjects.Columns.Count; i++)
-            {
-                dgvActiveProjects.Columns[i].HeaderText = dgvActiveProjects.Columns[i].HeaderText.Replace('_', ' ');
-            }
-        }
+        
         void Clear()
         {
             void func(Control.ControlCollection controls)
@@ -109,14 +83,12 @@ namespace ProjectManager.Forms
                 DialogResult result = MessageBox.Show("Are you sure to add " + project.ProjectName, "Add Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    // sqlDbHelper.SaveProject(project) to 61
 
                     log.LogSource = "Project";
                     log.LogType = "Save";
                     log.LogDate = DateTime.Now;
                     log.LogUser = user.UserMail;
                     log.LogDescription = "Add Project " + project.ProjectName;
-                    //log.LogStatus = sqlHelper.NewProject(project).ToString();
                     GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
                     log.LogStatus = genericProject.Create(project).ToString();
 
@@ -124,7 +96,6 @@ namespace ProjectManager.Forms
                 }
                 else
                     MessageBox.Show("Cancelled");
-                Dt();
             }
             else
             {
@@ -141,7 +112,7 @@ namespace ProjectManager.Forms
                 project.ProjectPriority = cmbProjectPriority.Text;
                 project.ProjectEndDate = dtProjectEndDate.Value;
                 project.ProjectDescription = txProjectComment.Text;
-                project.ProjectId = varId;
+                project.ProjectId = editId;
                 project.ProjectGroupId = cmbProjectTeamIdHidden.Text != "" ? Convert.ToInt32(cmbProjectTeamIdHidden.Text) : -1;
 
                 DialogResult result = MessageBox.Show("Are you sure to edit " + project.ProjectName, "Edit Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -159,8 +130,6 @@ namespace ProjectManager.Forms
                 }
                 else
                     MessageBox.Show("Cancelled");
-
-                Dt();
             }
             else
             {
@@ -178,7 +147,7 @@ namespace ProjectManager.Forms
                 project.ProjectPriority = cmbProjectPriority.Text;
                 project.ProjectCreatorId = user.UserId;
                 project.ProjectEndDate = dtProjectEndDate.Value;
-                project.ProjectId = varId;
+                project.ProjectId = editId;
 
                 DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -194,8 +163,6 @@ namespace ProjectManager.Forms
                 }
                 else
                     MessageBox.Show("Cancelled");
-
-                Dt();
             }
             else
             {
@@ -211,11 +178,59 @@ namespace ProjectManager.Forms
         private void cmbTeam_SelectedValueChanged(object sender, EventArgs e)
         {
             cmbProjectTeamIdHidden.SelectedIndex = cmbTeam.SelectedIndex;
+            lblProjectTeam.Text = cmbTeam.Text;
+            if (cmbTeam.Text == "")
+                lblProjectTeam.Text = "Project Team";
         }
 
         private void cmbProjectTeamIdHidden_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbTeam.SelectedIndex = cmbProjectTeamIdHidden.SelectedIndex;
+        }
+
+        private void txProjectName_TextChanged(object sender, EventArgs e)
+        {
+            lblProjectName.Text = txProjectName.Text;
+            if (txProjectName.Text.Trim() == "")
+                lblProjectName.Text = "Project Name";
+        }
+
+        private void dtProjectStartDate_ValueChanged(object sender, EventArgs e)
+        {
+            lblStartEndDate.Text = dtProjectStartDate.Value.ToString("dd/MM/yyy") + " / " + dtProjectEndDate.Value.ToString("dd/MM/yy");
+        }
+
+        private void dtProjectEndDate_ValueChanged(object sender, EventArgs e)
+        {
+            lblStartEndDate.Text = dtProjectStartDate.Value.ToString("dd/MM/yyy") + " / " + dtProjectEndDate.Value.ToString("dd/MM/yy");
+        }
+
+        private void cmbProjectStatus_SelectedValueChanged(object sender, EventArgs e)
+        {
+            lblProjectStatus.Text = cmbProjectStatus.Text;
+        }
+
+        private void cmbProjectPriority_SelectedValueChanged(object sender, EventArgs e)
+        {
+            lblPriority.Text = cmbProjectPriority.Text;
+        }
+
+        private void txProjectComment_TextChanged(object sender, EventArgs e)
+        {
+            lblProjectDescription.Text = txProjectComment.Text;
+            if (txProjectComment.Text.Trim() == "")
+                lblProjectDescription.Text = "Project Description";
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+            cmbProjectTeamIdHidden.SelectedIndex = -1;
+            cmbTeam.SelectedIndex = -1;
+        }
+
+        private void pnlRight_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

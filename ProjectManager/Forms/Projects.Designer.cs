@@ -52,9 +52,9 @@
             // 
             this.pnlActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.pnlActive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlActive.Location = new System.Drawing.Point(133, 0);
+            this.pnlActive.Location = new System.Drawing.Point(135, 0);
             this.pnlActive.Name = "pnlActive";
-            this.pnlActive.Size = new System.Drawing.Size(1147, 551);
+            this.pnlActive.Size = new System.Drawing.Size(1145, 551);
             this.pnlActive.TabIndex = 44;
             // 
             // pnlControls
@@ -66,7 +66,7 @@
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
             this.pnlControls.Padding = new System.Windows.Forms.Padding(10, 30, 10, 0);
-            this.pnlControls.Size = new System.Drawing.Size(133, 551);
+            this.pnlControls.Size = new System.Drawing.Size(135, 551);
             this.pnlControls.TabIndex = 43;
             // 
             // btnNewProject
@@ -82,7 +82,7 @@
             this.btnNewProject.ForeColor = System.Drawing.Color.White;
             this.btnNewProject.Location = new System.Drawing.Point(10, 85);
             this.btnNewProject.Name = "btnNewProject";
-            this.btnNewProject.Size = new System.Drawing.Size(113, 53);
+            this.btnNewProject.Size = new System.Drawing.Size(115, 53);
             this.btnNewProject.TabIndex = 3;
             this.btnNewProject.Text = "New Project";
             this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
@@ -101,7 +101,7 @@
             this.btnProject.Location = new System.Drawing.Point(10, 30);
             this.btnProject.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
             this.btnProject.Name = "btnProject";
-            this.btnProject.Size = new System.Drawing.Size(113, 55);
+            this.btnProject.Size = new System.Drawing.Size(115, 55);
             this.btnProject.TabIndex = 2;
             this.btnProject.Text = "Projects";
             this.btnProject.Click += new System.EventHandler(this.btnProject_Click);
