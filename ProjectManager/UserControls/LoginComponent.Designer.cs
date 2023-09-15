@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class LoginCompanets
+    partial class LoginComponent
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

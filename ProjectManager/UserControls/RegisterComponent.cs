@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class Register : UserControl
+    public partial class RegisterComponent : UserControl
     {
-        Entry entry;
+        LoginPage entry;
         User user = new User();
         Log log = new Log();
-        public Register(Entry recieve)
+        public RegisterComponent(LoginPage recieve)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -54,11 +54,11 @@ namespace ProjectManager.UserControls
                     genericLog.Create(log);
 
                     Clear();
-                    MessageBox.Show("Registration Successful");
+                    MessageBox.Show("Registration Successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     entry.SetPanelSettings("Login");
                 }
                 else
-                    MessageBox.Show("Passwords do not match");
+                    MessageBox.Show("Passwords do not match", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {

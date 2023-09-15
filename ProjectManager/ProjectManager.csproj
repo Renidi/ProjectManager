@@ -340,11 +340,11 @@
     <Compile Include="Forms\CreateTask.Designer.cs">
       <DependentUpon>CreateTask.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PopupAddMembeer.cs">
+    <Compile Include="Forms\PopupAddMember.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PopupAddMembeer.Designer.cs">
-      <DependentUpon>PopupAddMembeer.cs</DependentUpon>
+    <Compile Include="Forms\PopupAddMember.Designer.cs">
+      <DependentUpon>PopupAddMember.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PopupCreateTeam.cs">
       <SubType>Form</SubType>
@@ -371,17 +371,17 @@
       <DependentUpon>RelatingTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="GenericSqlHelper.cs" />
-    <Compile Include="UserControls\Badge.cs">
+    <Compile Include="UserControls\TaskBadges.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\Badge.Designer.cs">
-      <DependentUpon>Badge.cs</DependentUpon>
+    <Compile Include="UserControls\TaskBadges.Designer.cs">
+      <DependentUpon>TaskBadges.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CardControl.cs">
+    <Compile Include="UserControls\LeapDayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\CardControl.Designer.cs">
-      <DependentUpon>CardControl.cs</DependentUpon>
+    <Compile Include="UserControls\LeapDayControl.Designer.cs">
+      <DependentUpon>LeapDayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DayControl.cs">
       <SubType>UserControl</SubType>
@@ -403,35 +403,35 @@
     <Compile Include="Forms\Projects.Designer.cs">
       <DependentUpon>Projects.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\LoginCompanets.cs">
+    <Compile Include="UserControls\LoginComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\LoginCompanets.Designer.cs">
-      <DependentUpon>LoginCompanets.cs</DependentUpon>
+    <Compile Include="UserControls\LoginComponent.Designer.cs">
+      <DependentUpon>LoginComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ProjectControl.cs">
+    <Compile Include="UserControls\ProjectCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ProjectControl.Designer.cs">
-      <DependentUpon>ProjectControl.cs</DependentUpon>
+    <Compile Include="UserControls\ProjectCard.Designer.cs">
+      <DependentUpon>ProjectCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Register.cs">
+    <Compile Include="UserControls\RegisterComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\Register.Designer.cs">
-      <DependentUpon>Register.cs</DependentUpon>
+    <Compile Include="UserControls\RegisterComponent.Designer.cs">
+      <DependentUpon>RegisterComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ForgotPassword.cs">
+    <Compile Include="UserControls\ForgotPasswordComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ForgotPassword.Designer.cs">
-      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    <Compile Include="UserControls\ForgotPasswordComponent.Designer.cs">
+      <DependentUpon>ForgotPasswordComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ResetPassword.cs">
+    <Compile Include="UserControls\ResetPasswordComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ResetPassword.Designer.cs">
-      <DependentUpon>ResetPassword.cs</DependentUpon>
+    <Compile Include="UserControls\ResetPasswordComponent.Designer.cs">
+      <DependentUpon>ResetPasswordComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TaskCard.cs">
       <SubType>UserControl</SubType>
@@ -439,17 +439,17 @@
     <Compile Include="UserControls\TaskCard.Designer.cs">
       <DependentUpon>TaskCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TeamControl.cs">
+    <Compile Include="UserControls\TeamCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\TeamControl.Designer.cs">
-      <DependentUpon>TeamControl.cs</DependentUpon>
+    <Compile Include="UserControls\TeamCard.Designer.cs">
+      <DependentUpon>TeamCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Entry.cs">
+    <Compile Include="Forms\LoginPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Entry.Designer.cs">
-      <DependentUpon>Entry.cs</DependentUpon>
+    <Compile Include="Forms\LoginPage.Designer.cs">
+      <DependentUpon>LoginPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -467,17 +467,17 @@
       <DependentUpon>Teams.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Forms\UserSettings.cs">
+    <Compile Include="Forms\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UserSettings.Designer.cs">
-      <DependentUpon>UserSettings.cs</DependentUpon>
+    <Compile Include="Forms\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UserControlTeams.cs">
+    <Compile Include="UserControls\UserTeamCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UserControlTeams.Designer.cs">
-      <DependentUpon>UserControlTeams.cs</DependentUpon>
+    <Compile Include="UserControls\UserTeamCard.Designer.cs">
+      <DependentUpon>UserTeamCard.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\Calendar.resx">
       <DependentUpon>Calendar.cs</DependentUpon>
@@ -488,8 +488,8 @@
     <EmbeddedResource Include="Forms\CreateTask.resx">
       <DependentUpon>CreateTask.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PopupAddMembeer.resx">
-      <DependentUpon>PopupAddMembeer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PopupAddMember.resx">
+      <DependentUpon>PopupAddMember.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PopupCreateTeam.resx">
       <DependentUpon>PopupCreateTeam.cs</DependentUpon>
@@ -503,11 +503,11 @@
     <EmbeddedResource Include="Forms\RelatingTasks.resx">
       <DependentUpon>RelatingTasks.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\Badge.resx">
-      <DependentUpon>Badge.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\TaskBadges.resx">
+      <DependentUpon>TaskBadges.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\CardControl.resx">
-      <DependentUpon>CardControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\LeapDayControl.resx">
+      <DependentUpon>LeapDayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DayControl.resx">
       <DependentUpon>DayControl.cs</DependentUpon>
@@ -515,32 +515,32 @@
     <EmbeddedResource Include="Forms\Events.resx">
       <DependentUpon>Events.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Entry.resx">
-      <DependentUpon>Entry.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\LoginPage.resx">
+      <DependentUpon>LoginPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Projects.resx">
       <DependentUpon>Projects.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\LoginCompanets.resx">
-      <DependentUpon>LoginCompanets.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\LoginComponent.resx">
+      <DependentUpon>LoginComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ProjectControl.resx">
-      <DependentUpon>ProjectControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\ProjectCard.resx">
+      <DependentUpon>ProjectCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\Register.resx">
-      <DependentUpon>Register.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\RegisterComponent.resx">
+      <DependentUpon>RegisterComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ForgotPassword.resx">
-      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\ForgotPasswordComponent.resx">
+      <DependentUpon>ForgotPasswordComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ResetPassword.resx">
-      <DependentUpon>ResetPassword.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\ResetPasswordComponent.resx">
+      <DependentUpon>ResetPasswordComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TaskCard.resx">
       <DependentUpon>TaskCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TeamControl.resx">
-      <DependentUpon>TeamControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\TeamCard.resx">
+      <DependentUpon>TeamCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -559,11 +559,11 @@
     <EmbeddedResource Include="Forms\Teams.resx">
       <DependentUpon>Teams.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserSettings.resx">
-      <DependentUpon>UserSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UserControlTeams.resx">
-      <DependentUpon>UserControlTeams.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\UserTeamCard.resx">
+      <DependentUpon>UserTeamCard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -589,9 +589,6 @@
     <None Include="Resources\graph.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\password-code.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\project-management.png" />
   </ItemGroup>
   <ItemGroup>
@@ -604,18 +601,14 @@
     <None Include="Resources\tasks.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\work-process.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\teamwork.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\check.png" />
     <Content Include="Resources\close.png" />
     <Content Include="Resources\email.png" />
-    <Content Include="Resources\userPic.png" />
-    <Content Include="Resources\wp3.jpeg" />
-    <None Include="Resources\check1.png" />
+    <Content Include="Resources\userBlack.png" />
+    <Content Include="Resources\loginSide.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

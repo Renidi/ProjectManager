@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ProjectManager.Entities
 {
     public class UserGroup
-    {
+    {    
         public int UserGroupId { get; set; }
         public int UserId { get; set; }
         public int GroupId { get; set; }
@@ -18,3 +18,4 @@ namespace ProjectManager.Entities
         public string InviteStatus { get; set; } // -Rejected -Accepted -Waiting
     }
 }
+ 

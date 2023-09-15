@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class Badge : UserControl
+    public partial class TaskBadges : UserControl
     {
-        public Badge(string badgeName)
+        public TaskBadges(string badgeName)
         {
             InitializeComponent();
             lblText.Text = badgeName;

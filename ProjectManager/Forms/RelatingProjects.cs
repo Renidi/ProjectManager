@@ -67,22 +67,22 @@ namespace ProjectManager.Forms
                 Project project = projectList[i];
                 if(project.ProjectStatus == statusList[0])
                 {
-                    ProjectControl projectControl = new ProjectControl(project,user,frmProjects);
+                    ProjectCard projectControl = new ProjectCard(project,user,frmProjects);
                     pnlList[0].Controls.Add(projectControl);
                 }
                 else if (project.ProjectStatus == statusList[1])
                 {
-                    ProjectControl projectControl = new ProjectControl(project, user,frmProjects);
+                    ProjectCard projectControl = new ProjectCard(project, user,frmProjects);
                     pnlList[1].Controls.Add(projectControl);
                 }
                 else if (project.ProjectStatus == statusList[2])
                 {
-                    ProjectControl projectControl = new ProjectControl(project, user,frmProjects);
+                    ProjectCard projectControl = new ProjectCard(project, user,frmProjects);
                     pnlList[2].Controls.Add(projectControl);
                 }
                 else
                 {
-                    ProjectControl projectControl = new ProjectControl(project, user, frmProjects);
+                    ProjectCard projectControl = new ProjectCard(project, user, frmProjects);
                     pnlList[3].Controls.Add(projectControl);
                 }
             }

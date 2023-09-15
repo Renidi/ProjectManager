@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager
 {
-    partial class UserSettings
+    partial class Settings
     {
         /// <summary>
         /// Required designer variable.
@@ -93,10 +93,13 @@
             // 
             // btnResetPassword
             // 
+            this.btnResetPassword.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
+            this.btnResetPassword.BorderRadius = 15;
             this.btnResetPassword.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnResetPassword.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnResetPassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnResetPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnResetPassword.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.btnResetPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnResetPassword.ForeColor = System.Drawing.Color.White;
             this.btnResetPassword.Location = new System.Drawing.Point(23, 355);
@@ -221,7 +224,7 @@
             this.panel1.Size = new System.Drawing.Size(249, 422);
             this.panel1.TabIndex = 34;
             // 
-            // UserSettings
+            // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,7 +232,7 @@
             this.ClientSize = new System.Drawing.Size(1264, 512);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "UserSettings";
+            this.Name = "Settings";
             this.Text = "UserSettings";
             this.Load += new System.EventHandler(this.UserSettings_Load);
             this.panel1.ResumeLayout(false);

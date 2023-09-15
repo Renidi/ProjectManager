@@ -279,7 +279,7 @@ namespace ProjectManager
 
                 foreach (PropertyInfo property in properties)
                 {
-                    if (property != keyProperty)
+                    if (property != keyProperty && property.GetValue(t) !=null && ( property.PropertyType != typeof(DateTime) || (DateTime)property.GetValue(t) != DateTime.MinValue ))
                     {
                         string propName = ConvertPropName(property.Name);
                         sql += propName + "=@" + propName + ", ";
@@ -297,7 +297,7 @@ namespace ProjectManager
                     {
                         foreach (PropertyInfo property in properties)
                         {
-                            if (property != keyProperty)
+                            if (property != keyProperty && property.GetValue(t) != null && (property.PropertyType != typeof(DateTime) || (DateTime)property.GetValue(t) != DateTime.MinValue))
                             {
                                 object value = property.GetValue(t);
                                 cmd.Parameters.AddWithValue("@" + ConvertPropName(property.Name), value ?? DBNull.Value);

@@ -32,7 +32,7 @@ namespace ProjectManager.Forms
 
         private void btnCreateTeam_Click(object sender, EventArgs e)
         {
-            if(group.GroupName != "")
+            if(txGroupName.Text != "")
             {
                 group.GroupName = txGroupName.Text;
                 group.GroupFounderId = user.UserId;
@@ -46,7 +46,7 @@ namespace ProjectManager.Forms
             }
             else
             {
-                MessageBox.Show("Please enter team name");
+                MessageBox.Show("Please enter team name", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

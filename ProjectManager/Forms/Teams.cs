@@ -47,11 +47,11 @@ namespace ProjectManager
             {
                 if (inGroup.UserGroupAuthorization>0)
                 {
-                    TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
+                    TeamCard teamControl = new TeamCard(inGroup, this, user.UserId);
                     pnlTeams.Controls.Add(teamControl);
                 }else if(inGroup.InviteStatus == "Waiting")
                 {
-                    TeamControl teamControl = new TeamControl(inGroup, this, user.UserId);
+                    TeamCard teamControl = new TeamCard(inGroup, this, user.UserId);
                     pnlRequests.Controls.Add(teamControl);
                 }
                 
@@ -59,10 +59,9 @@ namespace ProjectManager
             pnlTeams.AutoScroll = true;
         }
         
-        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo,int authUserId,TeamControl teamC)
+        public void DisplayTeamUsers(List<User> userList,List<UserGroup> userGroupInfo,int authUserId,TeamCard teamC)
         {
             pnlMemebers.Controls.Clear();
-            pnlRequests.Controls.Clear();
             pnlMemebers.AutoScroll = false;
             User newUser;
             UserGroup newUserGroup = new UserGroup();
@@ -77,7 +76,7 @@ namespace ProjectManager
                         break;
                     }
                 }
-                UserControlTeams userControlTeams = new UserControlTeams(newUserGroup,newUser,authUserId,teamC);
+                UserTeamCard userControlTeams = new UserTeamCard(newUserGroup,newUser,authUserId,teamC);
                 pnlMemebers.Controls.Add(userControlTeams);
             }
             pnlMemebers.AutoScroll=true;
@@ -97,7 +96,7 @@ namespace ProjectManager
 
         private void btnAddMember_Click(object sender, EventArgs e)
         {
-            Form popUpInviteMember = new PopupAddMembeer(user,groups);
+            Form popUpInviteMember = new PopupAddMember(user,groups);
             popUpInviteMember.ShowDialog();
         }
         public void enableConclusion(int groupID)
@@ -121,12 +120,12 @@ namespace ProjectManager
             userGroupInfo.InviteStatus = "Accepted";
             if (genericUserGroup.Update(userGroupInfo))
             {
-                MessageBox.Show("Joined Team");
+                MessageBox.Show("Joined Team", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             else
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             DisplayTeams();
         }
@@ -138,9 +137,9 @@ namespace ProjectManager
             userGroupInfo.ProcessDate = DateTime.Now;
             userGroupInfo.InviteStatus = "Rejected";
             if (genericUserGroup.Update(userGroupInfo))
-                MessageBox.Show("Rejected Invite");
+                MessageBox.Show("Rejected Invite", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-                MessageBox.Show("Error");
+                MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             DisplayTeams();
         }
 

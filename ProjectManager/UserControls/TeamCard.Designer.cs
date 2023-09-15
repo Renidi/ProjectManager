@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.Forms
 {
-    partial class TeamControl
+    partial class TeamCard
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamCard));
             this.pnlMain = new System.Windows.Forms.Panel();
             this.lblDescription = new System.Windows.Forms.Label();
             this.pnlBottom = new System.Windows.Forms.Panel();

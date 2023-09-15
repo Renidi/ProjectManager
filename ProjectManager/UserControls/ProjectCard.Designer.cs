@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class ProjectControl
+    partial class ProjectCard
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectCard));
             this.pnlMainProject = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblProjectDescription = new System.Windows.Forms.Label();
@@ -199,14 +199,14 @@
             this.lblStartEndDate.Text = "TarihTarih xx/ Tarih Tarih xx";
             this.lblStartEndDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // ProjectControl
+            // ProjectCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
             this.Controls.Add(this.pnlMainProject);
             this.Margin = new System.Windows.Forms.Padding(7);
-            this.Name = "ProjectControl";
+            this.Name = "ProjectCard";
             this.Size = new System.Drawing.Size(357, 279);
             this.pnlMainProject.ResumeLayout(false);
             this.panel5.ResumeLayout(false);

@@ -38,7 +38,7 @@ namespace ProjectManager
             
             for(int i = 1; i < dayOfWeek ; i++)
             {
-                CardControl cardControl = new CardControl();
+                LeapDayControl cardControl = new LeapDayControl();
                 flContainer.Controls.Add(cardControl);
             }
             for (int i = 1;i <= days ; i++)

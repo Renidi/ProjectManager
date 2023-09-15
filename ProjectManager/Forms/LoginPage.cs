@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ProjectManager
 {
-    public partial class Entry : Form
+    public partial class LoginPage : Form
     {
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
@@ -26,7 +26,7 @@ namespace ProjectManager
             ReleaseCapture();
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
         }
-        public Entry()
+        public LoginPage()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -48,19 +48,19 @@ namespace ProjectManager
             switch (panelMod)
             {
                 case "Login": // Login
-                    LoginCompanets loginCompanets = new LoginCompanets(this);
+                    LoginComponent loginCompanets = new LoginComponent(this);
                     panelMain.Controls.Add(loginCompanets);
                     break;
                 case "ResetPassword": // Reset Password
-                    ResetPassword resetPassword = new ResetPassword(this,user);
+                    ResetPasswordComponent resetPassword = new ResetPasswordComponent(this,user);
                     panelMain.Controls.Add(resetPassword);
                     break;
                 case "Reset": // Reset password with secret word
-                    ForgotPassword forgotPassword = new ForgotPassword(this);
+                    ForgotPasswordComponent forgotPassword = new ForgotPasswordComponent(this);
                     panelMain.Controls.Add(forgotPassword);
                     break;
                 case "Register": // Register
-                    Register registerControl = new Register(this);
+                    RegisterComponent registerControl = new RegisterComponent(this);
                     panelMain.Controls.Add(registerControl);
                     break;
                 default:

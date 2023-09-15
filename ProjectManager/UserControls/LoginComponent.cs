@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class LoginCompanets : UserControl
+    public partial class LoginComponent : UserControl
     {
-        Entry entry = new Entry();
+        LoginPage entry = new LoginPage();
         User user = new User();
         Log log = new Log();
-        public LoginCompanets(Entry recieve)
+        public LoginComponent(LoginPage recieve)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -86,7 +86,7 @@ namespace ProjectManager.UserControls
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password.");
+                    MessageBox.Show("Invalid username or password.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else

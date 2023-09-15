@@ -1,4 +1,5 @@
-﻿using ProjectManager.Forms;
+﻿using ProjectManager.Entities;
+using ProjectManager.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,24 +12,31 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class ProjectControl : UserControl
+    public partial class ProjectCard : UserControl
     {
         User user;
         Projects frmProjects;
         Project project;
+        Group group;
         GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+        GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
         
-        public ProjectControl(Project recProject,User recUser,Projects recProjects)
+        public ProjectCard(Project recProject,User recUser,Projects recProjects)
         {
             InitializeComponent();
             user = recUser; 
             project = recProject;
             frmProjects = recProjects;
+            group = new Group() { GroupId = project.ProjectGroupId };
+            group = genericGroup.ReadById(group);
             lblProjectName.Text = project.ProjectName;
             lblProjectDescription.Text = project.ProjectDescription;
             lblProjectDescription.MaximumSize = new Size(240, 0);
             lblProjectDescription.AutoSize = true;
+            lblProjectTeam.Text = group.GroupName != null ? group.GroupName : "No Group";
+            lblPriority.Text = project.ProjectPriority;
+            lblProjectStatus.Text = project.ProjectStatus;
 
             lblStartEndDate.Text = project.ProjectStartDate.ToString("dd/MM/yyyy") + " / " + project.ProjectEndDate.ToString("dd/MM/yyyy");
             Width = Math.Max(lblProjectName.Width, lblProjectDescription.Width)>245 ? Math.Max(lblProjectName.Width, lblProjectDescription.Width) : 245;
@@ -58,7 +66,7 @@ namespace ProjectManager.UserControls
                 this.Parent.Controls.Remove(this);
             }
             else
-                MessageBox.Show("Cancelled");
+                MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void menuEdit_Click(object sender, EventArgs e)

@@ -42,8 +42,8 @@ namespace ProjectManager
         User user = new User();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-        Entry entry;
-        public Events(User recUser,Entry ent=null)
+        LoginPage entry;
+        public Events(User recUser,LoginPage ent=null)
         {
             user = recUser;
             InitializeComponent();
@@ -135,7 +135,7 @@ namespace ProjectManager
 
         private void pbSettings_Click(object sender, EventArgs e)
         {
-            openChildForm(new UserSettings(user));
+            openChildForm(new Settings(user));
             ActiveSection(pbSettings);
         }
         

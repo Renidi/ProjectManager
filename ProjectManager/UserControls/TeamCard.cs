@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProjectManager.Forms
 {
-    public partial class TeamControl : UserControl
+    public partial class TeamCard : UserControl
     {
         Project project = new Project();
         User user = new User();
@@ -23,7 +23,7 @@ namespace ProjectManager.Forms
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         private Teams teams;
-        public TeamControl(UserGroup x, Teams formTeams,int userId)
+        public TeamCard(UserGroup x, Teams formTeams,int userId)
         {
             InitializeComponent();
             userGroup = x;
@@ -145,7 +145,7 @@ namespace ProjectManager.Forms
             }
             else
             {
-                MessageBox.Show("Cancelled");
+                MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -167,17 +167,17 @@ namespace ProjectManager.Forms
                 userGroupInfo.InviteStatus = "Left";
                 if (genericUserGroup.Update(userGroupInfo))
                 {
-                    MessageBox.Show("Ok");
+                    MessageBox.Show("You have left the team", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     refreshTeamUsers(0);
                 }
                 else
                 {
-                    MessageBox.Show("Error");
+                    MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Cancelled");
+                MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

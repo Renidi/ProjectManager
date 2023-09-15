@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class Register
+    partial class RegisterComponent
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

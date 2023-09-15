@@ -35,12 +35,12 @@ namespace ProjectManager.Forms
             group.GroupDescription = txGroupDescription.Text;
             if (genericGroup.Update(group))
             {
-                MessageBox.Show("Team info updated");
+                MessageBox.Show("Team info updated", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 teams.DisplayTeams();
                 this.Close();
             }
             else
-                MessageBox.Show("Something went wrong");
+                MessageBox.Show("Something went wrong", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
 

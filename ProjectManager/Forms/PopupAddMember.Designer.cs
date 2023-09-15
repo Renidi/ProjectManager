@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.Forms
 {
-    partial class PopupAddMembeer
+    partial class PopupAddMember
     {
         /// <summary>
         /// Required designer variable.
@@ -97,6 +97,7 @@
             this.btnInvite.TabIndex = 12;
             this.btnInvite.Text = "Invite";
             this.btnInvite.UseVisualStyleBackColor = true;
+            this.btnInvite.Click += new System.EventHandler(this.btnInvite_Click);
             // 
             // label2
             // 
@@ -131,7 +132,7 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Team";
             // 
-            // PopupAddMembeer
+            // PopupAddMember
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -140,7 +141,7 @@
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "PopupAddMembeer";
+            this.Name = "PopupAddMember";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.Text = "PopupAddMembeer";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PopupAddMembeer_MouseDown);

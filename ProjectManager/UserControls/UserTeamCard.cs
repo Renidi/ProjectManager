@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class UserControlTeams : UserControl
+    public partial class UserTeamCard : UserControl
     {
         User user = new User();
         User authUser = new User();
@@ -21,8 +21,8 @@ namespace ProjectManager.UserControls
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-        TeamControl teamControl;
-        public UserControlTeams(UserGroup userGroups,User users,int authUserId,TeamControl teamC) // auth level must to be loginned user
+        TeamCard teamControl;
+        public UserTeamCard(UserGroup userGroups,User users,int authUserId,TeamCard teamC) // auth level must to be loginned user
         {
             InitializeComponent();
             userGroup = userGroups;
@@ -65,7 +65,7 @@ namespace ProjectManager.UserControls
             authUserGroup = genericUserGroup.ReadById(authUserGroup);
             if (cmbAuth.SelectedIndex != userGroup.UserGroupAuthorization && authUserGroup.UserGroupAuthorization > 1)
             {
-                DialogResult dialog = MessageBox.Show("R u sure ?","Title", MessageBoxButtons.YesNo);
+                DialogResult dialog = MessageBox.Show("Are you sure you want to change this member's role?","Role Change Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (DialogResult.Yes == dialog)
                 {
                     userGroup.UserGroupAuthorization = cmbAuth.SelectedIndex;
@@ -97,7 +97,7 @@ namespace ProjectManager.UserControls
                     }
                     else
                     {
-                        MessageBox.Show("Something went wrong", "Error", MessageBoxButtons.OK);
+                        MessageBox.Show("Something went wrong", "Error", MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     }
                     teamControl.refreshTeamUsers(1);
                 }

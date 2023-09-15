@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class ResetPassword
+    partial class ResetPasswordComponent
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

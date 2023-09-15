@@ -53,7 +53,7 @@ namespace ProjectManager.UserControls
                 
                 foreach (string badgeName in badgeNames)
                 {
-                    Badge badgeControl = new Badge(badgeName);
+                    TaskBadges badgeControl = new TaskBadges(badgeName);
                     pnlTop.Controls.Add(badgeControl);
                     if(xPosition+badgeControl.Width + badgeSpacing > panelWidth)
                     {
@@ -115,7 +115,7 @@ namespace ProjectManager.UserControls
                 this.Parent.Controls.Remove(this);
             }
             else
-                MessageBox.Show("Cancelled");
+                MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             
         }
         private string ConvertToTagName(string input)

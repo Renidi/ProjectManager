@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ProjectManager
 {
-    public partial class CardControl : UserControl
+    public partial class LeapDayControl : UserControl
     {
-        public CardControl()
+        public LeapDayControl()
         {
             InitializeComponent();
         }

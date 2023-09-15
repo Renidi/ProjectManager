@@ -34,7 +34,8 @@ namespace ProjectManager.Forms
         {
             dtTaskEndDate.Value = DateTime.Now;
             dtTaskStartDate.Value = DateTime.Now;
-
+            cmbTaskEmployee.Items.Add(user.UserMail);
+            users.Add(user);
             GenericSqlHelper<Project> genericSqlProject = new GenericSqlHelper<Project>();
             projectList = genericSqlProject.ReadList(user);
 
@@ -175,14 +176,14 @@ namespace ProjectManager.Forms
             else
             {
                 if (txTaskName.Text == "")
-                    MessageBox.Show("Task name field cannot be left blank");
+                    MessageBox.Show("Task name field cannot be left blank","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 else if (cmbTaskProject.SelectedIndex == -1)
-                    MessageBox.Show("Task project is not selected");
+                    MessageBox.Show("Task project is not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 
                 else if (cmbTaskEmployee.SelectedIndex == -1)
-                    MessageBox.Show("Task owner not selected");
+                    MessageBox.Show("Task owner not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
-                    MessageBox.Show("Error");
+                    MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void btnEdit_Click(object sender, EventArgs e)
@@ -214,20 +215,20 @@ namespace ProjectManager.Forms
                     genericLog.Create(log);
                 }
                 else
-                    MessageBox.Show("Cancelled");
+                    MessageBox.Show("Cancelled","Warning",MessageBoxButtons.OK);
 
                 Dt();
             }
             else
             {
                 if (txTaskName.Text == "")
-                    MessageBox.Show("Task name field cannot be left blank");
+                    MessageBox.Show("Task name field cannot be left blank","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else if (cmbTaskProject.SelectedIndex == -1)
-                    MessageBox.Show("Task project is not selected");
+                    MessageBox.Show("Task project is not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else if (cmbTaskEmployee.SelectedIndex == -1)
-                    MessageBox.Show("Task owner not selected");
+                    MessageBox.Show("Task owner not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
-                    MessageBox.Show("Error");
+                    MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
         }
@@ -251,12 +252,12 @@ namespace ProjectManager.Forms
                     genericLog.Create(log);
                 }
                 else
-                    MessageBox.Show("Cancelled");
+                    MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Dt();
             }
             else
             {
-                MessageBox.Show("Select Task First");
+                MessageBox.Show("Select Task First", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
         }
@@ -292,7 +293,7 @@ namespace ProjectManager.Forms
             GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
             Group groupInfo = new Group() { GroupId = projectList[cmbTaskProject.SelectedIndex].ProjectGroupId };
             groupInfo = genericGroup.ReadById(groupInfo);
-            if (groupInfo != null)
+            if (groupInfo.GroupId != 0)
             {
                 cmbTaskTeam.Items.Add(groupInfo.GroupName);
                 cmbTaskTeam.SelectedIndex = 0;
@@ -305,6 +306,7 @@ namespace ProjectManager.Forms
             }
             else
                 cmbTaskEmployee.Items.Add(user.UserMail);
+                users.Add(user);
         }
 
     }

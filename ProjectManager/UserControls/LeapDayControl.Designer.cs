@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager
 {
-    partial class CardControl
+    partial class LeapDayControl
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

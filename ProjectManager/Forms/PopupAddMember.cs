@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ProjectManager.Forms
 {
-    public partial class PopupAddMembeer : Form
+    public partial class PopupAddMember : Form
     {
         Group group = new Group();
         List<UserGroup> userGroups = new List<UserGroup>();
@@ -21,7 +21,7 @@ namespace ProjectManager.Forms
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<UserGroup> genericUserGroup = new GenericSqlHelper<UserGroup>();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-        public PopupAddMembeer(User recUser,List<UserGroup> list)
+        public PopupAddMember(User recUser,List<UserGroup> list)
         {
             user = recUser;
             InitializeComponent();
@@ -60,7 +60,7 @@ namespace ProjectManager.Forms
                     {
                         if(userGroup.InviteStatus == "Accepted")
                         {
-                            MessageBox.Show("User already in this team");
+                            MessageBox.Show("User already in this team", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
@@ -68,10 +68,11 @@ namespace ProjectManager.Forms
                             userGroup.UserGroupAuthorization = 0;
                             userGroup.InviteDate = DateTime.Now;
                             userGroup.InviteSenderId = user.UserId;
-                            if (genericUserGroup.Update(userGroup))
-                                MessageBox.Show("User has been successfully invited");
+
+                            if (genericUserGroup.Update(userGroup)) // !!! probelm grup ekleme
+                                MessageBox.Show("User has been successfully invited", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             else
-                                MessageBox.Show("Error");
+                                MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
@@ -86,26 +87,26 @@ namespace ProjectManager.Forms
                             InviteStatus = "Waiting"
                         };
                         if (genericUserGroup.Create(userGroup))
-                            MessageBox.Show("User has been successfully invited");
+                            MessageBox.Show("User has been successfully invited", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         else
-                            MessageBox.Show("Error");
+                            MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     
                 }
                 else
                 {
-                    MessageBox.Show("There is no user with this mail");
+                    MessageBox.Show("There is no user with this mail", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                if(cmbTeams.SelectedIndex != -1)
+                if(cmbTeams.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Please select the team you want to invite member");
+                    MessageBox.Show("Please select the team you want to invite member", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    MessageBox.Show("Pleas enter the mail of the member you want to invite");
+                    MessageBox.Show("Pleas enter the mail of the member you want to invite", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             
@@ -129,5 +130,6 @@ namespace ProjectManager.Forms
         {
             PopupAddMembeer_MouseDown(sender, e);
         }
+
     }
 }

@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class ResetPassword : UserControl
+    public partial class ResetPasswordComponent : UserControl
     {
-        Entry entry;
+        LoginPage entry;
         User user = new User();
-        public ResetPassword(Entry recieve,User recUser)
+        public ResetPasswordComponent(LoginPage recieve,User recUser)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -37,7 +37,7 @@ namespace ProjectManager.UserControls
                     GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
                     if (genericUser.Update(user))
                     {
-                        MessageBox.Show("Password Successfully Changed");
+                        MessageBox.Show("Password Successfully Changed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Clear();
                         entry.SetPanelSettings("Login");
                         Events events = new Events(user,entry);
@@ -48,7 +48,7 @@ namespace ProjectManager.UserControls
                 }
                 else
                 {
-                    MessageBox.Show("Passwords do not match");
+                    MessageBox.Show("Passwords do not match", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else

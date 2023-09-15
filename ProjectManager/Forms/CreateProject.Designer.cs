@@ -49,7 +49,7 @@
             this.btnEdit = new Guna.UI2.WinForms.Guna2Button();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.pnlMainProject = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlProjectBottom = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblProjectTeam = new System.Windows.Forms.Label();
             this.lblPriority = new System.Windows.Forms.Label();
@@ -64,7 +64,7 @@
             this.pnlBottom.SuspendLayout();
             this.pnlRight.SuspendLayout();
             this.pnlMainProject.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.pnlProjectBottom.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnlLeft.SuspendLayout();
@@ -362,7 +362,7 @@
             // pnlMainProject
             // 
             this.pnlMainProject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(155)))), ((int)(((byte)(135)))));
-            this.pnlMainProject.Controls.Add(this.panel2);
+            this.pnlMainProject.Controls.Add(this.pnlProjectBottom);
             this.pnlMainProject.Controls.Add(this.lblProjectDescription);
             this.pnlMainProject.Controls.Add(this.lblProjectName);
             this.pnlMainProject.Location = new System.Drawing.Point(82, 129);
@@ -370,15 +370,15 @@
             this.pnlMainProject.Size = new System.Drawing.Size(345, 179);
             this.pnlMainProject.TabIndex = 6;
             // 
-            // panel2
+            // pnlProjectBottom
             // 
-            this.panel2.Controls.Add(this.panel4);
-            this.panel2.Controls.Add(this.panel3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 113);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(345, 66);
-            this.panel2.TabIndex = 8;
+            this.pnlProjectBottom.Controls.Add(this.panel4);
+            this.pnlProjectBottom.Controls.Add(this.panel3);
+            this.pnlProjectBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlProjectBottom.Location = new System.Drawing.Point(0, 113);
+            this.pnlProjectBottom.Name = "pnlProjectBottom";
+            this.pnlProjectBottom.Size = new System.Drawing.Size(345, 66);
+            this.pnlProjectBottom.TabIndex = 8;
             // 
             // panel4
             // 
@@ -521,6 +521,7 @@
             this.txProjectComment.TabIndex = 104;
             this.txProjectComment.Text = "";
             this.txProjectComment.TextChanged += new System.EventHandler(this.txProjectComment_TextChanged);
+            this.txProjectComment.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txProjectComment_KeyPress);
             // 
             // CreateProject
             // 
@@ -539,7 +540,7 @@
             this.pnlRight.ResumeLayout(false);
             this.pnlMainProject.ResumeLayout(false);
             this.pnlMainProject.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.pnlProjectBottom.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.pnlLeft.ResumeLayout(false);
@@ -573,7 +574,7 @@
         private System.Windows.Forms.RichTextBox txProjectComment;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
         private System.Windows.Forms.Panel pnlMainProject;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlProjectBottom;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label lblProjectTeam;
         private System.Windows.Forms.Label lblPriority;

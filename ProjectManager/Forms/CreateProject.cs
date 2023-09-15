@@ -50,6 +50,18 @@ namespace ProjectManager.Forms
             lblPriority.Text = cmbProjectPriority.Text;
             lblProjectStatus.Text = cmbProjectStatus.Text;
             btnEdit.Enabled = editId>0;
+            if (editId > 0)
+            {
+                project = new Project() { ProjectId = editId};
+                project = genericProject.ReadById(project);
+                txProjectName.Text = project.ProjectName;
+                txProjectComment.Text = project.ProjectDescription;
+                dtProjectStartDate.Value = project.ProjectStartDate;
+                dtProjectEndDate.Value = project.ProjectEndDate;
+                cmbProjectStatus.SelectedItem = project.ProjectStatus;
+                cmbProjectPriority.SelectedItem = project.ProjectPriority;
+                cmbProjectTeamIdHidden.SelectedItem = project.ProjectGroupId> 0 ? project.ProjectGroupId : -1;
+            }
         }
         
         void Clear()
@@ -95,7 +107,7 @@ namespace ProjectManager.Forms
                     genericLog.Create(log);
                 }
                 else
-                    MessageBox.Show("Cancelled");
+                    MessageBox.Show("Cancelled", "Cancel" , MessageBoxButtons.OK);
             }
             else
             {
@@ -129,7 +141,7 @@ namespace ProjectManager.Forms
                     genericLog.Create(log);
                 }
                 else
-                    MessageBox.Show("Cancelled");
+                    MessageBox.Show("Cancelled", "Cancel", MessageBoxButtons.OK);
             }
             else
             {
@@ -162,11 +174,11 @@ namespace ProjectManager.Forms
 
                 }
                 else
-                    MessageBox.Show("Cancelled");
+                    MessageBox.Show("Cancelled", "Cancel", MessageBoxButtons.OK);
             }
             else
             {
-                MessageBox.Show("Select Project First");
+                MessageBox.Show("Select Project First","Warning",MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -220,6 +232,9 @@ namespace ProjectManager.Forms
             lblProjectDescription.Text = txProjectComment.Text;
             if (txProjectComment.Text.Trim() == "")
                 lblProjectDescription.Text = "Project Description";
+
+            pnlMainProject.Height = (lblProjectName.Height + lblProjectDescription.Height + pnlProjectBottom.Height) > 180 ? (lblProjectName.Height + lblProjectDescription.Height + pnlProjectBottom.Height) : 180;
+            pnlMainProject.Height = pnlMainProject.Height > 366 ? 366 : pnlMainProject.Height;
         }
 
         private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
@@ -228,9 +243,11 @@ namespace ProjectManager.Forms
             cmbTeam.SelectedIndex = -1;
         }
 
-        private void pnlRight_Paint(object sender, PaintEventArgs e)
+        private void txProjectComment_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            int maxLength = 500;
+            if(txProjectComment.Text.Length > maxLength)
+                e.Handled = true;
         }
     }
 }

@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace ProjectManager
 {
-    public partial class UserSettings : Form
+    public partial class Settings : Form
     {
 
         User user = new User();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
 
-        public UserSettings(User recUser)
+        public Settings(User recUser)
         {
             user = recUser;
             user = genericUser.ReadById(user);
@@ -59,12 +59,12 @@ namespace ProjectManager
                         {
                             user.UserPassword = txNewPassword.Text;
                             genericUser.Update(user);
-                            MessageBox.Show("Password Successfully Changed");
+                            MessageBox.Show("Password Successfully Changed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Clear();
                         }
                         else
                         {
-                            MessageBox.Show("Invalid Password");
+                            MessageBox.Show("Invalid Password", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
@@ -75,19 +75,19 @@ namespace ProjectManager
                         {
                             user.UserPassword = txNewPassword.Text;
                             genericUser.Update(user);
-                            MessageBox.Show("Password Successfully Changed");
+                            MessageBox.Show("Password Successfully Changed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Clear();
                         }
                         else
                         {
-                            MessageBox.Show("Invalid Secret Word");
+                            MessageBox.Show("Invalid Secret Word", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                    
                 }
                 else
                 {
-                    MessageBox.Show("Passwords do not match");
+                    MessageBox.Show("Passwords do not match", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else

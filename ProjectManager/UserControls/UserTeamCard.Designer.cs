@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class UserControlTeams
+    partial class UserTeamCard
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

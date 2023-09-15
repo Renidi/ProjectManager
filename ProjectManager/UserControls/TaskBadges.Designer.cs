@@ -1,6 +1,6 @@
 ﻿namespace ProjectManager.UserControls
 {
-    partial class Badge
+    partial class TaskBadges
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.

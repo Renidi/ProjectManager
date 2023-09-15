@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace ProjectManager.UserControls
 {
-    public partial class ForgotPassword : UserControl
+    public partial class ForgotPasswordComponent : UserControl
     {
-        Entry entry = new Entry();
+        LoginPage entry = new LoginPage();
         User user = new User();
-        public ForgotPassword(Entry recieve)
+        public ForgotPasswordComponent(LoginPage recieve)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -46,7 +46,7 @@ namespace ProjectManager.UserControls
                 }
                 else
                 {
-                    MessageBox.Show("Wrong Info");
+                    MessageBox.Show("Wrong Info", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
