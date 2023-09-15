@@ -75,7 +75,7 @@
             this.cmbAuth.TabIndex = 5;
             this.cmbAuth.SelectedIndexChanged += new System.EventHandler(this.cmbAuth_SelectedIndexChanged);
             // 
-            // UserControlTeams
+            // UserTeamCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,7 +83,7 @@
             this.Controls.Add(this.lblMail);
             this.Controls.Add(this.lblAuth);
             this.Controls.Add(this.lblFullName);
-            this.Name = "UserControlTeams";
+            this.Name = "UserTeamCard";
             this.Size = new System.Drawing.Size(446, 40);
             this.Load += new System.EventHandler(this.UserControlTeams_Load);
             this.ResumeLayout(false);

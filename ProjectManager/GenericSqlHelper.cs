@@ -80,12 +80,9 @@ namespace ProjectManager
 
                 }
                 return true;
-
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
             return false;
         }
@@ -133,10 +130,7 @@ namespace ProjectManager
             string sql = "SELECT * FROM [" + tableName + "] WHERE " + ConvertPropName(properties[0].Name) + "=@" + ConvertPropName(properties[0].Name);
             if ((int)properties[0].GetValue(t) == 0) // üye id si yoksa mail ve secret word check yapılır
             {
-                if(tableName == "USER")
-                    sql = "SELECT * FROM [" + tableName + "] WHERE USER_MAIL=@USER_MAIL AND USER_SECRET_WORD=@USER_SECRET_WORD";
-                else
-                    sql = "SELECT * FROM [" + tableName + "] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID";
+                sql = tableName == "USER" ? "SELECT * FROM [" + tableName + "] WHERE USER_MAIL=@USER_MAIL AND USER_SECRET_WORD=@USER_SECRET_WORD" : "SELECT * FROM [" + tableName + "] WHERE USER_ID=@USER_ID AND GROUP_ID=@GROUP_ID";
             }
             try
             {
@@ -176,6 +170,7 @@ namespace ProjectManager
                                     PropertyInfo property = typeof(T).GetProperty(ConvertName(rd.GetName(i)));
                                     property?.SetValue(item, rd[i] == DBNull.Value ? null : rd[i]);
                                 }
+                                con.Close();
                                 return item;
                                 
                             }
@@ -185,6 +180,7 @@ namespace ProjectManager
                             T item = Activator.CreateInstance<T>();
                             PropertyInfo property = typeof(T).GetProperty(ConvertName(rd.GetName(0)));
                             property.SetValue(item, 0);
+                            con.Close();
                             return item;
                         }
                     }

@@ -31,7 +31,7 @@ namespace ProjectManager.UserControls
             entry.SetPanelSettings("Register"); // Register page
         }
 
-        private void btnReset_Click(object sender, EventArgs e) //////////////////////////////////////////////////////////////////////////////////////////// SORUN ////////////////////////////////////////////////////////////////
+        private void btnReset_Click(object sender, EventArgs e)  
         {
             if (txMail.Text != "" && txSecretWord.Text != "")
             {

@@ -58,21 +58,23 @@ namespace ProjectManager.Forms
             int desiredHeight = lblDescription.Height-30;
             Height += desiredHeight;
         }
-
-        private void pnlMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ClickOn()
         {
-            if (userGroup.UserGroupAuthorization>0)
+            if (userGroup.UserGroupAuthorization > 0)
             {
                 List<User> userList = genericUser.ReadList(user, group.GroupId);
                 List<UserGroup> userGroups = genericUserGroup.ReadList(user, group.GroupId);
-                teams.DisplayTeamUsers(userList, userGroups, user.UserId,this);
+                teams.DisplayTeamUsers(userList, userGroups, user.UserId, this);
                 teams.disableConclusion();
             }
             else
             {
                 teams.enableConclusion(group.GroupId);
             }
-            
+        }
+        private void pnlMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ClickOn();
         }
         public void refreshTeamUsers(int test=0) // 1 for refresh userList otherwise 0 or nothing
         {
@@ -91,12 +93,12 @@ namespace ProjectManager.Forms
         }
         private void lblDescription_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            pnlMain_MouseDoubleClick(sender, e);
+            ClickOn();
         }
 
         private void lblTeamName_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            pnlMain_MouseDoubleClick(sender, e);
+            ClickOn();
         }
 
         private void pbMenu_Click(object sender, EventArgs e)
@@ -179,6 +181,26 @@ namespace ProjectManager.Forms
             {
                 MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void lblTeamName_Click(object sender, EventArgs e)
+        {
+            ClickOn();
+        }
+
+        private void lblDescription_Click(object sender, EventArgs e)
+        {
+            ClickOn();
+        }
+
+        private void lblTeamLeaderMail_Click(object sender, EventArgs e)
+        {
+            ClickOn();
+        }
+
+        private void lblTaskProjectCount_Click(object sender, EventArgs e)
+        {
+            ClickOn();
         }
     }
 }

@@ -68,12 +68,6 @@ namespace ProjectManager
             }
         }
 
-        private void exitApp_Click(object sender, EventArgs e)
-        {
-            
-            Application.Exit();
-        }
-
-        
+        private void exitApp_Click(object sender, EventArgs e) { Application.Exit(); }
     }
 }

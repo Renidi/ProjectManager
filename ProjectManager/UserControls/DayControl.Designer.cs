@@ -90,7 +90,6 @@
             this.Name = "DayControl";
             this.Size = new System.Drawing.Size(150, 70);
             this.Load += new System.EventHandler(this.DayControl_Load);
-            this.Click += new System.EventHandler(this.DayControl_Click);
             this.ResumeLayout(false);
             this.PerformLayout();
 

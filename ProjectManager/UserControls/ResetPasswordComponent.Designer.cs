@@ -126,7 +126,7 @@
             this.lblLogin.Text = "Login";
             this.lblLogin.Click += new System.EventHandler(this.lblLogin_Click);
             // 
-            // ResetPassword
+            // ResetPasswordComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -136,7 +136,7 @@
             this.Controls.Add(this.txConfirmPassword);
             this.Controls.Add(this.lblUserMail);
             this.Controls.Add(this.btnResetPasswordAndLogin);
-            this.Name = "ResetPassword";
+            this.Name = "ResetPasswordComponent";
             this.Size = new System.Drawing.Size(261, 270);
             this.ResumeLayout(false);
             this.PerformLayout();

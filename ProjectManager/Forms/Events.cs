@@ -40,7 +40,6 @@ namespace ProjectManager
         }
 
         User user = new User();
-        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
         LoginPage entry;
         public Events(User recUser,LoginPage ent=null)

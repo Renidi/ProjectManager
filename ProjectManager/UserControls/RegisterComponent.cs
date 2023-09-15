@@ -36,7 +36,7 @@ namespace ProjectManager.UserControls
             {
                 if (txRegisterPasswordSecond.Text == txRegisterPasswordFirst.Text)
                 {
-                    if (genericUser.CheckUserMail(txRegisterMail.Text)>0)
+                    if (genericUser.CheckUserMail(txRegisterMail.Text)==0)
                     {
                         user.UserName = txRegisterName.Text;
                         user.UserSurname = txRegisterSurname.Text;

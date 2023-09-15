@@ -17,7 +17,7 @@ namespace ProjectManager
         static int currentMonth = currentDt.Month;
         static int currentYear = currentDt.Year;
         User user = new User();
-        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        private readonly GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
         public Calendar(User recUser)
         {
             user = recUser;

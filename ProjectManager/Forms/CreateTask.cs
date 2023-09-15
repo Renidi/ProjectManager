@@ -124,8 +124,6 @@ namespace ProjectManager.Forms
                     }
 
                 }
-
-
             }
             catch { }
         }
@@ -179,7 +177,6 @@ namespace ProjectManager.Forms
                     MessageBox.Show("Task name field cannot be left blank","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 else if (cmbTaskProject.SelectedIndex == -1)
                     MessageBox.Show("Task project is not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
                 else if (cmbTaskEmployee.SelectedIndex == -1)
                     MessageBox.Show("Task owner not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
@@ -228,7 +225,7 @@ namespace ProjectManager.Forms
                 else if (cmbTaskEmployee.SelectedIndex == -1)
                     MessageBox.Show("Task owner not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
-                    MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Unexpected Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
         }

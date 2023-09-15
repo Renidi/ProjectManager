@@ -68,6 +68,7 @@
             this.lblDescription.TabIndex = 11;
             this.lblDescription.Text = resources.GetString("lblDescription.Text");
             this.lblDescription.TextChanged += new System.EventHandler(this.lblDescription_TextChanged);
+            this.lblDescription.Click += new System.EventHandler(this.lblDescription_Click);
             this.lblDescription.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lblDescription_MouseDoubleClick);
             // 
             // pnlBottom
@@ -91,6 +92,7 @@
             this.lblTaskProjectCount.TabIndex = 6;
             this.lblTaskProjectCount.Text = "XXX Proje   XXX Task";
             this.lblTaskProjectCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTaskProjectCount.Click += new System.EventHandler(this.lblTaskProjectCount_Click);
             // 
             // lblTeamLeaderMail
             // 
@@ -103,6 +105,7 @@
             this.lblTeamLeaderMail.TabIndex = 8;
             this.lblTeamLeaderMail.Text = "Team Leader : a.hakan1818@hotmail.com";
             this.lblTeamLeaderMail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTeamLeaderMail.Click += new System.EventHandler(this.lblTeamLeaderMail_Click);
             // 
             // pnlTop
             // 
@@ -137,15 +140,16 @@
             this.lblTeamName.TabIndex = 6;
             this.lblTeamName.Text = "Tringle.io Dev Team";
             this.lblTeamName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTeamName.Click += new System.EventHandler(this.lblTeamName_Click);
             this.lblTeamName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lblTeamName_MouseDoubleClick);
             // 
-            // TeamControl
+            // TeamCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(199)))), ((int)(((byte)(190)))));
             this.Controls.Add(this.pnlMain);
-            this.Name = "TeamControl";
+            this.Name = "TeamCard";
             this.Size = new System.Drawing.Size(223, 135);
             this.Load += new System.EventHandler(this.TeamsControl_Load);
             this.pnlMain.ResumeLayout(false);

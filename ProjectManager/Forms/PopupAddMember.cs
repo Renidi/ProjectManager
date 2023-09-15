@@ -15,7 +15,7 @@ namespace ProjectManager.Forms
     public partial class PopupAddMember : Form
     {
         Group group = new Group();
-        List<UserGroup> userGroups = new List<UserGroup>();
+        private readonly List<UserGroup> userGroups = new List<UserGroup>();
         List<Group> groups = new List<Group>();
         User user = new User();
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
@@ -69,7 +69,7 @@ namespace ProjectManager.Forms
                             userGroup.InviteDate = DateTime.Now;
                             userGroup.InviteSenderId = user.UserId;
 
-                            if (genericUserGroup.Update(userGroup)) // !!! probelm grup ekleme
+                            if (genericUserGroup.Update(userGroup)) 
                                 MessageBox.Show("User has been successfully invited", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             else
                                 MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -106,7 +106,7 @@ namespace ProjectManager.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Pleas enter the mail of the member you want to invite", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Please enter the mail of the member you want to invite", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             

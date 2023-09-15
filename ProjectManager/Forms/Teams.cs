@@ -121,13 +121,13 @@ namespace ProjectManager
             if (genericUserGroup.Update(userGroupInfo))
             {
                 MessageBox.Show("Joined Team", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
             else
             {
                 MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             DisplayTeams();
+            disableConclusion();
         }
 
         private void btnRejectRequest_Click(object sender, EventArgs e)
@@ -141,6 +141,7 @@ namespace ProjectManager
             else
                 MessageBox.Show("Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             DisplayTeams();
+            disableConclusion();
         }
 
     }

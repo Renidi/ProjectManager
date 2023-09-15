@@ -60,10 +60,5 @@ namespace ProjectManager
             }
 
         }
-
-        private void DayControl_Click(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
