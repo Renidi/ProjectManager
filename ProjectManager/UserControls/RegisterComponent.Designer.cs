@@ -34,7 +34,7 @@
             this.txRegisterSecretWord = new Guna.UI2.WinForms.Guna2TextBox();
             this.txRegisterPasswordFirst = new Guna.UI2.WinForms.Guna2TextBox();
             this.txRegisterPasswordSecond = new Guna.UI2.WinForms.Guna2TextBox();
-            this.btnReset = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRegister = new Guna.UI2.WinForms.Guna2Button();
             this.lblLogin = new System.Windows.Forms.Label();
             this.lblDoYouHaveAccount = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -183,23 +183,23 @@
             this.txRegisterPasswordSecond.Size = new System.Drawing.Size(200, 36);
             this.txRegisterPasswordSecond.TabIndex = 36;
             // 
-            // btnReset
+            // btnRegister
             // 
-            this.btnReset.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnReset.BorderRadius = 15;
-            this.btnReset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnReset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnReset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnReset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnReset.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
-            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(36, 304);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(231, 45);
-            this.btnReset.TabIndex = 37;
-            this.btnReset.Text = "Register";
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnRegister.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnRegister.BorderRadius = 15;
+            this.btnRegister.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRegister.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRegister.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRegister.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRegister.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.btnRegister.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnRegister.ForeColor = System.Drawing.Color.White;
+            this.btnRegister.Location = new System.Drawing.Point(36, 304);
+            this.btnRegister.Name = "btnRegister";
+            this.btnRegister.Size = new System.Drawing.Size(231, 45);
+            this.btnRegister.TabIndex = 37;
+            this.btnRegister.Text = "Register";
+            this.btnRegister.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // lblLogin
             // 
@@ -225,21 +225,21 @@
             this.lblDoYouHaveAccount.TabIndex = 40;
             this.lblDoYouHaveAccount.Text = "Do You Have Account?";
             // 
-            // Register
+            // RegisterComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(212)))), ((int)(((byte)(181)))));
             this.Controls.Add(this.lblDoYouHaveAccount);
             this.Controls.Add(this.lblLogin);
-            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.txRegisterPasswordFirst);
             this.Controls.Add(this.txRegisterPasswordSecond);
             this.Controls.Add(this.txRegisterSurname);
             this.Controls.Add(this.txRegisterSecretWord);
             this.Controls.Add(this.txRegisterName);
             this.Controls.Add(this.txRegisterMail);
-            this.Name = "Register";
+            this.Name = "RegisterComponent";
             this.Size = new System.Drawing.Size(301, 387);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -253,7 +253,7 @@
         private Guna.UI2.WinForms.Guna2TextBox txRegisterSecretWord;
         private Guna.UI2.WinForms.Guna2TextBox txRegisterPasswordFirst;
         private Guna.UI2.WinForms.Guna2TextBox txRegisterPasswordSecond;
-        private Guna.UI2.WinForms.Guna2Button btnReset;
+        private Guna.UI2.WinForms.Guna2Button btnRegister;
         private System.Windows.Forms.Label lblLogin;
         private System.Windows.Forms.Label lblDoYouHaveAccount;
     }

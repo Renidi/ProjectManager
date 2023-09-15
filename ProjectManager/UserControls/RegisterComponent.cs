@@ -15,6 +15,8 @@ namespace ProjectManager.UserControls
         LoginPage entry;
         User user = new User();
         Log log = new Log();
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
         public RegisterComponent(LoginPage recieve)
         {
             InitializeComponent();
@@ -27,35 +29,37 @@ namespace ProjectManager.UserControls
             entry.SetPanelSettings("Login");
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void btnReset_Click(object sender, EventArgs e) // btn register
         {
             if (txRegisterMail.Text != "" && txRegisterName.Text != "" && txRegisterPasswordFirst.Text != "" &&
                 txRegisterPasswordSecond.Text != "" && txRegisterSecretWord.Text != "" && txRegisterSurname.Text != "")
             {
                 if (txRegisterPasswordSecond.Text == txRegisterPasswordFirst.Text)
                 {
-                    user.UserName = txRegisterName.Text;
-                    user.UserSurname = txRegisterSurname.Text;
-                    user.UserMail = txRegisterMail.Text;
-                    user.UserPassword = txRegisterPasswordSecond.Text;
-                    user.UserSecretWord = txRegisterSecretWord.Text;
-                    user.UserLastLoginDate = DateTime.Now;
-                    user.UserRegisterDate = DateTime.Now;
+                    if (genericUser.CheckUserMail(txRegisterMail.Text)>0)
+                    {
+                        user.UserName = txRegisterName.Text;
+                        user.UserSurname = txRegisterSurname.Text;
+                        user.UserMail = txRegisterMail.Text;
+                        user.UserPassword = txRegisterPasswordSecond.Text;
+                        user.UserSecretWord = txRegisterSecretWord.Text;
+                        user.UserLastLoginDate = DateTime.Now;
+                        user.UserRegisterDate = DateTime.Now;
+                        log.LogSource = "User";
+                        log.LogType = "Login";
+                        log.LogDate = DateTime.Now;
+                        log.LogUser = user.UserMail;
+                        log.LogUserId = user.UserId;
+                        log.LogDescription = "Login";
+                        log.LogStatus = genericUser.Create(user).ToString();
+                        genericLog.Create(log);
 
-                    GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-                    log.LogSource = "User";
-                    log.LogType = "Login";
-                    log.LogDate = DateTime.Now;
-                    log.LogUser = user.UserMail;
-                    log.LogUserId = user.UserId;
-                    log.LogDescription = "Login";
-                    log.LogStatus = genericUser.Create(user).ToString();
-                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-                    genericLog.Create(log);
-
-                    Clear();
-                    MessageBox.Show("Registration Successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    entry.SetPanelSettings("Login");
+                        Clear();
+                        MessageBox.Show("Registration Successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        entry.SetPanelSettings("Login");
+                    }
+                    else
+                        MessageBox.Show("This email address is already in use!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                     MessageBox.Show("Passwords do not match", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
