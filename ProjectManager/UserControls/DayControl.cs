@@ -20,10 +20,6 @@ namespace ProjectManager
         User user = new User();
         static DateTime currentDt = DateTime.Now.Date;
 
-        private void DayControl_Load(object sender, EventArgs e)
-        {
-            
-        }
         public void Days(int numDay, string dateDay,int userId)
         {
             lbl.Text = numDay.ToString();

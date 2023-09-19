@@ -89,7 +89,6 @@
             this.Controls.Add(this.lbl);
             this.Name = "DayControl";
             this.Size = new System.Drawing.Size(150, 70);
-            this.Load += new System.EventHandler(this.DayControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
