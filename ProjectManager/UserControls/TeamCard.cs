@@ -13,10 +13,8 @@ namespace ProjectManager.Forms
 {
     public partial class TeamCard : UserControl
     {
-        Project project = new Project();
         User user = new User();
         User groupFounder = new User();
-        Log log = new Log();
         Group group = new Group();
         UserGroup userGroup = new UserGroup();
         GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();

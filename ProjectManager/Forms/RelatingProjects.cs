@@ -16,6 +16,7 @@ namespace ProjectManager.Forms
     {
         User user = new User();
         Projects frmProjects;
+        GenericSqlHelper<Project> SqlHelper = new GenericSqlHelper<Project>();
         public RelatingProjects(User recUser,Projects recProjects)
         {
             InitializeComponent();
@@ -45,22 +46,9 @@ namespace ProjectManager.Forms
         private void FillPanel()
         {
             ClearPanels();
-            List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
-            {
-                pnlActive,
-                pnlOnHold,
-                pnlCancelled,
-                pnlComplete
-            };
-            List<string> statusList = new List<string>
-            {
-                "ACTIVE",
-                "ON HOLD",
-                "CANCELLED",
-                "COMPLETED"
-            };
-            GenericSqlHelper<Project> genericSqlHelper = new GenericSqlHelper<Project>();
-            List<Project> projectList = genericSqlHelper.ReadList(user);
+            List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>{pnlActive, pnlOnHold, pnlCancelled, pnlComplete};
+            List<string> statusList = new List<string>{"ACTIVE", "ON HOLD", "CANCELLED", "COMPLETED"};
+            List<Project> projectList = SqlHelper.ReadList(user);
 
             for(int i = 0; i<projectList.Count; i++)
             {

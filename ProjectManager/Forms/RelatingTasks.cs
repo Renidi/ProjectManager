@@ -23,8 +23,10 @@ namespace ProjectManager.Forms
             }
         }
         User user = new User();
+        GenericSqlHelper<Task> SqlHelper = new GenericSqlHelper<Task>();
         Tasks frmTask;
         public int ownerID = 0;
+
         public RelatingTasks(User recUser,Tasks tasks,int ownerId = 0)
         {
             InitializeComponent();
@@ -56,29 +58,13 @@ namespace ProjectManager.Forms
 
         void FillPanel()
         {
-
             ClearPanels();
-            List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>
-            {
-                pnlActive,
-                pnlOnHold,
-                pnlCancelled,
-                pnlComplete
-            };
-            List<string> statusList = new List<string>
-            {
-                "ACTIVE",
-                "ON HOLD",
-                "CANCELLED",
-                "COMPLETED"
-            };
-            GenericSqlHelper<Task> genericSqlHelper = new GenericSqlHelper<Task>();
-            List<Task> taskList = genericSqlHelper.ReadList(user);
-            // 0 1 2 3 4 
+            List<FlowLayoutPanel> pnlList = new List<FlowLayoutPanel>{pnlActive, pnlOnHold, pnlCancelled, pnlComplete};
+            List<string> statusList = new List<string>{ "ACTIVE", "ON HOLD", "CANCELLED", "COMPLETED"};
+            List<Task> taskList = SqlHelper.ReadList(user);
             if(ownerID > 0)
-            {
                 taskList = taskList.Where(task => task.TaskOwnerId == ownerID).ToList();
-            }
+
             foreach(var pnl in pnlList)
             {
                 pnl.AutoScroll = false;
@@ -113,7 +99,6 @@ namespace ProjectManager.Forms
             {
                 pnl.AutoScroll = true;
                 pnl.HorizontalScroll.Visible = false;
-                pnl.VerticalScroll.Visible = false;
             }
 
         }

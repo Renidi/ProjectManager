@@ -22,7 +22,7 @@ namespace ProjectManager.UserControls
         GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
         GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
         
-        public ProjectCard(Project recProject,User recUser,Projects recProjects)
+        public ProjectCard(Project recProject,User recUser,Projects recProjects)// projects = form / project = proje info
         {
             InitializeComponent();
             user = recUser; 
@@ -78,6 +78,5 @@ namespace ProjectManager.UserControls
         {
             ShowSubMenu();
         }
-
     }
 }

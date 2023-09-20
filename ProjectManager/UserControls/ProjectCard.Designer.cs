@@ -81,9 +81,9 @@
             this.lblProjectDescription.Location = new System.Drawing.Point(0, 0);
             this.lblProjectDescription.Name = "lblProjectDescription";
             this.lblProjectDescription.Padding = new System.Windows.Forms.Padding(15);
-            this.lblProjectDescription.Size = new System.Drawing.Size(190, 45);
+            this.lblProjectDescription.Size = new System.Drawing.Size(119, 45);
             this.lblProjectDescription.TabIndex = 4;
-            this.lblProjectDescription.Text = "Project Iron Man description";
+            this.lblProjectDescription.Text = "Proje Açıklama";
             // 
             // panel1
             // 
@@ -118,7 +118,7 @@
             this.lblProjectName.Padding = new System.Windows.Forms.Padding(5);
             this.lblProjectName.Size = new System.Drawing.Size(259, 52);
             this.lblProjectName.TabIndex = 3;
-            this.lblProjectName.Text = "Project Iron Man";
+            this.lblProjectName.Text = "Proje 1";
             this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel2
@@ -150,7 +150,7 @@
             this.lblProjectTeam.Name = "lblProjectTeam";
             this.lblProjectTeam.Size = new System.Drawing.Size(158, 38);
             this.lblProjectTeam.TabIndex = 10;
-            this.lblProjectTeam.Text = "Project Team";
+            this.lblProjectTeam.Text = "Proje Takımı";
             this.lblProjectTeam.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblPriority
@@ -162,7 +162,7 @@
             this.lblPriority.Name = "lblPriority";
             this.lblPriority.Size = new System.Drawing.Size(117, 38);
             this.lblPriority.TabIndex = 9;
-            this.lblPriority.Text = "Project Priority";
+            this.lblPriority.Text = "Proje Önceliği";
             this.lblPriority.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel3
@@ -184,7 +184,7 @@
             this.lblProjectStatus.Name = "lblProjectStatus";
             this.lblProjectStatus.Size = new System.Drawing.Size(106, 28);
             this.lblProjectStatus.TabIndex = 11;
-            this.lblProjectStatus.Text = "Project Status";
+            this.lblProjectStatus.Text = "Proje Durumu";
             this.lblProjectStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblStartEndDate

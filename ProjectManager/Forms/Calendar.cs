@@ -17,7 +17,8 @@ namespace ProjectManager
         static int currentMonth = currentDt.Month;
         static int currentYear = currentDt.Year;
         User user = new User();
-        private readonly GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
         public Calendar(User recUser)
         {
             user = recUser;
@@ -35,16 +36,27 @@ namespace ProjectManager
             int days = DateTime.DaysInMonth(currentYear,currentMonth);
             int dayOfWeek = Convert.ToInt32(startOfMonth.DayOfWeek.ToString("d"));
 
+            List<Task> taskList = genericTask.ReadList(user);
             
-            for(int i = 1; i < dayOfWeek ; i++)
+
+            for (int i = 1; i < dayOfWeek ; i++)
             {
                 LeapDayControl cardControl = new LeapDayControl();
                 flContainer.Controls.Add(cardControl);
             }
+
             for (int i = 1;i <= days ; i++)
             {
+                List<Task> mainTaskList = new List<Task>();
+                foreach (Task item in taskList)
+                {
+                    if(item.TaskEndDate.Date == Convert.ToDateTime(i + "." + currentMonth + "." + currentYear).Date && item.TaskStatus != "CANCELLED")
+                    {
+                        mainTaskList.Add(item);
+                    }
+                }
                 DayControl dayControl = new DayControl();
-                dayControl.Days(i, i + "." + currentMonth + "." + currentYear,user.UserId);
+                dayControl.Days(i, i + "." + currentMonth + "." + currentYear,user.UserId,mainTaskList);
                 
                 flContainer.Controls.Add(dayControl);
             }

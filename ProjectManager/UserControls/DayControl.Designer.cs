@@ -72,7 +72,7 @@
             // lblExtra
             // 
             this.lblExtra.AutoSize = true;
-            this.lblExtra.Location = new System.Drawing.Point(112, 56);
+            this.lblExtra.Location = new System.Drawing.Point(127, 50);
             this.lblExtra.Name = "lblExtra";
             this.lblExtra.Size = new System.Drawing.Size(0, 13);
             this.lblExtra.TabIndex = 4;

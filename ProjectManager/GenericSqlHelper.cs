@@ -164,7 +164,6 @@ namespace ProjectManager
                             while (rd.Read())
                             {
                                 T item = Activator.CreateInstance<T>();
-
                                 for (int i = 0; i < rd.FieldCount; i++)
                                 {
                                     PropertyInfo property = typeof(T).GetProperty(ConvertName(rd.GetName(i)));
@@ -272,7 +271,6 @@ namespace ProjectManager
                 List<PropertyInfo> properties = t.GetType().GetProperties().ToList();
                 PropertyInfo keyProperty = properties.FirstOrDefault(prop => prop.Name.Equals(ConvertName(tableName + "_ID"), StringComparison.OrdinalIgnoreCase)); // ID prop and value
                 string sql = "UPDATE [" + tableName + "] SET ";
-
                 foreach (PropertyInfo property in properties)
                 {
                     if (property != keyProperty && property.GetValue(t) !=null && ( property.PropertyType != typeof(DateTime) || (DateTime)property.GetValue(t) != DateTime.MinValue ))
@@ -282,10 +280,8 @@ namespace ProjectManager
 
                     }
                 }
-
                 sql = sql.TrimEnd(',', ' ');
                 sql += " WHERE " + ConvertPropName(keyProperty.Name) + "=@" + ConvertPropName(keyProperty.Name);
-
                 using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
                 {
                     con.Open();
@@ -299,10 +295,8 @@ namespace ProjectManager
                                 cmd.Parameters.AddWithValue("@" + ConvertPropName(property.Name), value ?? DBNull.Value);
                             }
                         }
-
                         object keyValue = keyProperty.GetValue(t);
                         cmd.Parameters.AddWithValue("@" + ConvertPropName(keyProperty.Name), keyValue);
-
                         cmd.ExecuteNonQuery();
                     }
                     con.Close();
@@ -313,8 +307,6 @@ namespace ProjectManager
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
             return false;
         }
         public bool Delete(T t) 
@@ -356,20 +348,17 @@ namespace ProjectManager
         // Subprocesses
         private List<int> GetAuthList(int userId, int filteredGroupId = -1) // The user can see the tasks or projects for which user has authority
         {
-            List<int> authIdList = new List<int>() { -1,0 }; // -1 for projects with no group 
+            List<int> authIdList = new List<int>() { -1,0 }; // 0 and -1 for projects with no group 
             string sql;
             int value;
-            string parameter;
-            string getId;
-            if (filteredGroupId == -1)
-            {
+            string parameter, getId;
+            if (filteredGroupId == -1){
                 sql = "SELECT GROUP_ID FROM [USER_GROUP] WHERE USER_ID=@USER_ID AND INVITE_STATUS=@INVITE_STATUS";
                 getId = "GROUP_ID";
                 parameter = "@USER_ID";
                 value = userId;
             }
-            else
-            {
+            else{
                 sql = "SELECT USER_ID FROM [USER_GROUP] WHERE GROUP_ID=@GROUP_ID AND INVITE_STATUS=@INVITE_STATUS";
                 getId = "USER_ID";
                 parameter = "@GROUP_ID";
@@ -378,16 +367,14 @@ namespace ProjectManager
 
             try
             {
-                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;"))
-                {
+                using (SqlConnection con = new SqlConnection("Data Source = .;Initial Catalog = ProjectManager; Integrated Security=true;")){
                     SqlCommand cmd = new SqlCommand(sql, con);
                     cmd.Parameters.AddWithValue(parameter, value);
                     cmd.Parameters.AddWithValue("@INVITE_STATUS", "Accepted");
                     con.Open();
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        while (rd.Read())
-                        {
+                        while (rd.Read()){
                             authIdList.Add(Convert.ToInt32(rd[getId]));
                         }
                     }
