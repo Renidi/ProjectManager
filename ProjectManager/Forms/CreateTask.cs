@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Entities;
+using ProjectManager.UserControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,129 +17,99 @@ namespace ProjectManager.Forms
     public partial class CreateTask : Form
     {
         User user;
+        User taskOwner = new User();
         Task task = new Task();
+        Project project = new Project();
         Log log = new Log();
         List<User> users = new List<User>();
         List<Project> projectList = new List<Project>();
+        GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+        GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
+        GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
         public int editTaskId = 0; 
         public CreateTask(User recUser,int taskId=0)
         {
             InitializeComponent();
             user = recUser;
-            GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
+            
             user = genericUser.ReadById(user);
             editTaskId = taskId;
+            task.TaskPriority = cmbTaskPriority.Text;
+            ManageTags();
         }
 
         private void CreateTask_Load(object sender, EventArgs e)
         {
             dtTaskEndDate.Value = DateTime.Now;
             dtTaskStartDate.Value = DateTime.Now;
-            cmbTaskEmployee.Items.Add(user.UserMail);
             users.Add(user);
-            GenericSqlHelper<Project> genericSqlProject = new GenericSqlHelper<Project>();
-            projectList = genericSqlProject.ReadList(user);
+
+            projectList = genericProject.ReadList(user);
 
             for (int i = 0; i < projectList.Count; i++)
             {
                 cmbTaskProject.Items.Add(projectList[i].ProjectName);
             }
-
-            GenericSqlHelper<User> genericSqlUser = new GenericSqlHelper<User>();
-            users = genericSqlUser.ReadList(user);
-            users = genericSqlUser.ReadList(user);
+            cmbTaskEmployee.Items.Clear();
+            users = genericUser.ReadList(user);
+            users = users.GroupBy(user => user.UserId).Select(group => group.First()).ToList();
             for (int i = 0; i < users.Count; i++)
             {
                 cmbTaskEmployee.Items.Add(users[i].UserMail);
             }
-
+            task.TaskPriority = cmbTaskPriority.Text;
+            task.TaskStatus = cmbTaskStatus.Text;
             DoubleBuffered = true;
-            Dt();
+            btnEdit.Enabled = editTaskId > 0;
             if (editTaskId > 0)
             {
-                foreach (DataGridViewRow row in dgvActiveTasks.Rows)
-                {
-                    int rowId = Convert.ToInt32(row.Cells[0].Value);
-                    if (rowId == editTaskId)
-                    {
-                        dgvActiveTasks.CurrentCell = dgvActiveTasks.Rows[row.Index].Cells[0];
-                        dgvActiveTasks_CellContentClick(dgvActiveTasks, new DataGridViewCellEventArgs(0, row.Index));
-                    }
-                }
-            }
-        }
-
-        private void dgvActiveTasks_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                task.TaskId = Convert.ToInt32(dgvActiveTasks.SelectedRows[0].Cells[0].Value);
-                GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
+                task.TaskId = editTaskId;
                 task = genericTask.ReadById(task);
-
-                Project projectInfo = new Project() {ProjectId = task.TaskProjectId };
-                User userInfo = new User() { UserId = task.TaskOwnerId };
-                Group groupInfo = new Group();
-                if (task.TaskGroupId > 0)
-                {
-                    groupInfo.GroupId = task.TaskGroupId;
-                    GenericSqlHelper<Group> genericGroup = new GenericSqlHelper<Group>();
-                    groupInfo = genericGroup.ReadById(groupInfo);
-                }
-                else
-                {
-                    groupInfo.GroupName = "No Group";
-                }
-
-                GenericSqlHelper<Project> genericProject = new GenericSqlHelper<Project>();
-                projectInfo = genericProject.ReadById(projectInfo);
-                GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();
-                userInfo = genericUser.ReadById(userInfo);
-                
+                project.ProjectId = task.TaskProjectId;
+                project = genericProject.ReadById(project);
+                taskOwner.UserId = task.TaskOwnerId;
+                taskOwner = genericUser.ReadById(taskOwner);
                 txTaskName.Text = task.TaskName;
+                cmbTaskProject.Text = project.ProjectName;
                 cmbTaskStatus.Text = task.TaskStatus;
+                cmbTaskPriority.Text = task.TaskPriority;
                 dtTaskStartDate.Value = task.TaskStartDate;
                 dtTaskEndDate.Value = task.TaskEndDate;
-                cmbTaskProject.Text = projectInfo.ProjectName;
-                cmbTaskEmployee.Text = userInfo.UserMail;
-                cmbTaskTeam.Text = groupInfo.GroupName;
-                cmbTaskPriority.Text = task.TaskPriority;
+                cmbTaskEmployee.Text = taskOwner.UserMail;
                 txTaskComment.Text = task.TaskDescription;
-                if(task.TaskBadges != null)
+                task.TaskBadges = task.TaskBadges == null || task.TaskBadges == "" ? ConvertToTagName(task.TaskPriority) : ConvertToTagName(task.TaskPriority) + ", " + task.TaskBadges;
+                List<string> badgeNames = new List<string>(task.TaskBadges.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                foreach (string badgeName in badgeNames)
                 {
                     for (int i = 0; i < clb1.Items.Count; i++)
                     {
-                        string itemText = clb1.Items[i].ToString();
-                        if (task.TaskBadges.Contains(itemText))
+                        string listItem = clb1.Items[i].ToString();
+                        if (listItem.ToLower().Trim() == badgeName.ToLower().Trim())
                         {
                             clb1.SetItemChecked(i, true);
+                            break;
                         }
                     }
                     for (int i = 0; i < clb2.Items.Count; i++)
                     {
-                        string itemText = clb2.Items[i].ToString();
-                        if (task.TaskBadges.Contains(itemText))
+                        string listItem = clb2.Items[i].ToString();
+                        if (listItem.ToLower().Trim() == badgeName.ToLower().Trim())
                         {
-                            clb2.SetItemChecked(i, true);
+                            clb1.SetItemChecked(i, true);
+                            break;
                         }
                     }
-
                 }
-            }
-            catch { }
-        }
-        private void Dt()
-        {
-            GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
-            dgvActiveTasks.DataSource = genericTask.ReadTable(user);
-            for (int i = 0; i < dgvActiveTasks.Columns.Count; i++)
-            {
-                dgvActiveTasks.Columns[i].HeaderText = dgvActiveTasks.Columns[i].HeaderText.Replace('_', ' ');
-            }
-            dtTaskEndDate.Value = DateTime.Now;
-            dtTaskStartDate.Value = DateTime.Now;
-        }
 
+                ManageTags();
+            }
+        }
+        void OnLoad()
+        {
+
+            
+        }
+        
         private void btnCreate_Click(object sender, EventArgs e)
         {
             if(txTaskName.Text!="" && cmbTaskProject.SelectedIndex != -1 && cmbTaskEmployee.SelectedIndex != -1)
@@ -169,7 +140,6 @@ namespace ProjectManager.Forms
                     GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
                     genericLog.Create(log);
                 }
-                Dt();
             }
             else
             {
@@ -214,7 +184,6 @@ namespace ProjectManager.Forms
                 else
                     MessageBox.Show("Cancelled","Warning",MessageBoxButtons.OK);
 
-                Dt();
             }
             else
             {
@@ -226,35 +195,6 @@ namespace ProjectManager.Forms
                     MessageBox.Show("Task owner not selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
                     MessageBox.Show("Unexpected Error", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if(task.TaskId != 0)
-            {
-                DialogResult result = MessageBox.Show("Are you sure to delete " + task.TaskName, "Delete Task", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    log.LogSource = "Task";
-                    log.LogType = "Delete";
-                    log.LogDate = DateTime.Now;
-                    log.LogUser = user.UserMail;
-                    log.LogDescription = "Deleted " + task.TaskName + " and Id : " + task.TaskId;
-                    GenericSqlHelper<Task> genericTask = new GenericSqlHelper<Task>();
-                    log.LogStatus = genericTask.Delete(task).ToString();
-
-                    GenericSqlHelper<Log> genericLog = new GenericSqlHelper<Log>();
-                    genericLog.Create(log);
-                }
-                else
-                    MessageBox.Show("Cancelled", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Dt();
-            }
-            else
-            {
-                MessageBox.Show("Select Task First", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
         }
@@ -296,6 +236,7 @@ namespace ProjectManager.Forms
                 cmbTaskTeam.SelectedIndex = 0;
                 GenericSqlHelper<User> genericUser = new GenericSqlHelper<User>();  
                 users = genericUser.ReadList(user, projectList[cmbTaskProject.SelectedIndex].ProjectGroupId);
+                users = users.GroupBy(x => x.UserId).Select(group => group.First()).ToList();
                 for (int i = 0; i < users.Count; i++)
                 {
                     cmbTaskEmployee.Items.Add(users[i].UserMail);
@@ -304,7 +245,126 @@ namespace ProjectManager.Forms
             else
                 cmbTaskEmployee.Items.Add(user.UserMail);
                 users.Add(user);
+            lblTaskGroupName.Text = groupInfo.GroupName;
+        }
+        private void ManageTags()
+        {
+            List<string> startSelectedVal = new List<string>() { ConvertToTagName(task.TaskPriority) };
+            for (int i = 0; i < clb1.Items.Count;i++)
+            {
+                string item = clb1.Items[i].ToString();
+                if (clb1.GetItemChecked(i))
+                    startSelectedVal.Add(item);
+            }
+            for (int i = 0; i < clb1.Items.Count; i++)
+            {
+                string item = clb2.Items[i].ToString();
+                if (clb2.GetItemChecked(i))
+                    startSelectedVal.Add(item);
+            }
+
+            string taskBadges = string.Join(",", startSelectedVal);
+            pnlBadge.Controls.Clear();
+            if (taskBadges != null)
+            {
+                int badgeSpacing = 5;
+                int xPosition = 0;
+                int yPosition = 0;
+                int panelWidth = 210;
+                int panelHeight = 42;
+                List<string> badgeNames = new List<string>(taskBadges.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                foreach (string badgeName in badgeNames)
+                {
+                    TaskBadges badgeControl = new TaskBadges(badgeName);
+                    pnlTop.Controls.Add(badgeControl);
+                    if (xPosition + badgeControl.Width + badgeSpacing > panelWidth)
+                    {
+                        xPosition = 0;
+                        yPosition += badgeControl.Height + badgeSpacing;
+                    }
+                    badgeControl.Location = new Point(xPosition, yPosition);
+                    pnlBadge.Controls.Add(badgeControl);
+                    xPosition += badgeControl.Width + badgeSpacing;
+                    if (yPosition + badgeControl.Height > panelHeight)
+                    {
+                        panelHeight += badgeControl.Height + badgeSpacing;
+                        pnlBadge.Height = panelHeight;
+                        pnlTop.Height = panelHeight;
+                        pnlFill.Height += badgeControl.Height + badgeSpacing;
+                    }
+                    
+                }
+                
+                pnlFill.Height = (lblTaskName.Height + lblContent.Height + pnlTop.Height) > 246 ? lblContent.Height + lblTaskName.Height + pnlTop.Height : 246;
+            }
+            else
+            {
+                pnlFill.Height = (lblTaskName.Height + lblContent.Height + pnlTop.Height) > 246 ? lblContent.Height + lblTaskName.Height + pnlTop.Height : 246;
+            }
+        }
+        private string ConvertToTagName(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+            string firstLetter = char.ToUpper(input[0]).ToString();
+            string rest = input.Substring(1).ToLower().Replace("ı", "i");
+            return firstLetter + rest;
+        }
+        private void txTaskName_TextChanged(object sender, EventArgs e)
+        {
+            lblTaskName.Text = txTaskName.Text;
         }
 
+        private void cmbTaskStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageTags();
+        }
+
+        private void cmbTaskPriority_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            task.TaskPriority = cmbTaskPriority.Text;
+            ManageTags();
+        }
+
+        private void dtTaskStartDate_ValueChanged(object sender, EventArgs e)
+        {
+            lblTaskDate.Text = dtTaskStartDate.Value.ToString("dd/MM/yyy") + " / " + dtTaskEndDate.Value.ToString("dd/MM/yy");
+        }
+
+        private void dtTaskEndDate_ValueChanged(object sender, EventArgs e)
+        {
+            lblTaskDate.Text = dtTaskStartDate.Value.ToString("dd/MM/yyy") + " / " + dtTaskEndDate.Value.ToString("dd/MM/yy");
+        }
+
+        private void txTaskComment_TextChanged(object sender, EventArgs e)
+        {
+            lblContent.Text = txTaskComment.Text;
+        }
+
+        private void cmbTaskEmployee_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblTaskOwner.Text = cmbTaskEmployee.Text;
+        }
+
+        private void clb1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ManageTags();
+        }
+
+        private void clb2_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ManageTags();
+        }
+
+        private void clb2_Click(object sender, EventArgs e)
+        {
+            ManageTags();
+        }
+
+        private void clb1_Click(object sender, EventArgs e)
+        {
+            ManageTags();
+        }
     }
 }
