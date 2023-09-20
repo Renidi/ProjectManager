@@ -95,7 +95,7 @@ namespace ProjectManager.Forms
                         string listItem = clb2.Items[i].ToString();
                         if (listItem.ToLower().Trim() == badgeName.ToLower().Trim())
                         {
-                            clb1.SetItemChecked(i, true);
+                            clb2.SetItemChecked(i, true);
                             break;
                         }
                     }
