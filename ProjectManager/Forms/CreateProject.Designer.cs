@@ -498,6 +498,7 @@
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Size = new System.Drawing.Size(580, 457);
             this.pnlLeft.TabIndex = 110;
+            this.pnlLeft.MouseEnter += new System.EventHandler(this.pnlLeft_MouseEnter);
             // 
             // guna2CirclePictureBox1
             // 

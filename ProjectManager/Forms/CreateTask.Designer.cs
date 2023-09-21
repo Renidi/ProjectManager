@@ -217,6 +217,7 @@
             this.clb2.ThreeDCheckBoxes = true;
             this.clb2.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clb2_ItemCheck);
             this.clb2.Click += new System.EventHandler(this.clb2_Click);
+            this.clb2.MouseEnter += new System.EventHandler(this.clb2_MouseEnter);
             // 
             // cmbTaskPriority
             // 
@@ -257,6 +258,7 @@
             this.clb1.TabIndex = 112;
             this.clb1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clb1_ItemCheck);
             this.clb1.Click += new System.EventHandler(this.clb1_Click);
+            this.clb1.MouseEnter += new System.EventHandler(this.clb1_MouseEnter);
             // 
             // cmbTaskStatus
             // 

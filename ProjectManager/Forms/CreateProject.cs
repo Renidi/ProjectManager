@@ -122,6 +122,7 @@ namespace ProjectManager.Forms
                 project.ProjectName = txProjectName.Text;
                 project.ProjectStatus = cmbProjectStatus.Text;
                 project.ProjectPriority = cmbProjectPriority.Text;
+                project.ProjectStartDate = dtProjectStartDate.Value;
                 project.ProjectEndDate = dtProjectEndDate.Value;
                 project.ProjectDescription = txProjectComment.Text;
                 project.ProjectId = editId;
@@ -147,38 +148,6 @@ namespace ProjectManager.Forms
             {
                 MessageBox.Show("Missing Info", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            }
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (project.ProjectId !=0)
-            {
-                project.ProjectName = txProjectName.Text;
-                project.ProjectStatus = cmbProjectStatus.Text;
-                project.ProjectPriority = cmbProjectPriority.Text;
-                project.ProjectCreatorId = user.UserId;
-                project.ProjectEndDate = dtProjectEndDate.Value;
-                project.ProjectId = editId;
-
-                DialogResult result = MessageBox.Show("Are you sure to delete " + project.ProjectName, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    log.LogSource = "Project";
-                    log.LogType = "Delete";
-                    log.LogDate = DateTime.Now;
-                    log.LogUser = user.UserMail;
-                    log.LogDescription = "Deleted " + project.ProjectName + ", Id : " + project.ProjectId;
-                    log.LogStatus = genericProject.Delete(project).ToString();
-                    genericLog.Create(log);
-
-                }
-                else
-                    MessageBox.Show("Cancelled", "Cancel", MessageBoxButtons.OK);
-            }
-            else
-            {
-                MessageBox.Show("Select Project First","Warning",MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -248,6 +217,11 @@ namespace ProjectManager.Forms
             int maxLength = 500;
             if(txProjectComment.Text.Length > maxLength)
                 e.Handled = true;
+        }
+
+        private void pnlLeft_MouseEnter(object sender, EventArgs e)
+        {
+
         }
     }
 }

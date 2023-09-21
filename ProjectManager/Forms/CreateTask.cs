@@ -39,7 +39,7 @@ namespace ProjectManager.Forms
         }
 
         private void CreateTask_Load(object sender, EventArgs e)
-        {
+        {   // Task Badges mechanic gonna be change 247
             dtTaskEndDate.Value = DateTime.Now;
             dtTaskStartDate.Value = DateTime.Now;
             users.Add(user);
@@ -103,11 +103,6 @@ namespace ProjectManager.Forms
 
                 ManageTags();
             }
-        }
-        void OnLoad()
-        {
-
-            
         }
         
         private void btnCreate_Click(object sender, EventArgs e)
@@ -247,8 +242,9 @@ namespace ProjectManager.Forms
                 users.Add(user);
             lblTaskGroupName.Text = groupInfo.GroupName;
         }
+             
         private void ManageTags()
-        {
+        {   // Size problem
             List<string> startSelectedVal = new List<string>() { ConvertToTagName(task.TaskPriority) };
             for (int i = 0; i < clb1.Items.Count;i++)
             {
@@ -262,46 +258,46 @@ namespace ProjectManager.Forms
                 if (clb2.GetItemChecked(i))
                     startSelectedVal.Add(item);
             }
-
             string taskBadges = string.Join(",", startSelectedVal);
             pnlBadge.Controls.Clear();
-            if (taskBadges != null)
-            {
-                int badgeSpacing = 5;
-                int xPosition = 0;
-                int yPosition = 0;
-                int panelWidth = 210;
-                int panelHeight = 42;
-                List<string> badgeNames = new List<string>(taskBadges.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
-                foreach (string badgeName in badgeNames)
-                {
-                    TaskBadges badgeControl = new TaskBadges(badgeName);
-                    pnlTop.Controls.Add(badgeControl);
-                    if (xPosition + badgeControl.Width + badgeSpacing > panelWidth)
-                    {
-                        xPosition = 0;
-                        yPosition += badgeControl.Height + badgeSpacing;
-                    }
-                    badgeControl.Location = new Point(xPosition, yPosition);
-                    pnlBadge.Controls.Add(badgeControl);
-                    xPosition += badgeControl.Width + badgeSpacing;
-                    if (yPosition + badgeControl.Height > panelHeight)
-                    {
-                        panelHeight += badgeControl.Height + badgeSpacing;
-                        pnlBadge.Height = panelHeight;
-                        pnlTop.Height = panelHeight;
-                        pnlFill.Height += badgeControl.Height + badgeSpacing;
-                    }
-                    
-                }
-                
-                pnlFill.Height = (lblTaskName.Height + lblContent.Height + pnlTop.Height) > 246 ? lblContent.Height + lblTaskName.Height + pnlTop.Height : 246;
-            }
-            else
+            int badgeSpacing = 5;
+            int panelWidth = pnlBadge.Width;
+            int xPosition = 0;
+            int yPosition = 0;
+            int panelHeight = pnlBadge.Height;
+            List<string> badgeNames = new List<string>(taskBadges.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+            foreach (string badgeName in badgeNames)
             {
-                pnlFill.Height = (lblTaskName.Height + lblContent.Height + pnlTop.Height) > 246 ? lblContent.Height + lblTaskName.Height + pnlTop.Height : 246;
+                TaskBadges badgeControl = new TaskBadges(badgeName);
+                pnlTop.Controls.Add(badgeControl);
+                if (xPosition + badgeControl.Width + badgeSpacing > panelWidth)
+                {
+                    xPosition = 0;
+                    yPosition += badgeControl.Height + badgeSpacing;
+                }
+                badgeControl.Location = new Point(xPosition, yPosition);
+                pnlBadge.Controls.Add(badgeControl);
+                xPosition += badgeControl.Width + badgeSpacing;
+                if (yPosition + badgeControl.Height > panelHeight+badgeSpacing)
+                {
+                    panelHeight += badgeControl.Height + badgeSpacing;
+                    pnlBadge.Height = panelHeight;
+                    pnlTop.Height = panelHeight;
+                    pnlFill.Height += badgeControl.Height;
+                }
+                else if (panelHeight > badgeControl.Height + yPosition + badgeSpacing)
+                {
+                    panelHeight = badgeControl.Height + badgeSpacing;
+                    pnlBadge.Height = panelHeight;
+                    pnlTop.Height = panelHeight;
+                    pnlFill.Height += badgeControl.Height;
+                }
+
             }
+
+            pnlFill.Height = (lblTaskName.Height + lblContent.Height + pnlTop.Height) > 246 ? (lblContent.Height + lblTaskName.Height + pnlTop.Height) -25 : 246;
         }
         private string ConvertToTagName(string input)
         {
@@ -359,12 +355,23 @@ namespace ProjectManager.Forms
 
         private void clb2_Click(object sender, EventArgs e)
         {
-            ManageTags();
+           ManageTags();
         }
 
         private void clb1_Click(object sender, EventArgs e)
         {
             ManageTags();
         }
+
+        private void clb2_MouseEnter(object sender, EventArgs e)
+        {
+            ManageTags();
+        }
+
+        private void clb1_MouseEnter(object sender, EventArgs e)
+        {
+            ManageTags();
+        }
+
     }
 }
